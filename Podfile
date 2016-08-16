@@ -1,0 +1,6 @@
+platform :ios, '8.0'
+pod 'AFNetworking', '~> 3.0'
+pod 'SDWebImage', '~>3.7'
+pod 'MBProgressHUD', '~> 0.9.2'
+pod 'MJRefresh'
+pod 'Bugly', '~> 2.3.0'
