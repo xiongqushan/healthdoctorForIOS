@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SpeechViewController">
+            <connections>
+                <outlet property="sendStrBtn" destination="fQY-k1-er1" id="QgU-qT-viw"/>
+                <outlet property="starBtn" destination="cPt-9J-bfR" id="h7n-pU-ISc"/>
+                <outlet property="textView" destination="gvQ-a5-xi0" id="bbT-wO-Vxh"/>
+                <outlet property="view" destination="dbe-Wh-cz7" id="oqD-ww-5E9"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="dbe-Wh-cz7">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="leE-Xi-tK2">
+                    <rect key="frame" x="35" y="324" width="305" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPt-9J-bfR">
+                            <rect key="frame" x="5" y="10" width="125" height="30"/>
+                            <color key="backgroundColor" red="0.074509803920000006" green="0.60392156860000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="125" id="Kgc-0g-rlg"/>
+                                <constraint firstAttribute="height" constant="30" id="c7I-zL-wLR"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <state key="normal" title="开始说话">
+                                <color key="titleColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="starBtnClick:" destination="-1" eventType="touchUpInside" id="khp-Uj-mtK"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQY-k1-er1">
+                            <rect key="frame" x="175" y="10" width="125" height="30"/>
+                            <color key="backgroundColor" red="0.074509803920000006" green="0.60392156860000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="125" id="3or-ju-Xho"/>
+                                <constraint firstAttribute="height" constant="30" id="XRU-ys-Uma"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <state key="normal" title="发送到Web端">
+                                <color key="titleColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="sendBtnClick:" destination="-1" eventType="touchUpInside" id="va4-15-g4D"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="fQY-k1-er1" firstAttribute="top" secondItem="leE-Xi-tK2" secondAttribute="top" constant="10" id="3MG-Mi-vw1"/>
+                        <constraint firstAttribute="width" constant="305" id="IQ8-xq-z7J"/>
+                        <constraint firstItem="cPt-9J-bfR" firstAttribute="leading" secondItem="leE-Xi-tK2" secondAttribute="leading" constant="5" id="Kob-oo-odx"/>
+                        <constraint firstAttribute="height" constant="50" id="gRn-aT-qsn"/>
+                        <constraint firstAttribute="trailing" secondItem="fQY-k1-er1" secondAttribute="trailing" constant="5" id="mg4-h2-SGS"/>
+                        <constraint firstItem="cPt-9J-bfR" firstAttribute="top" secondItem="leE-Xi-tK2" secondAttribute="top" constant="10" id="uQa-Hp-GvG"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示: 正在语音时点击屏幕结束语音" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFp-Dm-Sfv">
+                    <rect key="frame" x="77" y="295" width="221" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="BZo-Ow-diQ"/>
+                        <constraint firstAttribute="width" constant="221" id="aGW-aX-op1"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gvQ-a5-xi0">
+                    <rect key="frame" x="5" y="85" width="362" height="202"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="202" id="uXy-VY-Wgw"/>
+                    </constraints>
+                    <color key="textColor" red="0.39215686274509803" green="0.39215686274509803" blue="0.39215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="gvQ-a5-xi0" secondAttribute="trailing" constant="8" id="1DE-Ty-jI5"/>
+                <constraint firstItem="CFp-Dm-Sfv" firstAttribute="centerX" secondItem="dbe-Wh-cz7" secondAttribute="centerX" id="1vS-Ke-OA9"/>
+                <constraint firstItem="leE-Xi-tK2" firstAttribute="centerX" secondItem="dbe-Wh-cz7" secondAttribute="centerX" id="2Q7-Um-lJC"/>
+                <constraint firstItem="leE-Xi-tK2" firstAttribute="centerX" secondItem="gvQ-a5-xi0" secondAttribute="centerX" constant="1.5" id="3tV-OI-5Kl"/>
+                <constraint firstItem="CFp-Dm-Sfv" firstAttribute="centerX" secondItem="gvQ-a5-xi0" secondAttribute="centerX" constant="1.5" id="NSj-8X-OPC"/>
+                <constraint firstItem="leE-Xi-tK2" firstAttribute="top" secondItem="CFp-Dm-Sfv" secondAttribute="bottom" constant="8" id="PWd-0z-Eei"/>
+                <constraint firstItem="gvQ-a5-xi0" firstAttribute="centerX" secondItem="dbe-Wh-cz7" secondAttribute="centerX" constant="-1.5" id="bc9-aZ-Xhz"/>
+                <constraint firstItem="CFp-Dm-Sfv" firstAttribute="top" secondItem="gvQ-a5-xi0" secondAttribute="bottom" constant="8" id="li4-do-E9Q"/>
+                <constraint firstItem="gvQ-a5-xi0" firstAttribute="top" secondItem="dbe-Wh-cz7" secondAttribute="top" constant="85" id="mHT-Fz-mul"/>
+                <constraint firstItem="gvQ-a5-xi0" firstAttribute="leading" secondItem="dbe-Wh-cz7" secondAttribute="leading" constant="5" id="pfB-4P-5uR"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="570.5" y="43.5"/>
+        </view>
+    </objects>
+</document>

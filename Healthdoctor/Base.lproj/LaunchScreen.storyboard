@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youjianguan" translatesAutoresizingMaskIntoConstraints="NO" id="Cum-22-SyP">
+                                <rect key="frame" x="220" y="223" width="161" height="57"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="rWw-gP-LgF"/>
+                                    <constraint firstAttribute="width" constant="161" id="tlK-zi-ChC"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的健康，我们帮您把关" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-5e-e8n">
+                                <rect key="frame" x="223" y="554" width="154" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="TPQ-QL-eDh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.44313725490196076" green="0.44313725490196076" blue="0.44313725490196076" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xO-GX-0YN">
+                                <rect key="frame" x="174" y="572" width="253" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="0Q9-vf-AkF"/>
+                                </constraints>
+                                <string key="text" base64-UTF8="YES">
+AwMDAwPCqTIwMTYg5LiK5rW35aW95Y2T5pWw5o2u5pyN5Yqh5pyJ6ZmQ5YWs5Y+4IOayqklDUOWkhzE1
+MDAyOTE55Y+3A
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" red="0.70980392156862748" green="0.70980392156862748" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="3xO-GX-0YN" secondAttribute="trailing" constant="161" id="6N4-3K-ndA"/>
+                            <constraint firstItem="h3W-5e-e8n" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Esf-bB-iNb"/>
+                            <constraint firstItem="h3W-5e-e8n" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="207" id="Khe-R4-XaP"/>
+                            <constraint firstItem="Cum-22-SyP" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="203" id="OYM-P0-zHK"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="3xO-GX-0YN" secondAttribute="bottom" constant="7" id="T2p-DM-CCv"/>
+                            <constraint firstItem="3xO-GX-0YN" firstAttribute="top" secondItem="h3W-5e-e8n" secondAttribute="bottom" constant="-3" id="VQ0-rC-k7V"/>
+                            <constraint firstItem="3xO-GX-0YN" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="161" id="hPy-DZ-hky"/>
+                            <constraint firstItem="Cum-22-SyP" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="kXF-8x-b7I"/>
+                            <constraint firstItem="3xO-GX-0YN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="oJK-ck-Wvu"/>
+                            <constraint firstAttribute="trailing" secondItem="h3W-5e-e8n" secondAttribute="trailing" constant="206" id="sCx-Xk-wPW"/>
+                            <constraint firstItem="3xO-GX-0YN" firstAttribute="centerX" secondItem="h3W-5e-e8n" secondAttribute="centerX" id="sX9-MF-0Ht"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Khe-R4-XaP"/>
+                                <exclude reference="sCx-Xk-wPW"/>
+                                <exclude reference="6N4-3K-ndA"/>
+                                <exclude reference="hPy-DZ-hky"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="youjianguan" width="381" height="113"/>
+    </resources>
+</document>
