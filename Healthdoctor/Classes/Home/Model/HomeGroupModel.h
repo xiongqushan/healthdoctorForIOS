@@ -8,12 +8,12 @@
 
 #import "HZBaseModel.h"
 
-@interface HomeGroupModel : HZBaseModel
+@interface HomeGroupModel : HZBaseModel<NSCoding>
 
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, copy)NSString *doctorNum;
 @property (nonatomic, copy)NSString *groupNum;
-@property (nonatomic, copy)NSString *Id;
+@property (nonatomic, assign)NSInteger Id;
 @property (nonatomic, copy)NSString *type;
 
 @end

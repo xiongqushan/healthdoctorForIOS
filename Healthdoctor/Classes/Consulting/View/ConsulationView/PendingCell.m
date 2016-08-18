@@ -23,7 +23,7 @@
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.photoUrl] placeholderImage:[UIImage imageNamed:@"icon"]];
     
     self.nameLabel.text = model.custName;
-    NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@"  "];
+    NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     self.dateLabel.text = [HZUtils getDetailDateStrWithDate:date];
     self.cosulationLabel.text = model.consultTitele;
 

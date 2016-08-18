@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		69E60233E74A03A9D5CA2DC0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0E50B9B363B83C628C8408 /* libPods.a */; };
+		A5070D691D63266E006060BA /* GroupManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A5070D681D63266E006060BA /* GroupManager.m */; };
 		A901488E1D59C2CF00A5149D /* PhraseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A901488D1D59C2CF00A5149D /* PhraseViewController.m */; };
 		A915D7971CF7FDD800EA7084 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A915D7961CF7FDD800EA7084 /* PersonalInfoViewController.m */; };
 		A924A6611D2CEA600077FF5A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A924A6601D2CEA600077FF5A /* Images.xcassets */; };
@@ -181,6 +182,8 @@
 /* Begin PBXFileReference section */
 		5E0E50B9B363B83C628C8408 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		851E00FC5A998F25EB6E70B8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A5070D671D63266D006060BA /* GroupManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupManager.h; sourceTree = "<group>"; };
+		A5070D681D63266E006060BA /* GroupManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupManager.m; sourceTree = "<group>"; };
 		A901488C1D59C2CF00A5149D /* PhraseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhraseViewController.h; sourceTree = "<group>"; };
 		A901488D1D59C2CF00A5149D /* PhraseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhraseViewController.m; sourceTree = "<group>"; };
 		A915D7951CF7FDD800EA7084 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
@@ -1063,6 +1066,8 @@
 				A9CA93821CEC686C0077175A /* HZUtils.m */,
 				A9CA93841CEC68880077175A /* Config.h */,
 				A9CA93851CEC68880077175A /* Config.m */,
+				A5070D671D63266D006060BA /* GroupManager.h */,
+				A5070D681D63266E006060BA /* GroupManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1497,6 +1502,7 @@
 				A9DDAF831D17E6F000E557A1 /* ChartModel.m in Sources */,
 				A9FC66911CF7DFD300D4DA7E /* TextCell.m in Sources */,
 				A9CA93861CEC68880077175A /* Config.m in Sources */,
+				A5070D691D63266E006060BA /* GroupManager.m in Sources */,
 				A9CA92981CEBFB970077175A /* ConsultViewController.m in Sources */,
 				A97680671D3396BB0098DEC2 /* GroupListCell.m in Sources */,
 				A915D7971CF7FDD800EA7084 /* PersonalInfoViewController.m in Sources */,
