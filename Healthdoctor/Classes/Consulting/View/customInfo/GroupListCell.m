@@ -56,12 +56,10 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"______name:%@",self.groupList[indexPath.row]);
     HZUser *user = [Config getProfile];
     NSDictionary *param = @{@"customerId":self.customerId,@"curGroupId":self.groupIdList[indexPath.row],@"operateBy":user.name};
     [[GKNetwork sharedInstance] GetUrl:kDeleteGroupURL param:param completionBlockSuccess:^(id responseObject) {
         
-        NSLog(@"_____responseObject:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:@"删除分组失败！"];
             return ;
@@ -70,7 +68,6 @@
         [self.groupList removeObjectAtIndex:indexPath.row];
         [collectionView reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"______error:%@",error);
     }];
 
 }

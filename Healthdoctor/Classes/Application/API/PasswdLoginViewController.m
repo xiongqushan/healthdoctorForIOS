@@ -37,7 +37,6 @@
 
     [[GKNetwork sharedInstance] PostUrl:kLoginValidateURL param:param completionBlockSuccess:^(id responseObject) {
         NSString *message = responseObject[@"message"];
-        NSLog(@"_____________success:%@",responseObject);
         
         if ([responseObject[@"state"] integerValue] == 1) {
             NSDictionary *data = responseObject[@"Data"];
@@ -59,7 +58,6 @@
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"_____error:%@",error);
         [HZUtils showHUDWithTitle:@"网络出错！"];
     }];
 }

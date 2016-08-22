@@ -14,7 +14,7 @@
 
 - (void)setRoundWithRadius:(CGFloat)radius;
 
-- (void)setBadgeValue:(NSInteger)badgeValue;
+- (void)setBadgeValue:(NSInteger)badgeValue center:(CGPoint)point;
 
 - (void)addCuttingLine;
 

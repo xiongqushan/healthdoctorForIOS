@@ -29,15 +29,11 @@
     
     for (DepartmentModel *model in self.dataArr) {
         for (CheckItemModel *model2 in model.checkItmes) {
-            NSLog(@"________checkItemName:%@",model2.checkItemName);
             for (ResultModel *model3 in model2.checkResults) {
-                NSLog(@"_______checkIndexName:%@\n_______resultValue:%@\n_______TextRef:%@\n______unit:%@",model3.checkIndexName,model3.resultValue,model3.textRef,model3.unit);
                 if ([model3.resultFlagID integerValue] != 1) {
                     [unusualDataArr addObject:model3];
                 }
-                
             }
-            NSLog(@"********************************************");
         }
     }
 

@@ -24,10 +24,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"*********************\n_______count:%ld",self.dataArr.count);
-    for (ResultModel *model in self.dataArr) {
-        NSLog(@"________name:%@,flag:%@",model.checkIndexName,model.resultFlagID);
-    }
     [self setUpTableView];
 }
 
@@ -51,7 +47,7 @@
     ReportItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReportItemCell"];
     ResultModel *model = self.dataArr[indexPath.row];
 
-    [cell showDataWithModel:model];
+    [cell showDataWithModel:model isExceptionsView:YES];
     return cell;
     
 }
@@ -59,13 +55,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ResultModel *model = self.dataArr[indexPath.row];
-    
-    ShowDetailView *view = [[ShowDetailView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) title:model.resultValue];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication].keyWindow addSubview:view];
-    });
+//    ResultModel *model = self.dataArr[indexPath.row];
+//    
+//    ShowDetailView *view = [[ShowDetailView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) title:model.resultValue];
+//    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [[UIApplication sharedApplication].keyWindow addSubview:view];
+//    });
     
 }
 

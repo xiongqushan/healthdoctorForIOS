@@ -11,7 +11,12 @@
 
 @interface ChartBaseViewController : UIViewController
 
-@property (nonatomic, strong)ConsulationModel *model;
+//@property (nonatomic, strong)ConsulationModel *model;
+
+@property (nonatomic, copy) NSString *customId;
+@property (nonatomic, copy) NSString *photoUrl;
+@property (nonatomic, copy) NSString *customName;
+
 @property (nonatomic, strong)UIView *userInfoView;
 
 - (void)setUpNavTitleViewWithTitle:(NSString *)title;

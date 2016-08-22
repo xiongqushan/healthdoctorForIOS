@@ -29,10 +29,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //NSLog(@"______finailDate:%@",[HZUtils getStringWithDate:@"2016-08-07 13:41:26"]);
-    //[HZUtils isNumAtFirst:@"1、我想你"];
-//    NSLog(@"________%d",[HZUtils isNumAtFirst:@"12、我想你"]);
-//    NSLog(@"________%d",[HZUtils isNumAtFirst:@"我想你"]);
     [NSThread sleepForTimeInterval:2.0];
     
     [Bugly startWithAppId:kBugluAppId];

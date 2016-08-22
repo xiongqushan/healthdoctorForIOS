@@ -45,28 +45,27 @@
     NSDictionary *param = @{@"customerId":self.customId};
     [[GKNetwork sharedInstance] GetUrl:kGetCusInfoURL param:param completionBlockSuccess:^(id responseObject) {
         
-        NSLog(@"________responseObject:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
         }
         NSDictionary *dict = responseObject[@"Data"];
         CustomInfoModel *model = [[CustomInfoModel alloc] init];
-        if ([dict[@"Gender"] isKindOfClass:[NSNull class]]) {
-            model.gender = @"暂无";
-        }else if ([dict[@"Gender"] integerValue] == 0) {
-            model.gender = @"女";
-        }else {
-            model.gender = @"男";
-        }
+//        if ([dict[@"Gender"] isKindOfClass:[NSNull class]]) {
+//            model.gender = @"暂无";
+//        }else if ([dict[@"Gender"] integerValue] == 0) {
+//            model.gender = @"女";
+//        }else {
+//            model.gender = @"男";
+//        }
+        
+        //根据数字获得性别
+        model.gender = [HZUtils getGender:dict[@"Gender"]];
         
         model.career = dict[@"Career"];
         
         model.birthday = dict[@"Birthday"];
-        NSDate *date = [HZUtils stringToDate:[model.birthday substringToIndex:10]];
-        NSTimeInterval dateDiff = 0 - [date timeIntervalSinceNow];
-        int age = trunc(dateDiff/(60*60*24))/365;
-        model.age = [NSString stringWithFormat:@"%d",age];
+        model.age = [HZUtils getAgeWithBirthday:model.birthday];
         
         model.mobile = dict[@"Mobile"];
         model.certificateCode = dict[@"Certificate_Code"];
@@ -83,6 +82,8 @@
             /*
             NSString *keyStr = [NSString stringWithFormat:@"%@",groupId];
             NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:keyStr];
+            if (groupName) {
+                [self.groupList addObject:groupName];
             NSLog(@"_____%@",groupName);
              */
             HomeGroupModel *groupModel=[GroupManager getGroup:(NSInteger)groupId];
@@ -94,7 +95,6 @@
         [self initDataWithModel:model];
         
     } failure:^(NSError *error) {
-        NSLog(@"_____error:%@",error);
     }];
 }
 

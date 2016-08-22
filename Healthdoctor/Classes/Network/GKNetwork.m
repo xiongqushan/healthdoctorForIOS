@@ -61,9 +61,7 @@
             NSString *paramStr = [NSString stringWithFormat:@"%@=%@",keyArr[i],valueArr[i]];
             requestUrl = [requestUrl stringByAppendingString:[NSString stringWithFormat:@"&%@",paramStr]];
         }
-        NSLog(@"1_________URL:%@",requestUrl);
         requestUrl = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSLog(@"2_________URL:%@",requestUrl);
     }
     
     NSString *basicStr = [self getHttpHeaderStrWithUrl:requestUrl];
@@ -76,7 +74,6 @@
     //将认证信息添加到请求头
     [request setValue:newBasicStr forHTTPHeaderField:@"Authorization"];
     
-    NSLog(@"______%@",request);
     //AFN请求数据
     NSURLSessionDataTask *dataTask = [_manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * response, id responseObject, NSError * error) {
 
@@ -100,7 +97,6 @@
 - (NSString *)getHttpHeaderStrWithUrl:(NSString *)url {
     
     NSString *preSign = [NSString stringWithFormat:@"%@|%@",url,kAppSecret];
-    NSLog(@"________GET_URL:%@",preSign);
     
     NSString *sign = [MD5 md532BitLower:preSign];
     NSString *basicString = [NSString stringWithFormat:@"HZ_API_V2:%@",sign];
@@ -125,15 +121,12 @@
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
     NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    NSLog(@"_______jsonStr:%@",jsonStr);
     
     NSString *basicStr = [self postHttpHeaderStrWithUrl:requestUrl param:jsonStr];
-    // NSLog(@"___________%@",basicStr);
     //Basic认证 base64进行加密
     NSString *newBasicStr = [NSString stringWithFormat:@"Basic %@",[basicStr base64EncodedString]];
     //将认证信息添加到请求头
     [request setValue:newBasicStr forHTTPHeaderField:@"Authorization"];
-    NSLog(@"_______request:%@",request);
     NSURLSessionDataTask *dataTask = [_manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * response, id responseObject, NSError * error) {
         [hud hide:YES];
         
@@ -156,7 +149,6 @@
 - (NSString *)postHttpHeaderStrWithUrl:(NSString *)url param:(NSString *)jsonStr {
 
     NSString *preSign = [NSString stringWithFormat:@"%@|%@|%@",url,jsonStr,kAppSecret];
-    NSLog(@"_________POST_URL:%@",preSign);
     NSString *sign = [MD5 md532BitLower:preSign];
     NSString *basicString = [NSString stringWithFormat:@"HZ_API_V2:%@",sign];
     return basicString;

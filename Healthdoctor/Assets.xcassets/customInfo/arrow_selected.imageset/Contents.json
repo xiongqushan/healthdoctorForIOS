@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "arrow_selected.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "人物@2x.png",
+      "filename" : "arrow_selected@2x.png",
       "scale" : "2x"
     },
     {

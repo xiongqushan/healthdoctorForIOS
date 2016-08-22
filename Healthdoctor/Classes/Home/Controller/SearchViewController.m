@@ -18,7 +18,7 @@
 #import "HZAPI.h"
 #import "HomeDetailCell.h"
 //#import "UserViewController.h"
-#import "TestViewController.h"
+#import "UserDetailViewController.h"
 
 @interface SearchViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 
@@ -60,7 +60,6 @@
         if (index == 1) {
             [self.dataArr removeAllObjects];
         }
-        NSLog(@"________success:%@",responseObject);
         NSDictionary *data = responseObject[@"Data"];
         NSString *message = responseObject[@"message"];
         if ([responseObject[@"state"] integerValue] != 1) {
@@ -82,7 +81,6 @@
         [self.tableView reloadData];
         
     } failure:^(NSError *error) {
-        NSLog(@"________error:%@",error);
         [HZUtils showHUDWithTitle:@"网络不给力"];
     }];
 
@@ -121,12 +119,16 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     HomeDetailModel *model = self.dataArr[indexPath.row];
-    TestViewController *test = [[TestViewController alloc] init];
-    test.cname = model.cname;
-    test.photoUrl = model.photoUrl;
-    test.accountID = model.accountId;
-    test.custID = model.custId;
-    [self.navigationController pushViewController:test animated:YES];
+    UserDetailViewController *detail = [[UserDetailViewController alloc] init];
+    detail.cname = model.cname;
+    detail.photoUrl = model.photoUrl;
+    detail.accountID = model.accountId;
+    detail.custID = model.custId;
+    
+    detail.mobile = model.mobile;
+    detail.gender = model.gender;
+    detail.birthday = model.birthday;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 #pragma mark -- UISearchBarDelegate

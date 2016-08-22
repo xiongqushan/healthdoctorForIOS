@@ -45,4 +45,10 @@
 //判断首字母是否为数字
 + (BOOL)isNumAtFirst:(NSString *)str;
 
+//根据出生日期得出岁数
++ (NSString *)getAgeWithBirthday:(NSString *)birthday;
+
+//获得性别
++ (NSString *)getGender:(NSString *)gender;
+
 @end

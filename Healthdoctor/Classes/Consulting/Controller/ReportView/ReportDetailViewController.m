@@ -66,7 +66,6 @@
     // AppendInfo = "6616032768;66";
     NSDictionary *param = @{@"customerId":self.custId,@"checkCode":self.checkCode,@"workNo":self.workNum};
     [[GKNetwork sharedInstance] GetUrl:kGetHealthReportURL param:param completionBlockSuccess:^(id responseObject) {
-        NSLog(@"________ReportDetailData:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
@@ -75,9 +74,8 @@
         NSDictionary *data = responseObject[@"Data"];
         NSArray *arr = data[@"DepartmentCheck"];
         for (NSDictionary *dict in arr) {
-            DepartmentModel *model = [[DepartmentModel alloc] initWithDict:dict];
             
-          //  [self.unusualDataArr addObject:[model getUnusualDataArr]];
+            DepartmentModel *model = [[DepartmentModel alloc] initWithDict:dict];
             NSMutableArray *dataArray = [model getUnusualDataArr];
             for (ResultModel *model in dataArray) {
                 [self.unusualDataArr addObject:model];
@@ -92,7 +90,6 @@
             [self.summaryDataArr addObject:model];
         }
         self.masterDoctor = data[@"MasterDotor"];
-        NSLog(@"________masterDoctor:%@",_masterDoctor);
         [self setUpBaseUI];
     } failure:^(NSError *error) {
         

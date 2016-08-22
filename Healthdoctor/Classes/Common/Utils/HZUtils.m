@@ -178,41 +178,68 @@
 + (NSString *)getDetailDateStrWithDate:(NSString *)date {
     
     NSArray *dateArr = [date componentsSeparatedByString:@" "];
+    NSString *dateStr = [dateArr[1] substringToIndex:5];
     //获取当天的日期字符串
     NSDate * currentDate = [NSDate date];
     NSString *currentDateStr = [self getDateWithDate:currentDate];
     NSArray *currentDateArr = [currentDateStr componentsSeparatedByString:@"T"];
     currentDateStr = currentDateArr[0];
     
-    NSLog(@"______currentDateStr:%@",currentDateStr);
     if ([currentDateStr isEqualToString:dateArr[0]]) {
         //今天的时间
-        return [dateArr[1] substringToIndex:5];
+        //今天的时间
+        NSString *hour = [dateStr substringToIndex:2];
+        if ([hour integerValue] >= 8 && [hour integerValue] < 12) {
+            return [NSString stringWithFormat:@"上午 %@",dateStr];
+        }else if ([hour integerValue] >= 12 && [hour integerValue] < 14) {
+            return [NSString stringWithFormat:@"中午 %@",dateStr];
+        }else if ([hour integerValue] >=14 && [hour integerValue] < 18) {
+            return [NSString stringWithFormat:@"下午 %@",dateStr];
+        }else if ([hour integerValue] >= 18 && [hour integerValue] < 24) {
+            return [NSString stringWithFormat:@"晚上 %@",dateStr];
+        }
+        return dateStr;
     }
     
     //获取昨天日期字符串
     NSDate *yesterdayDate = [NSDate dateWithTimeInterval:-kOneDay sinceDate:currentDate];
     NSString *yesterdayDateStr = [[[self getDateWithDate:yesterdayDate] componentsSeparatedByString:@"T"] firstObject];
-    NSLog(@"______yesterdayDateStr:%@",yesterdayDateStr);
     if ([yesterdayDateStr isEqualToString:dateArr[0]]) {
         //昨天
-        return @"昨天";
+        return [NSString stringWithFormat:@"昨天 %@",dateStr];
     }
     
     //获取相对今天差一个星期的日期字符串
     NSDate *oneWeekDate = [NSDate dateWithTimeInterval:-kSixDay sinceDate:currentDate];
     NSString *oneWeekDateStr = [[[self getDateWithDate:oneWeekDate] componentsSeparatedByString:@"T"] firstObject];
-    NSLog(@"______oneWeekDateStr:%@",oneWeekDateStr);
     int isDate = [self compareDate:dateArr[0] withDate:oneWeekDateStr];
     if (isDate == -1) {
         //返回日期
-        return dateArr[0];
+        return [NSString stringWithFormat:@"%@ %@",dateArr[0],dateStr];
     }else {
         //返回星期
-        return [self weekdayStringFromDate:[self stringToDate:dateArr[0]]];
+        NSString *week = [self weekdayStringFromDate:[self stringToDate:dateArr[0]]];
+        
+        return [NSString stringWithFormat:@"%@ %@",week,dateStr];
     }
+
+}
+
++ (NSString *)getAgeWithBirthday:(NSString *)birthday {
+    NSDate *date = [HZUtils stringToDate:[birthday substringToIndex:10]];
+    NSTimeInterval dateDiff = 0 - [date timeIntervalSinceNow];
+    int age = trunc(dateDiff/(60*60*24))/365;
+    return [NSString stringWithFormat:@"%d",age];
+}
+
++ (NSString *)getGender:(NSString *)gender {
     
-    
-    //return @"123";
+    if ([gender isKindOfClass:[NSNull class]]) {
+        return @"暂无";
+    }else if ([gender integerValue] == 0) {
+        return @"女";
+    }else {
+        return @"男";
+    }
 }
 @end

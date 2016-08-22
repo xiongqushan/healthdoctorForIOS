@@ -98,13 +98,10 @@
 - (void)loadData {
     NSDictionary *param = [self getParamWithFlag:self.flag];
     
-    NSLog(@"param:________%@",param);
-    
     [[GKNetwork sharedInstance] GetUrl:self.url param:param completionBlockSuccess:^(id responseObject) {
         if (_index == 1) {
             [self.dataArr removeAllObjects];
         }
-        NSLog(@"_______%s:%@",__func__,responseObject);
         
         NSDictionary *dict = (NSDictionary *)responseObject;
         if ([dict[@"state"] integerValue] != 1) { //不为1时请求数据失败
@@ -151,7 +148,6 @@
             self.tableView.mj_footer.hidden = NO;
         }
     } failure:^(NSError *error) {
-        NSLog(@"______Error:%@",error);
         
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
@@ -177,11 +173,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.url isEqualToString:kGetPendingURL]) {
-        return 70;
-    }else {
-        return 80;
-    }
+//    if ([self.url isEqualToString:kGetPendingURL]) {
+//        return 70;
+//    }else {
+//        return 80;
+//    }
+    return 70;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -18,7 +18,7 @@
 #import <MJRefresh.h>
 //#import "UserViewController.h"
 #import "SearchViewController.h"
-#import "TestViewController.h"
+#import "UserDetailViewController.h"
 
 @interface HomeDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -118,7 +118,6 @@
         if (index == 1) {
             [self.dataArr removeAllObjects];
         }
-        NSLog(@"________success:%@",responseObject);
         NSDictionary *data = responseObject[@"Data"];
         NSString *message = responseObject[@"message"];
         if ([responseObject[@"state"] integerValue] != 1) {
@@ -150,7 +149,6 @@
         [self endRefershView];
         
     } failure:^(NSError *error) {
-        NSLog(@"________error:%@",error);
     }];
     
 }
@@ -178,12 +176,16 @@
     
     HomeDetailModel *model = self.dataArr [indexPath.row];
     
-    TestViewController *test = [[TestViewController alloc] init];
-    test.cname = model.cname;
-    test.photoUrl = model.photoUrl;
-    test.custID = model.custId;
-    test.accountID = model.accountId;
-    [self.navigationController pushViewController:test animated:YES];
+    UserDetailViewController *detail = [[UserDetailViewController alloc] init];
+    detail.cname = model.cname;
+    detail.photoUrl = model.photoUrl;
+    detail.accountID = model.accountId;
+    detail.custID = model.custId;
+    
+    detail.mobile = model.mobile;
+    detail.gender = model.gender;
+    detail.birthday = model.birthday;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -21,7 +21,6 @@
 
 - (void)showDataWithModel:(FeedbackModel *)model {
   //  FeedbackModel *newModel = (FeedbackModel *)model;
-    NSLog(@"_________FeedBackPhotoURL:%@",model.photoUrl);
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.photoUrl] placeholderImage:[UIImage imageNamed:@"default"]];
     self.nameLabel.text = model.custName;
@@ -34,7 +33,8 @@
     }else {
         self.doctorName.hidden = NO;
     }
-    self.doctorName.text = [NSString stringWithFormat:@"健管师:%@",model.reDoctor];
+    //self.doctorName.text = [NSString stringWithFormat:@"健管师:%@",model.reDoctor];
+    self.doctorName.text = model.reDoctor;
     self.consulationLabel.text = model.consultTitele;
     
 }

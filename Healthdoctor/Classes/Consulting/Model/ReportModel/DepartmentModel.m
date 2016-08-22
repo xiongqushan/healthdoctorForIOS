@@ -34,7 +34,6 @@
         for (NSDictionary *checkResult in checkItem[@"CheckResults"]) {
             ResultModel *model = [[ResultModel alloc] init];
             [model setValuesForKeysWithDictionary:checkResult];
-            NSLog(@"_______%@",model.resultFlagID);
 //            if ([model.resultFlagID integerValue] != 1 || [model.resultFlagID integerValue] != 0) {
 //                
 //            }
@@ -46,7 +45,6 @@
             }
         }
     }
-    NSLog(@"_______count:%ld",dataArr.count);
     
     return dataArr;
 }

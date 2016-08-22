@@ -47,17 +47,16 @@
     }
     
     if (count == 3) {
-        NSLog(@"能点击");
+      //  NSLog(@"能点击");
         if (self.block) {
             self.block(YES,btn.tag - 101,btn.selected);
         }
     }else {
-        NSLog(@"不能点击");
+      //  NSLog(@"不能点击");
         if (self.block) {
             self.block(NO,btn.tag - 101,btn.selected);
         }
     }
-    NSLog(@"_____click:%ld",btn.tag);
     
 }
 

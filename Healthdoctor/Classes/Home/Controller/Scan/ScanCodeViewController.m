@@ -56,7 +56,6 @@
     //2.用captureDevice创建输入流
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
     if (!input) {
-        NSLog(@"_____%@",[error localizedDescription]);
         return NO;
     }
     //3.创建媒体数据输出流
@@ -136,15 +135,11 @@
         
         //判断回传的数据类型
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-            NSLog(@"___________________stringValue:%@",[metadataObj stringValue]);
             _codeInfo = [metadataObj stringValue];
             
             HZUser *user = [Config getProfile];
             NSDictionary *dict = @{@"identity":_codeInfo,@"userId":user.doctorId};
-            NSLog(@"_________param,%@",dict);
             [[GKNetwork sharedInstance] GetUrl:kScanLoginURL param:dict completionBlockSuccess:^(id responseObject) {
-                NSLog(@"________success,%@",responseObject);
-                NSLog(@"_______message:%@",((NSDictionary*)responseObject[@"message"]));
                 NSDictionary *dict = (NSDictionary *)responseObject;
                 
                 if ([dict[@"Data"] longLongValue] == 1) {
@@ -153,7 +148,6 @@
                     [HZUtils showHUDWithTitle:@"二维码失效，请刷新界面。"];
                 }
             } failure:^(NSError *error) {
-                NSLog(@"________error,%@",error);
             }];
 
         }
