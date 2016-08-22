@@ -37,6 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor viewBackgroundColor];
+    [self loadData];
 }
 
 - (void)loadData {
@@ -187,7 +188,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
