@@ -43,6 +43,7 @@
     self.searchBar.placeholder = @"输入用户名";
     self.searchBar.backgroundImage = [HZUtils imageForColor:kSetRGBColor(53, 168, 240) size:CGSizeMake(kScreenSizeWidth - 70, 40)];
     self.searchBar.backgroundColor = [UIColor clearColor];
+    self.searchBar.tintColor = [UIColor navigationBarColor];
     self.searchBar.delegate = self;
     [self.navigationController.view addSubview:self.searchBar];
 

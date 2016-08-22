@@ -54,7 +54,12 @@
             for (NSDictionary *dict in Data) {
                 HomeGroupModel *model = [[HomeGroupModel alloc] init]; 
                 [model setValuesForKeysWithDictionary:dict];
-                [self.dataArr addObject:model];
+                if ([model.name containsString:@"Test_"]) {
+                    continue;
+                }else {
+                    [self.dataArr addObject:model];
+                }
+//                [self.dataArr addObject:model];
                 
                 /*
                 [[NSUserDefaults standardUserDefaults] setObject:model.name forKey:[NSString stringWithFormat:@"%@",model.Id]];

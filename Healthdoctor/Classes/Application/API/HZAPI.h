@@ -36,7 +36,7 @@
 #define kGetAskReplyURL kConsultBaseURL(@"GetAskReplyData")
 #define kAddDoctorReplyURL kConsultBaseURL(@"AddDoctorReply")
 #define kDefaultExpressionsURL kConsultBaseURL(@"GetDefaultExpressions")
-#define kSearchExpressionsURL kConsultBaseURL(@"SearchByKeyWord")
+#define kSearchExpressionsURL kConsultBaseURL(@"SearchExpressionsByKeyWord")
 
 /****************** Home **********************/
 #define kGetCusGroupURL kUserBaseURL(@"GetCusGroupByDoctorId")
