@@ -17,7 +17,8 @@
 #import "IconItemCell.h"
 #import <UIImageView+WebCache.h>
 #import "GroupListCell.h"
-
+#import "HomeGroupModel.h"
+#import "GroupManager.h"
 @interface CusInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -78,10 +79,16 @@
         self.customerId = model.Id;//保存客户Id
         
         for (id groupId in model.groupList) {
+            /*
             NSString *keyStr = [NSString stringWithFormat:@"%@",groupId];
             NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:keyStr];
             if (groupName) {
                 [self.groupList addObject:groupName];
+            NSLog(@"_____%@",groupName);
+             */
+            HomeGroupModel *groupModel=[GroupManager getGroup:(NSInteger)groupId];
+            if (groupModel) {
+                [self.groupList addObject:groupModel.name];
             }
             
         }

@@ -19,6 +19,7 @@
 #import "HZUtils.h"
 #import <MBProgressHUD.h>
 #import "UIColor+Utils.h"
+#import "GroupManager.h"
 
 #define kBaseTag 101
 
@@ -52,7 +53,9 @@
             for (NSDictionary *dict in Data) {
                 HomeGroupModel *model = [[HomeGroupModel alloc] init]; 
                 [model setValuesForKeysWithDictionary:dict];
+                [self.dataArr addObject:model];
                 
+                /*
                 [[NSUserDefaults standardUserDefaults] setObject:model.name forKey:[NSString stringWithFormat:@"%@",model.Id]];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
@@ -62,7 +65,11 @@
                     [self.dataArr addObject:model];
                 }
                 
+
+                NSLog(@"_______%@   %@",model.name,model.Id);
+                */
             }
+            [GroupManager setGroupArray:self.dataArr];
             
             //对数组进行排序
             _sortArr = [self.dataArr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {

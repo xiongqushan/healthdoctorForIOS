@@ -113,7 +113,7 @@
 - (void)requestDataWithCustomNameOrld:(NSString *)customName pageIndex:(NSInteger)index pageSize:(NSInteger)count {
     HZUser *user = [Config getProfile];
     
-    NSDictionary *param = @{@"serviceDeptId":user.dept,@"customNameOrMobile":customName,@"groupId":self.model.Id,@"doctorId":user.doctorId,@"pageIndex":@(index),@"pageSize":@(count)};
+    NSDictionary *param = @{@"serviceDeptId":user.dept,@"customNameOrMobile":customName,@"groupId":[NSString stringWithFormat:@"%ld",self.model.Id],@"doctorId":user.doctorId,@"pageIndex":@(index),@"pageSize":@(count)};
     [[GKNetwork sharedInstance] GetUrl:kGroupCustInfoListURL param:param completionBlockSuccess:^(id responseObject) {
         if (index == 1) {
             [self.dataArr removeAllObjects];
