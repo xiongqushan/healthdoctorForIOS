@@ -50,6 +50,7 @@
     UISearchBar * searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 5, kScreenSizeWidth - 140, 30)];
     searchBar.placeholder = @"关键字搜索";
     searchBar.delegate = self;
+    searchBar.tintColor = [UIColor navigationBarColor];
     self.navigationItem.titleView = searchBar;
     self.searchBar = searchBar;
     
@@ -138,7 +139,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     
     [searchBar resignFirstResponder];
-    NSDictionary *param = @{@"keyWord":searchBar.text,@"withUnenabled":@"false"};
+    NSDictionary *param = @{@"keyWord":searchBar.text};
     
    /// __weak PhraseViewController *weakSelf = self;
     

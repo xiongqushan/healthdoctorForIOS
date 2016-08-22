@@ -136,7 +136,7 @@
     }
     
     GKSliderView *slider = [[GKSliderView alloc] initWithFrame:self.bounds titleArr:_titleArr controllerNameArr:control];
-    slider.titleFont = [UIFont systemFontOfSize:13];
+    slider.titleFont = [UIFont systemFontOfSize:15];
     [self addSubview:slider];
 }
 

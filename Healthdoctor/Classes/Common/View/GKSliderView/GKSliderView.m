@@ -33,8 +33,8 @@
         self.titleArr = titleArr;
         self.controllerArr = nameArr;
         self.tabBarHeight = 40;
-        [self setUpTabBar];
-        [self setUpCollectionView];
+       // [self setUpTabBar];
+        
         
     }
     
@@ -48,6 +48,8 @@
 
 - (void)setTitleFont:(UIFont *)titleFont {
     _titleFont = titleFont;
+    [self setUpTabBar];
+    [self setUpCollectionView];
 }
 
 //- (void)setBadgeValue:(NSString *)badgeValue {
@@ -94,7 +96,7 @@
             titleLabel.text = self.titleArr[index];
            // label.backgroundColor = [UIColor yellowColor];
             titleLabel.textColor = [UIColor grayColor];
-            titleLabel.font = [UIFont systemFontOfSize:15];
+            titleLabel.font = _titleFont;
             titleLabel.textAlignment = NSTextAlignmentCenter;
             [view addSubview:titleLabel];
         }

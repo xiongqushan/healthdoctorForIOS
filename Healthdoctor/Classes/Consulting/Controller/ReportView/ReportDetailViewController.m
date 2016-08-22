@@ -10,6 +10,7 @@
 #import "ReportView.h"
 #import "Define.h"
 #import "GKSliderView.h"
+#import "BasicInfoViewController.h"
 #import "ExamDetailViewController.h"
 #import "ExamSummaryViewController.h"
 #import "ExamExceptionsViewController.h"
@@ -19,11 +20,14 @@
 #import "DepartmentModel.h"
 #import "SummarysModel.h"
 #import "ResultModel.h"
+#import "ReportInfoModel.h"
 
 @interface ReportDetailViewController ()
 @property (nonatomic ,strong)NSMutableArray *detailDataArr;
 @property (nonatomic, strong)NSMutableArray *summaryDataArr;
 @property (nonatomic, strong)NSMutableArray *unusualDataArr;
+@property (nonatomic, strong)ReportInfoModel *infoModel;
+
 @property (nonatomic, copy)NSString *masterDoctor;
 @end
 
@@ -44,7 +48,10 @@
 }
 
 - (void)setUpBaseUI {
-    NSArray *titleArr = @[@"体检汇总",@"体检异常",@"体检详情"];
+    NSArray *titleArr = @[@"基本信息",@"体检汇总",@"体检异常",@"体检详情"];
+    
+    BasicInfoViewController *basicInfo = [[BasicInfoViewController alloc] init];
+    basicInfo.infoModel = self.infoModel;
     
     ExamSummaryViewController *summary = [[ExamSummaryViewController alloc] init];
     summary.masterDoctor = self.masterDoctor;
@@ -56,8 +63,8 @@
     ExamDetailViewController *detail = [[ExamDetailViewController alloc] init];
     detail.dataArr = self.detailDataArr;
     
-    GKSliderView *slider = [[GKSliderView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64) titleArr:titleArr controllerNameArr:@[summary,exceptions,detail]];
-    slider.titleFont = [UIFont systemFontOfSize:15];
+    GKSliderView *slider = [[GKSliderView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64) titleArr:titleArr controllerNameArr:@[basicInfo,summary,exceptions,detail]];
+    slider.titleFont = [UIFont systemFontOfSize:16];
     [self.view addSubview:slider];
 }
 
@@ -73,8 +80,8 @@
         
         NSDictionary *data = responseObject[@"Data"];
         NSArray *arr = data[@"DepartmentCheck"];
+        // 解析体检详情数据
         for (NSDictionary *dict in arr) {
-            
             DepartmentModel *model = [[DepartmentModel alloc] initWithDict:dict];
             NSMutableArray *dataArray = [model getUnusualDataArr];
             for (ResultModel *model in dataArray) {
@@ -83,6 +90,7 @@
             [self.detailDataArr addObject:model];
         }
         
+        //解析体检汇总数据
         NSArray *summary = data[@"GeneralSummarys"];
         for (NSString *content in summary) {
             SummarysModel *model = [[SummarysModel alloc] init];
@@ -90,6 +98,13 @@
             [self.summaryDataArr addObject:model];
         }
         self.masterDoctor = data[@"MasterDotor"];
+        
+        //解析客户基本信息数据
+        NSDictionary *reportInfo = data[@"ReportInfoVM"];
+        ReportInfoModel *infoModel = [[ReportInfoModel alloc] init];
+        [infoModel setValuesForKeysWithDictionary:reportInfo];
+        self.infoModel = infoModel;
+        
         [self setUpBaseUI];
     } failure:^(NSError *error) {
         

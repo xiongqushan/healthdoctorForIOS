@@ -18,6 +18,8 @@
 		A92BC9001D0D33C700BDF132 /* HomeDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A92BC8FF1D0D33C700BDF132 /* HomeDetailModel.m */; };
 		A92BC9041D0D385500BDF132 /* HomeDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A92BC9021D0D385500BDF132 /* HomeDetailCell.m */; };
 		A92BC9051D0D385500BDF132 /* HomeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A92BC9031D0D385500BDF132 /* HomeDetailCell.xib */; };
+		A94420A11D6A99860033C87A /* ReportInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A94420A01D6A99860033C87A /* ReportInfoModel.m */; };
+		A94A250D1D6A9DBD0064D46B /* BasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A94A250C1D6A9DBD0064D46B /* BasicInfoViewController.m */; };
 		A950447D1D0E3E6600FF8155 /* PasswdLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A950447B1D0E3E6600FF8155 /* PasswdLoginViewController.m */; };
 		A950447E1D0E3E6600FF8155 /* PasswdLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A950447C1D0E3E6600FF8155 /* PasswdLoginViewController.xib */; };
 		A95044811D0E5F0200FF8155 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95044801D0E5F0200FF8155 /* SearchViewController.m */; };
@@ -203,6 +205,10 @@
 		A92BC9011D0D385500BDF132 /* HomeDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeDetailCell.h; sourceTree = "<group>"; };
 		A92BC9021D0D385500BDF132 /* HomeDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeDetailCell.m; sourceTree = "<group>"; };
 		A92BC9031D0D385500BDF132 /* HomeDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeDetailCell.xib; sourceTree = "<group>"; };
+		A944209F1D6A99860033C87A /* ReportInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportInfoModel.h; sourceTree = "<group>"; };
+		A94420A01D6A99860033C87A /* ReportInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportInfoModel.m; sourceTree = "<group>"; };
+		A94A250B1D6A9DBD0064D46B /* BasicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicInfoViewController.h; sourceTree = "<group>"; };
+		A94A250C1D6A9DBD0064D46B /* BasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicInfoViewController.m; sourceTree = "<group>"; };
 		A950447A1D0E3E6600FF8155 /* PasswdLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswdLoginViewController.h; path = API/PasswdLoginViewController.h; sourceTree = "<group>"; };
 		A950447B1D0E3E6600FF8155 /* PasswdLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswdLoginViewController.m; path = API/PasswdLoginViewController.m; sourceTree = "<group>"; };
 		A950447C1D0E3E6600FF8155 /* PasswdLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswdLoginViewController.xib; path = API/PasswdLoginViewController.xib; sourceTree = "<group>"; };
@@ -747,6 +753,8 @@
 			children = (
 				A992ED341CFE892D00DD08EE /* ReportDetailViewController.h */,
 				A992ED351CFE892D00DD08EE /* ReportDetailViewController.m */,
+				A94A250B1D6A9DBD0064D46B /* BasicInfoViewController.h */,
+				A94A250C1D6A9DBD0064D46B /* BasicInfoViewController.m */,
 				A9D1EB3A1D07CA740088DCB8 /* ExamSummaryViewController.h */,
 				A9D1EB3B1D07CA740088DCB8 /* ExamSummaryViewController.m */,
 				A9D1EB3D1D07CAA30088DCB8 /* ExamExceptionsViewController.h */,
@@ -1182,6 +1190,8 @@
 				A9D921541D1CC76300B8D7A5 /* CheckItemModel.m */,
 				A9D921591D1CC82300B8D7A5 /* ResultModel.h */,
 				A9D9215A1D1CC82300B8D7A5 /* ResultModel.m */,
+				A944209F1D6A99860033C87A /* ReportInfoModel.h */,
+				A94420A01D6A99860033C87A /* ReportInfoModel.m */,
 			);
 			path = ReportModel;
 			sourceTree = "<group>";
@@ -1518,6 +1528,7 @@
 				A992ED2E1CFE881D00DD08EE /* ReportCell.m in Sources */,
 				A992ED321CFE881D00DD08EE /* ReportView.m in Sources */,
 				A92BC9041D0D385500BDF132 /* HomeDetailCell.m in Sources */,
+				A94420A11D6A99860033C87A /* ReportInfoModel.m in Sources */,
 				A92BC9001D0D33C700BDF132 /* HomeDetailModel.m in Sources */,
 				A97116001CF454B300575670 /* ConfirmViewController.m in Sources */,
 				A98B16441D6540A200CBE062 /* SectionHeaderView.m in Sources */,
@@ -1593,6 +1604,7 @@
 				A98B164F1D65B18300CBE062 /* ChartModel.m in Sources */,
 				A9CA936A1CEC4E4F0077175A /* SettingViewController.m in Sources */,
 				A9CA93831CEC686C0077175A /* HZUtils.m in Sources */,
+				A94A250D1D6A9DBD0064D46B /* BasicInfoViewController.m in Sources */,
 				A965C7071CFEABB30018EEE0 /* PendingModel.m in Sources */,
 				A97680581D336ABB0098DEC2 /* CustomInfoModel.m in Sources */,
 				A992ED361CFE892D00DD08EE /* ReportDetailViewController.m in Sources */,

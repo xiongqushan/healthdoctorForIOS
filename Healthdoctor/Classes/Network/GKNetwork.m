@@ -61,7 +61,6 @@
             NSString *paramStr = [NSString stringWithFormat:@"%@=%@",keyArr[i],valueArr[i]];
             requestUrl = [requestUrl stringByAppendingString:[NSString stringWithFormat:@"&%@",paramStr]];
         }
-        requestUrl = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
     
     NSString *basicStr = [self getHttpHeaderStrWithUrl:requestUrl];
@@ -69,6 +68,7 @@
     //Basic认证 base64进行加密
     NSString *newBasicStr = [NSString stringWithFormat:@"Basic %@",[basicStr base64EncodedString]];
     
+    requestUrl = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //请求URL（带时间戳）
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET" URLString:requestUrl parameters:nil error:nil];
     //将认证信息添加到请求头
