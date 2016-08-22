@@ -48,7 +48,6 @@
 }
 - (IBAction)selectedBtnClick:(id)sender {
     
-    NSLog(@"________selected!!");
     UIButton *btn = (UIButton *)sender;
     
     if (btn.selected) {

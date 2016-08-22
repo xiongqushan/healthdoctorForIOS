@@ -7,7 +7,6 @@
 //  体检报告
 
 #import <UIKit/UIKit.h>
-#import "ReportModel.h"
 
 @interface ReportDetailViewController : UIViewController
 

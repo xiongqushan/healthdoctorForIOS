@@ -48,20 +48,27 @@
     NSMutableArray *dataArr = note.userInfo[@"dataArr"];
     
     ChartBaseViewController *chart = [[ChartBaseViewController alloc] init];
-    chart.model = dataArr[indexPath.row];
+    ConsulationModel *model = dataArr[indexPath.row];
+    chart.customId = [NSString stringWithFormat:@"%ld",model.custId];
+    chart.photoUrl = model.photoUrl;
+    chart.customName = model.custName;
+    
     [self.navigationController pushViewController:chart animated:YES];
 }
 
 - (void)setUpSegmentView {
 
+    self.navigationItem.title = nil;
+    
     NSArray *arr = @[@"待处理",@"已处理",@"问题反馈"];
     UISegmentedControl *segment = [[UISegmentedControl alloc] initWithItems:arr];
-    segment.frame = CGRectMake(0, 0, kScreenSizeWidth - 80, 35);
+    segment.frame = CGRectMake(40, 6, kScreenSizeWidth - 80, 35);
     segment.selectedSegmentIndex = 0;
     [segment setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} forState:UIControlStateNormal];
     [segment setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17]} forState:UIControlStateSelected];
     [segment addTarget:self action:@selector(segmentClick:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.titleView = segment;
+    
+    [self.navigationController.navigationBar addSubview:segment];
     self.segment = segment;
 
 }
@@ -73,7 +80,7 @@
     ConsulationView *pendingView = [[ConsulationView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64 - 48) titleArr:pendingArr url:kGetPendingURL];
     
     pendingView.badgeBlock = ^(NSInteger count) {
-        [self.segment setBadgeValue:count];
+        [self.navigationController.navigationBar setBadgeValue:count center:CGPointMake(120, 15)];
     };
     
     [self.view addSubview:pendingView];
@@ -92,28 +99,63 @@
 - (void)segmentClick:(UISegmentedControl *)segment {
     if (segment.selectedSegmentIndex == 0) {
         //待处理
-        NSLog(@"——————————待处理");
         [self.view addSubview:_pendingView];
         [_processedView removeFromSuperview];
         [_feedbackView removeFromSuperview];
     }else if (segment.selectedSegmentIndex == 1) {
         //已处理
-        NSLog(@"——————————已处理");
         [self.view addSubview:_processedView];
         [_pendingView removeFromSuperview];
         [_feedbackView removeFromSuperview];
         
     }else if (segment.selectedSegmentIndex == 2) {
         //问题反馈
-        NSLog(@"——————————问题反馈");
         [self.view addSubview:_feedbackView];
         [_pendingView removeFromSuperview];
         [_processedView removeFromSuperview];
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    // self.segment.hidden = YES;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.segment.alpha = 0.0;
+    }];
+    
+    for (UIView *view in [self.navigationController.navigationBar subviews]) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel *)view;
+            
+            [UIView animateWithDuration:0.25 animations:^{
+                label.alpha = 0.0;
+            }];
+        }
+    }
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.segment.alpha = 1.0;
+    }];
+    
+    for (UIView *view in [self.navigationController.navigationBar subviews]) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            UILabel *label = (UILabel *)view;
+            
+            [UIView animateWithDuration:0.25 animations:^{
+                label.alpha = 1.0;
+            }];
+        }
+    }
+}
+
 - (void)dealloc {
-    NSLog(@"_____dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

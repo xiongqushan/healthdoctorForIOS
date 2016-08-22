@@ -48,14 +48,12 @@
     NSDictionary *param = @{@"Mobile":self.phoneTextField.text,@"SmsCode":self.codeTextField.text};
 
     [[GKNetwork sharedInstance] PostUrl:kLoginURL param:param completionBlockSuccess:^(id responseObject) {
-        NSLog(@"________PostSuccess:%@",responseObject);
         NSDictionary *dict = (NSDictionary *)responseObject;
         NSString *result = [NSString stringWithFormat:@"%@",dict[@"state"]];
         
         if ([result isEqualToString:@"1"]) {
             //验证成功
             NSDictionary *data = dict[@"Data"];
-            NSLog(@"_______data:%@",data);
             HZUser *user = [[HZUser alloc] init];
             [user setValuesForKeysWithDictionary:data]; //字典转模型
             user.isLogin = @"1"; //登录
@@ -72,7 +70,6 @@
         }
         
     } failure:^(NSError * error) {
-        NSLog(@"_________%@",error);
         [HZUtils showHUDWithTitle:@"网络异常"];
     }];
 }
@@ -93,9 +90,7 @@
        // [HUD hide:YES];
         NSDictionary *dict = (NSDictionary *)responseObject;
         NSNumber *state = dict[@"state"];
-        NSLog(@"_________GetSuccess:%@",dict);
         if (state.longValue == 1) {
-            NSLog(@"______成功");
             //GCD 倒计时
             [_getCodeBtn startWithTime:30 title:@"获取验证码" countDownTitle:@"重新获取" mainColor:[UIColor colorWithRed:84/255.0 green:180/255.0 blue:98/255.0 alpha:1.0f] countColor:[UIColor colorWithRed:84/255.0 green:180/255.0 blue:98/255.0 alpha:1.0f]];
         }else {
@@ -105,7 +100,6 @@
         
     } failure:^(NSError *error) {
        // [HUD hide:YES];
-        NSLog(@"_________GetError:%@",error);
         [HZUtils showHUDWithTitle:@"网络异常"];
         
     }];

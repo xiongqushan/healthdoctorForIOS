@@ -20,6 +20,7 @@
 @property (nonatomic, copy)NSString *mobile;
 @property (nonatomic, copy)NSString *nickname;
 @property (nonatomic, copy)NSString *photoUrl;
+@property (nonatomic, copy)NSString *doctorID;
 
 //pendingModel 里的数据
 @property (nonatomic, copy)NSString *commitOn;

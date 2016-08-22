@@ -46,17 +46,20 @@
 
 
 - (void)setUpHeaderView {
-    self.tableView.showsVerticalScrollIndicator = YES;
-    self.tableView.showsHorizontalScrollIndicator = YES;
+
+    self.navigationItem.title = nil;
+    
+//    self.tableView.showsVerticalScrollIndicator = YES;
+//    self.tableView.showsHorizontalScrollIndicator = YES;
     
     HZUser *user = [Config getProfile];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.tableView.contentInset = UIEdgeInsetsMake(kHeaderViewH, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(kHeaderViewH + 10, 0, 0, 0);
     
     HeaderView *headerView = [[[NSBundle mainBundle] loadNibNamed:@"HeaderView" owner:self options:nil] lastObject];
     headerView.backgroundColor = [UIColor navigationBarColor];
-    headerView.frame = CGRectMake(0, -kHeaderViewH, kScreenSizeWidth, kHeaderViewH);
+    headerView.frame = CGRectMake(0, -kHeaderViewH - 10, kScreenSizeWidth, kHeaderViewH - 10);
     
     [headerView.iconBtn setRoundWithRadius:40];
     [headerView.iconBtn addTarget:self action:@selector(iconClick) forControlEvents:UIControlEventTouchUpInside];
@@ -71,7 +74,6 @@
 }
 
 - (void)iconClick { //头像被点击
-    NSLog(@"________iconClick");
     PersonalInfoViewController *person = [[PersonalInfoViewController alloc] init];
     [self.navigationController pushViewController:person animated:YES];
 }
@@ -104,16 +106,27 @@
 #pragma mark -- viewWillAppear && viewWillDisappear
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+    
+     [[self.navigationController.navigationBar subviews] objectAtIndex:0].alpha = 0.0;
+    
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    self.navigationController.navigationBar.shadowImage = [UIImage new];
+////    
+//    [UIView animateWithDuration:0.25 animations:^{
+//        [[self.navigationController.navigationBar subviews] objectAtIndex:0].alpha = 0.0;
+//    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        [[self.navigationController.navigationBar subviews] objectAtIndex:0].alpha = 1.0;
+    }];
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"_____%@",NSStringFromCGPoint(scrollView.contentOffset));
     CGFloat updateY = scrollView.contentOffset.y;
     self.headerView.frame = CGRectMake(0, updateY, kScreenSizeWidth, - updateY);
     
@@ -121,7 +134,6 @@
     CGFloat reduceW = updateY * (MaxIconWH - MinIconWH)/(165 - 64);
     CGFloat yuanW = MAX(MinIconWH, MaxIconWH - reduceW);
     
-    NSLog(@"_______%lf",yuanW);
     self.headerView.iconBtn.layer.cornerRadius = yuanW/2.0;
     
     self.headerView.iconWidth.constant = yuanW;

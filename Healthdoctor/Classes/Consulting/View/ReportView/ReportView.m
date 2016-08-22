@@ -62,7 +62,7 @@
     CheckItemModel *itemModel = model.checkItmes[indexPath.row];
     cell.checkItemLabel.text = itemModel.checkItemName;
     cell.dataArr = itemModel.checkResults;
-    [cell setUpTableView];
+    //[cell setUpTableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

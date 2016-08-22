@@ -20,9 +20,10 @@
     self.layer.cornerRadius = radius;
 }
 
-- (void)setBadgeValue:(NSInteger)badgeValue {
+- (void)setBadgeValue:(NSInteger)badgeValue center:(CGPoint)point{
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width - 30, 0, 22, 15)];
+    label.center = point;
     //[label sizeToFit];
     label.text = [NSString stringWithFormat:@"%ld",badgeValue];
     label.backgroundColor = [UIColor redColor];

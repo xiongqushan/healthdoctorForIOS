@@ -12,6 +12,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title;
 
-- (void)showViewWithText:(NSString *)text;
+//- (void)showViewWithText:(NSString *)text;
 
 @end

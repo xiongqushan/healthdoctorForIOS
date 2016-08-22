@@ -26,8 +26,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-   // [self setUpTableView];
+}
+
+- (void)setDataArr:(NSArray *)dataArr {
+    _dataArr = dataArr;
+    [self setUpTableView];
 }
 
 - (void)setUpTableView {
@@ -48,18 +51,18 @@
     ReportItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId"];
     ResultModel *model = self.dataArr[indexPath.row];
     
-    [cell showDataWithModel:model];
+    [cell showDataWithModel:model isExceptionsView:NO];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ResultModel *model = self.dataArr[indexPath.row];
-    ShowDetailView *view = [[ShowDetailView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) title:model.resultValue];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication].keyWindow addSubview:view];
-    });
+//    ResultModel *model = self.dataArr[indexPath.row];
+//    ShowDetailView *view = [[ShowDetailView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) title:model.resultValue];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [[UIApplication sharedApplication].keyWindow addSubview:view];
+//    });
 }
 
 #pragma mark -- 设置tableView分割线顶格

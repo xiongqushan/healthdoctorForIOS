@@ -13,6 +13,7 @@
 #import "HZUser.h"
 #import "Config.h"
 #import "HZUtils.h"
+#import "UIColor+Utils.h"
 
 @implementation TextCell
 {
@@ -71,7 +72,7 @@
         if ([model.consultType integerValue] == 3) {
             contentStr = [contentStr stringByAppendingString:@"\n点击查看报告"];
             NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:contentStr];
-            [str setAttributes:@{NSForegroundColorAttributeName:[UIColor blueColor]} range:NSMakeRange(contentStr.length - 6, 6)];
+            [str setAttributes:@{NSForegroundColorAttributeName:kSetRGBColor(11, 106, 233)} range:NSMakeRange(contentStr.length - 6, 6)];
             self.contentLabel.attributedText = str;
         }else {
             self.contentLabel.text = [NSString stringWithFormat:@"%@",contentStr];
@@ -87,7 +88,6 @@
 }
 
 - (void)cellClick:(UITapGestureRecognizer *)tap {
-    NSLog(@"________%@",_model.content);
     
     NSArray *arr = [_model.appendInfo componentsSeparatedByString:@";"];
     NSString *workNo = arr[0];

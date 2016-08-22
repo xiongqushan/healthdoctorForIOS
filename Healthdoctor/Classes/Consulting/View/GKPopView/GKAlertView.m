@@ -77,7 +77,6 @@
         
         if (![HZUtils isNumAtFirst:str]) {
             //判断常用短语 如果不是以数字开头则添加属性
-            NSLog(@"_____%@",NSStringFromRange(NSMakeRange(locationStr.length, str.length)));
             NSRange range = NSMakeRange(locationStr.length, str.length);
             NSDictionary *att = @{NSForegroundColorAttributeName:kButtonColor};
             [attributedStr addAttributes:att range:range];
@@ -202,7 +201,6 @@
 }
 
 - (void)leftViewSureBtnClick:(UIButton *)btn {
-    NSLog(@"__________确认，传值");
     UITextView *textView = [self.contentView viewWithTag:101];
     //发送通知
     NSDictionary *value = @{@"text":textView.text};
@@ -252,9 +250,16 @@
 }
 
 - (void)hide {
-    self.contentView.hidden = YES;
-    [self hideAlertAnimation];
-    [self removeFromSuperview];
+//    self.contentView.hidden = YES;
+//    [self hideAlertAnimation];
+//    [self removeFromSuperview];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //[self removeFromSuperview];
+        self.contentView.hidden = YES;
+        [self hideAlertAnimation];
+        [self removeFromSuperview];
+    });
 }
 
 - (void)hideAlertAnimation {

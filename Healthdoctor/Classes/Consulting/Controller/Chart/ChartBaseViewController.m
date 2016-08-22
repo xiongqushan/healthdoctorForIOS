@@ -14,13 +14,11 @@
 #import "CommonLanguageModle.h"
 #import "CommonLanguageCell.h"
 #import "UIView+SDAutoLayout.h"
-#import "TestViewController.h"
 #import "GKNetwork.h"
 #import "HZAPI.h"
 #import "CusInfoModel.h"
 #import "HZUtils.h"
 #import "FeedbackModel.h"
-#import "ChartModel.h"
 #import "ImageCell.h"
 #import "Config.h"
 #import "HZUser.h"
@@ -31,19 +29,11 @@
 #import "GKRecognizer.h"
 #import "GFWaterView.h"
 #import "PhraseViewController.h"
+#import "UserDetailViewController.h"
 
 #define kVoiceHeight 220
 
 @interface ChartBaseViewController ()<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
-
-//@property (nonatomic, weak)UITableView *tableView;
-
-//@property (nonatomic)GKToolBar *toolBar;
-//@property (nonatomic)SSTextView *textView;
-//@property (nonatomic)NSMutableArray *dataArr; //保存常用短语的可变数组
-//@property (nonatomic)NSMutableArray *textDataArr; //保存聊天记录的可变数组
-//@property (nonatomic)CusInfoModel *infoModel;
-//@property (nonatomic)UIView *voiceView;
 
 @end
 
@@ -61,6 +51,7 @@
     NSMutableArray *_textDataArr; //保存聊天记录的可变数组
     CusInfoModel *_infoModel;
     UIView *_voiceView;
+    UILabel *_navTitleLabel;
 }
 
 - (void)viewDidLoad {
@@ -76,7 +67,7 @@
     
     [self loadUserInfoData];//获取个人信息
     //添加可点击的导航title
-    [self setUpNavTitleViewWithTitle:_model.custName];
+    [self setUpNavTitleViewWithTitle:self.customName];
     [self setUpTableView];
     [self setUpToolBar];
 }
@@ -96,11 +87,10 @@
 
 - (void)loadChartDataWithDate:(NSString *)date {
     
-    NSDictionary *param = @{@"customerId":@(self.model.custId),@"commitOn":date};
+    NSDictionary *param = @{@"customerId":self.customId,@"commitOn":date};
     [[GKNetwork sharedInstance] GetUrl:kGetAskReplyURL param:param completionBlockSuccess:^(id responseObject) {
         NSInteger count = 0;
        // [self.textDataArr removeAllObjects];
-        NSLog(@"_________chart:%@",responseObject);
         
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
@@ -118,7 +108,6 @@
         for (NSDictionary *dict in data) {
             ChartModel *model = [[ChartModel alloc] init];
             [model setValuesForKeysWithDictionary:dict];
-            NSLog(@"_______content:%@",model.content);
             if ([model.isDoctorReply integerValue] == 1) {
                 model.consultType = @"1";
             }
@@ -132,26 +121,29 @@
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         
     } failure:^(NSError *error) {
-        NSLog(@"________chart:error%@",error);
         [_tableView.mj_header endRefreshing];
     }];
 }
 
 - (void)loadUserInfoData {
-    NSDictionary *param = @{@"customerId":@(self.model.custId)};
+    NSDictionary *param = @{@"customerId":self.customId};
     [[GKNetwork sharedInstance] GetUrl:kGetCusInfoURL param:param completionBlockSuccess:^(id responseObject) {
        
-        NSLog(@"_________cusInfo:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
         }
+        
         NSDictionary *data = responseObject[@"Data"];
         CusInfoModel *model = [[CusInfoModel alloc] init];
         [model setValuesForKeysWithDictionary:data];
-        model.commitOn = self.model.commitOn;
+       // model.commitOn = self.commitOn;
         _infoModel = model;
-      //  [self setUpUserInfoViewWithModel:model];
+        
+        NSString *navTitle = [NSString stringWithFormat:@"%@ %@ %@",model.cname,[HZUtils getGender:model.gender],[HZUtils getAgeWithBirthday:model.birthday]];
+        //[self setUpNavTitleViewWithTitle:navTitle];
+        _navTitleLabel.text = navTitle;
+        
     } failure:^(NSError *error) {
         
     }];
@@ -188,7 +180,6 @@
     ChartModel *model = _textDataArr.lastObject;
     NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:@"[a-zA-Z:-]" options:0 error:NULL];
     NSString *date = [regular stringByReplacingMatchesInString:model.commitOn options:0 range:NSMakeRange(0, [model.commitOn length]) withTemplate:@""];
-    NSLog(@"______date:%@",date);
     NSInteger dateValue = [date integerValue] - 100;
     [self loadChartDataWithDate:[NSString stringWithFormat:@"%ld",dateValue]];
 }
@@ -234,15 +225,16 @@
 
 //设置导航titleView 并添加手势
 - (void)setUpNavTitleViewWithTitle:(NSString *)title {
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, 100, 40)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, 200, 40)];
     // titleLabel.backgroundColor = [UIColor redColor];
     titleLabel.text = title;
-    [titleLabel sizeToFit];
+    //[titleLabel sizeToFit];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont boldSystemFontOfSize:18];
     //titleLabel.tintColor = [UIColor whiteColor];
     titleLabel.textColor = [UIColor whiteColor];
     self.navigationItem.titleView = titleLabel;
+    _navTitleLabel = titleLabel;
     
     titleLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleViewClick:)];
@@ -258,16 +250,18 @@
 - (void)pushViewController {
     [_textView resignFirstResponder];
     
-    TestViewController *test = [[TestViewController alloc] init];
-    //    test.model = self.infoModel;
-    //    test.consulaModel = self.model;
-    test.cname = self.model.custName;
-    test.photoUrl = self.model.photoUrl;
-    test.custID = [NSString stringWithFormat:@"%ld",self.model.custId];
-    test.accountID = _infoModel.account_Id;
-    test.chartDataArr = _textDataArr;
+    UserDetailViewController *detail = [[UserDetailViewController alloc] init];
+    detail.cname = self.customName;
+    detail.photoUrl = self.photoUrl;
+    detail.custID = self.customId;
+    detail.accountID = _infoModel.account_Id;
+//   // test.chartDataArr = _textDataArr;
+//    detail.customInfoModel = _infoModel;
+    detail.mobile = _infoModel.mobile;
+    detail.gender = _infoModel.gender;
+    detail.birthday = _infoModel.birthday;
     
-    [self.navigationController pushViewController:test animated:YES];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 //设置ToolBar
@@ -291,7 +285,6 @@
 
 - (void)keyboardWillChange:(NSNotification *)note {
    // [self.view bringSubviewToFront:self.toolBar];
-    NSLog(@"________note:%@",note.userInfo);
     
     NSDictionary *userInfo = note.userInfo;
     CGFloat duration = [userInfo[@"UIKeyboardAnimationDurationUserInfoKey"] doubleValue];
@@ -301,14 +294,11 @@
     CGFloat moveY = keyFrame.origin.y - self.view.frame.size.height;
     
     CGFloat differY = keyFrame.origin.y - keybeginFrame.origin.y;
-    NSLog(@"_________differY:%lf",differY);
     
-    NSLog(@"left:%lf_____right:%lf",self.view.frame.size.height - keyFrame.size.height,_tableView.contentSize.height);
     if ((self.view.frame.size.height - keyFrame.size.height) > _tableView.contentSize.height) {
         //键盘出现挡不住聊天内容
         if (differY > 10) {
             //隐藏keyboard
-            NSLog(@"————————隐藏");
 
             [UIView animateWithDuration:duration animations:^{
                 _toolBar.sd_layout.bottomSpaceToView(self.view,0);
@@ -316,7 +306,7 @@
             }];
             
         }else {
-            NSLog(@"————————显示");
+            
             [self cancelAllThing];
             
             [UIView animateWithDuration:duration animations:^{
@@ -328,7 +318,6 @@
         
     }else {
         //键盘出现挡住聊天内容
-        NSLog(@"______moveY:%lf",moveY);
         [UIView animateWithDuration:duration animations:^{
             self.view.transform = CGAffineTransformMakeTranslation(0, moveY);
         }];
@@ -392,7 +381,7 @@
     }
     //开始语音听写
     [[GKRecognizer shareManager] starRecognizerResult:^(NSString *result) {
-        NSLog(@"_______%@",result);
+        
         _textView.text = [_textView.text stringByAppendingString:result];
         [self textViewDidChange:_textView];
     }];
@@ -408,7 +397,6 @@
     //显示view
     if ((self.view.frame.size.height - kVoiceHeight) > _tableView.contentSize.height) {
         //view没有挡住内容
-        NSLog(@"————————显示");
         [self.view insertSubview:self.voiceView aboveSubview:_tableView];
 
         [UIView animateWithDuration:0.25 animations:^{
@@ -482,10 +470,9 @@
     [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSString *currentDate = [dateFormatter stringFromDate:date];
     
-    NSDictionary *param = @{@"DoctorId":@(self.model.healthConsultId),@"ReDoctorId":user.doctorId,@"ReDoctorName":user.name,@"CustomerId":@(self.model.custId),@"ReplyContent":text,@"ReplyTime":currentDate};
+    NSDictionary *param = @{@"DoctorId":_infoModel.doctorID,@"ReDoctorId":user.doctorId,@"ReDoctorName":user.name,@"CustomerId":self.customId,@"ReplyContent":text,@"ReplyTime":currentDate};
     [[GKNetwork sharedInstance] PostUrl:kAddDoctorReplyURL param:param completionBlockSuccess:^(id responseObject) {
         
-        NSLog(@"________success:%@",responseObject);
         if ([responseObject[@"state"] integerValue] == 1) {
             [HZUtils showHUDWithTitle:@"回复成功"];
             ChartModel *model = [[ChartModel alloc] init];
@@ -494,7 +481,6 @@
             model.content = text;
             model.photoUrl = user.photoUrl;
             
-            NSLog(@"______%@",[NSDate date]);
             model.commitOn = [HZUtils getDateWithDate:[NSDate date]];
             [_textDataArr insertObject:model atIndex:0];
             
@@ -510,15 +496,14 @@
         }
     } failure:^(NSError *error) {
         [HZUtils showHUDWithTitle:@"回复失败"];
-        
-        NSLog(@"________error:%@",error);
+    
     }];
 
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        NSLog(@"————————发送");
+        
         //把textView的内容封装到model中，并添加到可变数组
         NSString *textStr = textView.text;
         _textView.text = @""; // 将textView内容清空
@@ -571,7 +556,7 @@
             ReportDetailViewController *detail = [[ReportDetailViewController alloc] init];
             detail.checkCode = checkCode;
             detail.workNum = workNo;
-            detail.custId = [NSString stringWithFormat:@"%ld",weakSelf.model.custId];
+            detail.custId = weakSelf.customId;
             [weakSelf.navigationController pushViewController:detail animated:YES];
         };
         [cell showDataWithModel:model];
@@ -744,7 +729,7 @@
 
 
 - (void)dealloc {
-    NSLog(@"______dealloc");
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 }

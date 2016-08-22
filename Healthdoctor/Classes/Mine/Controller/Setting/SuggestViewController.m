@@ -39,7 +39,6 @@
     if ([self.textView isFirstResponder]) {
         return;
     }
-    NSLog(@"________note:%@",note.userInfo);
     
     NSDictionary *userInfo = note.userInfo;
     
@@ -51,7 +50,6 @@
         return;
     }
     CGFloat differY = keyFrame.origin.y - keybeginFrame.origin.y;
-    NSLog(@"______moveY:%lf",moveY);
     if (differY < 10) {
         moveY += 160;
     }

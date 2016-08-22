@@ -46,7 +46,6 @@
 
     [[GKNetwork sharedInstance] GetUrl:kGetCusGroupURL param:param completionBlockSuccess:^(id responseObject) {
         
-        NSLog(@"________responseObject:%@",responseObject);
         if ([responseObject[@"state"] integerValue] == 1) {
             
             NSArray * Data = responseObject[@"Data"];
@@ -58,12 +57,10 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 if ([model.name containsString:@"Test_"]) {
-                    NSLog(@"_______1111");
+                    
                 }else {
                     [self.dataArr addObject:model];
                 }
-                
-                NSLog(@"_______%@   %@",model.name,model.Id);
                 
             }
             
@@ -89,7 +86,6 @@
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"__________error:%@",error);
 
     }];
 }
@@ -145,7 +141,6 @@
 
 - (void)viewTap:(UITapGestureRecognizer *)tap {
     NSInteger tag = tap.view.tag;
-    NSLog(@"_______Tag:%ld",tag);
     NSInteger index = tag - kBaseTag;
     HomeGroupModel *model = [[HomeGroupModel alloc] init];
     

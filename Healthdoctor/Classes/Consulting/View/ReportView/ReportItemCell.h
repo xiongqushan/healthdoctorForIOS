@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *refLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unitLabel;
 
-- (void)showDataWithModel:(ResultModel *)model;
+- (void)showDataWithModel:(ResultModel *)model isExceptionsView:(BOOL)isExceptions;
 
 @end

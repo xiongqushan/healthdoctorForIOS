@@ -31,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"-_______%@",self.consultStr);
     [self setUpBaseUI];
     [self loadPhraseData];
     
@@ -107,7 +106,6 @@
 }
 
 - (void)click:(UIButton *)btn {
-    NSLog(@"_________确定");
     [self showPopView];
 }
 
@@ -116,7 +114,6 @@
     self.resultArr = [NSMutableArray array];
     
     [[GKNetwork sharedInstance] GetUrl:kDefaultExpressionsURL param:nil completionBlockSuccess:^(id responseObject) {
-        NSLog(@"______%@",responseObject);
         [self.dataArr removeAllObjects];
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:@"请求失败"];
@@ -146,7 +143,6 @@
    /// __weak PhraseViewController *weakSelf = self;
     
     [[GKNetwork sharedInstance] GetUrl:kSearchExpressionsURL param:param completionBlockSuccess:^(id responseObject) {
-        NSLog(@"______response:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
@@ -160,7 +156,7 @@
         }
         [self.tableView reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"______error:%@",error);
+    
     }];
 }
 
@@ -209,11 +205,9 @@
     CommonLanguageCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     UIButton *btn = (UIButton *)[cell.contentView viewWithTag:101];
     [cell selectedBtnClick:btn];
-    NSLog(@"选中%ld行",indexPath.row);
 }
 
 - (void)dealloc {
-   // NSLog(@"______%s dealloc",__FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

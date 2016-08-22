@@ -24,7 +24,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="166" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Uh-lV-avR">
-                        <rect key="frame" x="95" y="8" width="238" height="21"/>
+                        <rect key="frame" x="306" y="8" width="27" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="D08-aP-bXW"/>
                         </constraints>
@@ -66,7 +66,7 @@
                     <constraint firstAttribute="trailing" secondItem="9tu-OX-JZc" secondAttribute="trailing" constant="8" id="ir9-gy-1Vb"/>
                     <constraint firstAttribute="bottom" secondItem="9tu-OX-JZc" secondAttribute="bottom" constant="5" id="pim-PH-g2o"/>
                     <constraint firstItem="SkC-uI-V9L" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="sqU-Ec-RiT"/>
-                    <constraint firstItem="9Uh-lV-avR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="95" id="uJN-df-Cyt"/>
+                    <constraint firstItem="9Uh-lV-avR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="95" id="uJN-df-Cyt"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

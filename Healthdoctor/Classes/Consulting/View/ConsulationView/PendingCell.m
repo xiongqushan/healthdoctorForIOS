@@ -20,12 +20,13 @@
 - (void)showDataWithModel:(PendingModel *)model {
     [self.iconImageView setRoundWithRadius:25];
     
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.photoUrl] placeholderImage:[UIImage imageNamed:@"icon"]];
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.photoUrl] placeholderImage:[UIImage imageNamed:@"default"]];
     
     self.nameLabel.text = model.custName;
-    NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@"  "];
+    NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     self.dateLabel.text = [HZUtils getDetailDateStrWithDate:date];
-    self.cosulationLabel.text = model.consultTitele;
+   // self.cosulationLabel.text = model.consultTitele;
+    self.cosulationLabel.text = @"183****8531";
 
 }
 

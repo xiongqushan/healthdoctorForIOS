@@ -27,7 +27,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSLog(@"______doctorId:%@",[Config getProfile].doctorId);
     self.user = [Config getProfile];
     
     [self getBasList];
@@ -40,7 +39,6 @@
 
 - (void)getBasList {
     [[GKNetwork sharedInstance] GetUrl:kBasConstListURL param:nil completionBlockSuccess:^(id responseObject) {
-        NSLog(@"_________BasList:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
@@ -48,7 +46,6 @@
         
         NSArray *arr = responseObject[@"Data"];
         for (NSDictionary *dict in arr) {
-            NSLog(@"____name:%@",dict[@"Name"]);
             if ([dict[@"Code"] integerValue] == [_user.position integerValue]) {
                 self.professional = dict[@"Name"];
             }
@@ -60,13 +57,12 @@
         
         
     } failure:^(NSError *error) {
-        NSLog(@"_______error:%@",error);
+
     }];
 }
 
 - (void)getDeptList {
     [[GKNetwork sharedInstance] GetUrl:kServiceDeptListURL param:nil completionBlockSuccess:^(id responseObject) {
-        NSLog(@"________DeptList:%@",responseObject);
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
             return ;
@@ -83,7 +79,7 @@
         [self.tableView reloadData];
    
     } failure:^(NSError *error) {
-        NSLog(@"________error:%@",error);
+        
     }];
 }
 
