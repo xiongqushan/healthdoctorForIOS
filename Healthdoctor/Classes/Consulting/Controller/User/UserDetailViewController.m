@@ -113,7 +113,7 @@
     tableView.dataSource = self;
     tableView.backgroundColor = [UIColor viewBackgroundColor];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.sectionHeaderHeight = 40;
+    tableView.sectionHeaderHeight = 45;
     [tableView registerNib:[UINib nibWithNibName:@"MedicalReportCell" bundle:nil] forCellReuseIdentifier:@"MedicalReportCell"];
     [self.view addSubview:tableView];
     self.tableView = tableView;
@@ -247,7 +247,7 @@
 
     if (section == 0) {
         __weak SectionHeaderView *view = [[[NSBundle mainBundle] loadNibNamed:@"SectionHeaderView" owner:self options:0] lastObject];
-        view.frame = CGRectMake(0, 0, kScreenSizeWidth, 40);
+        view.frame = CGRectMake(0, 0, kScreenSizeWidth, 45);
         view.isOpend = _isMedicalReportOpend;
         [view initBaseUI];
         view.titleLabel.text = @"体检报告";
@@ -261,7 +261,7 @@
         
     }else {
         __weak SectionHeaderView *view = [[[NSBundle mainBundle] loadNibNamed:@"SectionHeaderView" owner:self options:0] lastObject];
-        view.frame = CGRectMake(0, 0, kScreenSizeWidth, 40);
+        view.frame = CGRectMake(0, 0, kScreenSizeWidth, 45);
         view.isOpend = _isPhotoCasesOpend;
         [view initBaseUI];
         view.titleLabel.text = @"照片病例";
@@ -285,7 +285,7 @@
             return 1;
         }
         NSInteger row = (self.photoDataArr.count-1)/3 + 1;
-        CGFloat photoItemW = (kScreenSizeWidth - 2*10)/3;
+        CGFloat photoItemW = (kScreenSizeWidth - 4*10)/3;
         CGFloat photoItemH = photoItemW*0.8 + 50;
         return row * (photoItemH + 10);
         //return 200;

@@ -26,6 +26,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.reportView.layer.borderColor = kSetRGBColor(210, 210, 210).CGColor;
+    self.reportView.layer.borderWidth = 1.0;
 }
 
 - (void)setDataArr:(NSArray *)dataArr {
@@ -34,11 +36,13 @@
 }
 
 - (void)setUpTableView {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 55 *self.dataArr.count) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth - 60, 55 *self.dataArr.count) style:UITableViewStylePlain];
     self.tableView.rowHeight = 55;
+   // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.reportView addSubview:self.tableView];
+    
     self.tableView.bounces = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"ReportItemCell" bundle:nil] forCellReuseIdentifier:@"CellId"];
 }
@@ -49,8 +53,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ReportItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellId"];
+  //  cell.selectionStyle = UITableViewCellSelectionStyleNone;
     ResultModel *model = self.dataArr[indexPath.row];
-    
     [cell showDataWithModel:model isExceptionsView:NO];
     return cell;
 }

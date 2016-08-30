@@ -12,8 +12,8 @@
 typedef void(^SelectedItemBlock)(NSString * title,NSString* isAdd);
 
 @interface CommonLanguageCell : UITableViewCell
-
-@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
+//
+//@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;

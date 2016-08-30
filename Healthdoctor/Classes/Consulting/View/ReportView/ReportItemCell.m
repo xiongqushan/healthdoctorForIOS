@@ -47,6 +47,8 @@
             self.checkIndexNameLabel.textColor = kSetRGBColor(51, 51, 51);
             self.valueLabel.textColor = kSetRGBColor(51, 51, 51);
         }
+    }else {
+        self.valueLabel.textColor = [UIColor redColor];
     }
 
     

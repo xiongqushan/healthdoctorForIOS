@@ -28,14 +28,9 @@
 }
 
 + (MBProgressHUD *)createHUD {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:window];
-//    //HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
-//    [window addSubview:HUD];
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:window animated:YES];
-    
-   // [HUD show:YES];
-    //HUD.mode = MBProgressHUDModeAnnularDeterminate;
+    HUD.userInteractionEnabled = NO;
     HUD.removeFromSuperViewOnHide = YES;
     
     return HUD;

@@ -6,6 +6,9 @@
 //  Copyright (c) 2013年 iflytek. All rights reserved.
 //
 
+#ifndef __IFlySpeechError__
+#define __IFlySpeechError__
+
 #import <Foundation/Foundation.h>
 
 /*!
@@ -52,3 +55,4 @@
 - (NSString *) errorDesc;
 
 @end
+#endif

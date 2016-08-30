@@ -16,6 +16,7 @@
 #import "HZTabBarViewController.h"
 #import "UIView+Utils.h"
 #import "AppDelegate.h"
+#import "JPUSHService.h"
 
 @interface PasswdLoginViewController ()
 
@@ -28,6 +29,11 @@
     // Do any additional setup after loading the view from its nib.
     
     [self.LoginBtn setRound];
+}
+
+- (void)setAlias:(int)iResCode tags:(NSSet *)tags alias:(NSString *)alias {
+    
+    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
 }
 
 - (IBAction)login:(id)sender {
@@ -46,6 +52,8 @@
             user.doctorId = data[@"Doctor_ID"];
             user.lastLogOn = data[@"Last_Log_On"];
             [Config saveProfile:user];
+            
+            [JPUSHService setAlias:[NSString stringWithFormat:@"%@",user.doctorId] callbackSelector:@selector(setAlias:tags:alias:) object:self];
     
             //跳转页面
             HZTabBarViewController *hzTab = [[HZTabBarViewController alloc] init];

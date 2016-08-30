@@ -13,13 +13,13 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self = [[[NSBundle mainBundle] loadNibNamed:@"OtherView" owner:self options:nil] lastObject];
-        [self.firstBtn setBackgroundImage:[UIImage imageNamed:@"unSelected"] forState:UIControlStateNormal];
-        [self.secondBtn setBackgroundImage:[UIImage imageNamed:@"unSelected"] forState:UIControlStateNormal];
-        [self.thirdBtn setBackgroundImage:[UIImage imageNamed:@"unSelected"] forState:UIControlStateNormal];
+        [self.firstBtn setImage:[UIImage imageNamed:@"otherUnSelected"] forState:UIControlStateNormal];
+        [self.secondBtn setImage:[UIImage imageNamed:@"otherUnSelected"] forState:UIControlStateNormal];
+        [self.thirdBtn setImage:[UIImage imageNamed:@"otherUnSelected"] forState:UIControlStateNormal];
         
-        [self.firstBtn setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateSelected];
-        [self.secondBtn setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateSelected];
-        [self.thirdBtn setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateSelected];
+        [self.firstBtn setImage:[UIImage imageNamed:@"otherSelected"] forState:UIControlStateSelected];
+        [self.secondBtn setImage:[UIImage imageNamed:@"otherSelected"] forState:UIControlStateSelected];
+        [self.thirdBtn setImage:[UIImage imageNamed:@"otherSelected"] forState:UIControlStateSelected];
         
         self.firstBtn.selected = YES;
         self.secondBtn.selected = YES;

@@ -23,27 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    self.view.backgroundColor = kSetRGBColor(250, 250, 250);
     
-    NSMutableArray *unusualDataArr = [NSMutableArray array];
-    
-    for (DepartmentModel *model in self.dataArr) {
-        for (CheckItemModel *model2 in model.checkItmes) {
-            for (ResultModel *model3 in model2.checkResults) {
-                if ([model3.resultFlagID integerValue] != 1) {
-                    [unusualDataArr addObject:model3];
-                }
-            }
-        }
-    }
-
     ReportView *reportView = [[ReportView alloc] initWithFrame:CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight - 64 - 40)];
-
     reportView.dataArr = self.dataArr;
     [self.view addSubview:reportView];
-    
-    ExamExceptionsViewController *exceptions = [[ExamExceptionsViewController alloc] init];
-    exceptions.dataArr = unusualDataArr;
+
 }
 
 - (void)didReceiveMemoryWarning {

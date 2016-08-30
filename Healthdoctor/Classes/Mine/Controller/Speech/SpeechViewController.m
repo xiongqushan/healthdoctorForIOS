@@ -33,6 +33,9 @@
 //       _textView.text = [_textView.text stringByAppendingString:result];
 //        
 //    }];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID&&path=com.ihaozhuo.health"]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID&&path=当前应用的bundleid"]];
 }
 
 - (IBAction)sendBtnClick:(id)sender {
@@ -50,6 +53,26 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.textView resignFirstResponder];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0f) {
+        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if (UIUserNotificationTypeNone == setting.types) {
+            NSLog(@"推送关闭!!");
+        }else {
+            NSLog(@"推送打开!!");
+        }
+    }else {
+        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (UIRemoteNotificationTypeNone == type) {
+            NSLog(@"推送关闭!!");
+        }else {
+            NSLog(@"推送打开!!");
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

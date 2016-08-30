@@ -186,6 +186,7 @@
     }
     InfoItemModel *model = self.dataArr[indexPath.section][indexPath.row];
     cell.textLabel.text = model.title;
+    cell.textLabel.textColor = [UIColor textColor];
     if ([model.value isKindOfClass:[NSNull class]]) {
         model.value = @"暂无";
     }

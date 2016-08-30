@@ -136,7 +136,7 @@
         
         NSArray *dataArr = data[@"Data"];
         if(dataArr.count == 0) {
-            [HZUtils showHUDWithTitle:@"没有更多数据!"];
+            [HZUtils showHUDWithTitle:@"数据加载完成!"];
             self.tableView.mj_footer.hidden = YES;
         }
         for (NSDictionary *dict in dataArr) {

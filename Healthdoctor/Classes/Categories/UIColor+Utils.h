@@ -17,7 +17,7 @@
 
 + (UIColor *)viewBackgroundColor;
 
-+ (UIColor *)fontColor;
++ (UIColor *)textColor;
 
 + (UIColor *)tabBarColor;
 

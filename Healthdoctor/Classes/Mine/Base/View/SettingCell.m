@@ -8,6 +8,7 @@
 
 #import "SettingCell.h"
 #import "BaseSetting.h"
+#import "UIColor+Utils.h"
 
 @interface SettingCell ()
 
@@ -42,6 +43,7 @@
     if (cell == nil) {
         cell = [[self alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
+    cell.textLabel.textColor = [UIColor textColor];
     return cell;
 }
 

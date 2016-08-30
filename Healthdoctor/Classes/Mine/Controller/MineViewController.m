@@ -133,7 +133,7 @@
     updateY += kHeaderViewH;
     CGFloat reduceW = updateY * (MaxIconWH - MinIconWH)/(165 - 64);
     CGFloat yuanW = MAX(MinIconWH, MaxIconWH - reduceW);
-    
+     
     self.headerView.iconBtn.layer.cornerRadius = yuanW/2.0;
     
     self.headerView.iconWidth.constant = yuanW;

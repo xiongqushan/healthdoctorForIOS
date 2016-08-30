@@ -80,7 +80,9 @@
     ConsulationView *pendingView = [[ConsulationView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64 - 48) titleArr:pendingArr url:kGetPendingURL];
     
     pendingView.badgeBlock = ^(NSInteger count) {
-        [self.navigationController.navigationBar setBadgeValue:count center:CGPointMake(120, 15)];
+        CGFloat badgeX = (kScreenSizeWidth - 80)/6.0 + 40 + 30
+        ;
+        [self.navigationController.navigationBar setBadgeValue:count center:CGPointMake(badgeX, 15)];
     };
     
     [self.view addSubview:pendingView];

@@ -7,6 +7,7 @@
 //
 
 #import "SummaryCell.h"
+#import "UIView+Utils.h"
 
 @implementation SummaryCell
 
@@ -14,8 +15,22 @@
     [super awakeFromNib];
     
     UIImage *image = [UIImage imageNamed:@"cellBg2"];
-    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(10, 50, 10, 50) resizingMode:UIImageResizingModeStretch];
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 150, 20, 150) resizingMode:UIImageResizingModeStretch];
     self.cellImageView.image = image;
+    
+    [self.pointView setRoundWithRadius:4.5];
+}
+
+- (void)showDataWithModel:(SummarysModel *)model {
+    
+//    NSString *str = [model.content stringByReplacingOccurrencesOfString:@"</strong><br/>" withString:@"\n"];
+//    NSString *result = [str stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
+//    
+//    NSArray *arr = [result componentsSeparatedByString:@"\n"];
+    
+    self.titleLabel.text = [NSString stringWithFormat:@"*%@",model.title];
+    self.contentLabel.text = model.content;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

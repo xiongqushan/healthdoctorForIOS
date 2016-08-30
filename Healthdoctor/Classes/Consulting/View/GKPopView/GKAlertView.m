@@ -11,8 +11,9 @@
 #import "Define.h"
 #import "OtherView.h"
 #import "HZUtils.h"
+#import "UIColor+Utils.h"
 
-#define kButtonColor kSetRGBColor(0, 208, 150)
+#define kButtonColor kSetRGBColor(255, 149, 0)
 
 @interface GKAlertView ()
 
@@ -123,7 +124,7 @@
     [textView setRound];
     textView.backgroundColor = [UIColor clearColor];
     textView.tag = 101;
-    textView.textColor = [UIColor blackColor];
+    textView.textColor = [UIColor textColor];
     textView.font = [UIFont systemFontOfSize:18
                      ];
     //根据数组内容得到拼接后的字符串
@@ -155,7 +156,7 @@
     rightBtn.backgroundColor = kButtonColor;
     [self.contentView addSubview:rightBtn];
     
-    OtherView *otherView = [[OtherView alloc] initWithFrame:CGRectMake(0, textView.bounds.size.height + textView.frame.origin.y + 20, 160, 100)];
+    OtherView *otherView = [[OtherView alloc] initWithFrame:CGRectMake(0, textView.bounds.size.height + textView.frame.origin.y + 20, 182, 100)];
     otherView.block = ^(BOOL canClick,NSInteger index,BOOL isAdd) {
         
         if (index == 0) {

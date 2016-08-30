@@ -105,7 +105,7 @@
         
         NSDictionary *dict = (NSDictionary *)responseObject;
         if ([dict[@"state"] integerValue] != 1) { //不为1时请求数据失败
-            [HZUtils showHUDWithTitle:@"服务器出错!"];
+            [HZUtils showHUDWithTitle:@"服务器出错"];
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
             return ;
@@ -114,7 +114,7 @@
         NSDictionary *data = dict[@"Data"];
         NSInteger count = [data[@"Count"] integerValue];
         if(count == 0) {
-            [HZUtils showHUDWithTitle:@"没有数据"];
+            [HZUtils showHUDWithTitle:@"暂时没有客户"];
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
             [self.dataArr removeAllObjects];
@@ -127,7 +127,7 @@
         }
         NSArray *arr = data[@"Data"];
         if (!arr.count) { // 请求不来数据 提示
-            [HZUtils showHUDWithTitle:@"没有更多数据。"];
+            [HZUtils showHUDWithTitle:@"客户已全部加载"];
             self.tableView.mj_footer.hidden = YES;
             return;
         }
@@ -135,6 +135,11 @@
             HZBaseModel *model = [[_cls alloc] init];
             [model setValuesForKeysWithDictionary:dic];
             [self.dataArr addObject:model];
+            
+            if ([model isKindOfClass:[FeedbackModel class]]) {
+                FeedbackModel *backModel = (FeedbackModel *)model;
+                NSLog(@"_____socre:%@",backModel.score);
+            }
         }
         
         [self.tableView reloadData];
@@ -148,7 +153,7 @@
             self.tableView.mj_footer.hidden = NO;
         }
     } failure:^(NSError *error) {
-        
+        [HZUtils showHUDWithTitle:@"服务器连接失败"];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];

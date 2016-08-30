@@ -86,7 +86,7 @@
 }
 
 - (void)loadChartDataWithDate:(NSString *)date {
-    
+    NSLog(@"_____date:%@",date);
     NSDictionary *param = @{@"customerId":self.customId,@"commitOn":date};
     [[GKNetwork sharedInstance] GetUrl:kGetAskReplyURL param:param completionBlockSuccess:^(id responseObject) {
         NSInteger count = 0;

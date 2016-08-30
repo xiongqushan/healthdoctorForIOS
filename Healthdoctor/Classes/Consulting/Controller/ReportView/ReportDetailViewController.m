@@ -48,7 +48,7 @@
 }
 
 - (void)setUpBaseUI {
-    NSArray *titleArr = @[@"基本信息",@"体检汇总",@"体检异常",@"体检详情"];
+    NSArray *titleArr = @[@"概括",@"汇总",@"异常",@"详情"];
     
     BasicInfoViewController *basicInfo = [[BasicInfoViewController alloc] init];
     basicInfo.infoModel = self.infoModel;
@@ -83,18 +83,41 @@
         // 解析体检详情数据
         for (NSDictionary *dict in arr) {
             DepartmentModel *model = [[DepartmentModel alloc] initWithDict:dict];
-            NSMutableArray *dataArray = [model getUnusualDataArr];
-            for (ResultModel *model in dataArray) {
-                [self.unusualDataArr addObject:model];
-            }
+            
+//            //获取体检异常数据
+//            NSMutableArray *dataArray = [model getUnusualDataArr];
+//            for (ResultModel *model in dataArray) {
+//                [self.unusualDataArr addObject:model];
+//            }
             [self.detailDataArr addObject:model];
         }
         
-        //解析体检汇总数据
-        NSArray *summary = data[@"GeneralSummarys"];
-        for (NSString *content in summary) {
+        //解析体检异常项数据  测试环境
+        NSArray *unUsuals = data[@"AnomalyCheckResult"];
+        self.unusualDataArr = [[ResultModel alloc] parseDataWithArr:unUsuals];
+        
+        
+//        //解析体检汇总数据   //生产环境
+//        NSArray *summary = data[@"GeneralSummarys"];
+//        for (NSString *content in summary) {
+//            SummarysModel *model = [[SummarysModel alloc] init];
+//            
+//            NSString *str = [content stringByReplacingOccurrencesOfString:@"</strong><br/>" withString:@","];
+//            NSString *result = [str stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
+//            NSArray *arr = [result componentsSeparatedByString:@","];
+//            model.title = arr[0];
+//            model.content = arr[1];
+//            [self.summaryDataArr addObject:model];
+//        }
+        
+        //解析体检汇总数据   //测试环境
+        NSArray *summary = data[@"GeneralSummarysForApp"];
+        for (NSDictionary *content in summary) {
+
             SummarysModel *model = [[SummarysModel alloc] init];
-            model.content = content;
+            model.title = content[@"SummaryName"];
+            model.content = content[@"SummaryDescription"];
+            
             [self.summaryDataArr addObject:model];
         }
         self.masterDoctor = data[@"MasterDotor"];

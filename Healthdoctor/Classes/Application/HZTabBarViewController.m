@@ -34,7 +34,7 @@
     MineViewController *mine = [[MineViewController alloc] init];
     [self setUpOneChildViewController:mine image:[UIImage imageNamed:@"main"] selectedImage:[UIImage imageWithOriginalName:@"main_selected"] title:@"我的"];
     
-    //self.selectedIndex = 1;
+    self.selectedIndex = 1;
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outLogin:) name:@"LoginOutNotification" object:nil];
 }
 

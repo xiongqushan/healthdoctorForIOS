@@ -12,7 +12,7 @@
 // @"http://hz75thbd2:803/api/" 内网测试环境  15601815186   111111
 // @"http://hc.ihaozhuo.com:90/api/" 外网生产环境 xhtest01   123456
 
-#define kUrlPrefix @"http://hc.ihaozhuo.com:90/api/"
+#define kUrlPrefix @"http://hz75thbd2:803/api/"
 #define kVersion @"v1"
 
 /****************** User **********************/

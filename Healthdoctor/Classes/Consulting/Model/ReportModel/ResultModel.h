@@ -19,7 +19,7 @@
 @property (nonatomic, copy)NSString *isCalc;
 @property (nonatomic, copy)NSString *lowValueRef;
 @property (nonatomic, copy)NSString *resultFlagID; //是否是异常项  0 1：不是 其它的都是
-@property (nonatomic, copy)NSString *resultTypeID;
+@property (nonatomic, copy)NSString *resultTypeID;  //1：数值类型  其它都不是
 @property (nonatomic, copy)NSString *resultValue;
 @property (nonatomic, copy)NSString *showIndex;
 @property (nonatomic, copy)NSString *textRef;

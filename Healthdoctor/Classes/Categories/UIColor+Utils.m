@@ -32,8 +32,8 @@
     return kSetRGBColor(250, 250, 250);
 }
 
-+ (UIColor *)fontColor {
-    return kSetRGBColor(55, 55, 55);
++ (UIColor *)textColor {
+    return kSetRGBColor(51, 51, 51);
 }
 
 + (UIColor *)tabBarColor {

@@ -11,7 +11,7 @@
 
 @interface PhotoCell : UICollectionViewCell
 
-//@property (weak, nonatomic) IBOutlet UILabel *totalNum;
+@property (weak, nonatomic) IBOutlet UILabel *totalNum;
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *checkCenter;
 @property (weak, nonatomic) IBOutlet UIView *imageBgView;

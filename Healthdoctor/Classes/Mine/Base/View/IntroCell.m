@@ -8,6 +8,7 @@
 
 #import "IntroCell.h"
 #import "Define.h"
+#import "UIColor+Utils.h"
 
 @implementation IntroCell
 
@@ -26,11 +27,12 @@
 }
 
 - (void)setUpData {
+    self.textLabel.textColor = [UIColor textColor];
     self.textLabel.text = _item.title;
     self.detailTextLabel.text = _item.introTitle;
     self.detailTextLabel.numberOfLines = 0;
     self.detailTextLabel.font = [UIFont systemFontOfSize:15];
-    self.detailTextLabel.textColor = kSetRGBColor(51, 51, 51);
+    self.detailTextLabel.textColor = [UIColor grayColor];
 }
 
 - (void)awakeFromNib {

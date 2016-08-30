@@ -56,11 +56,16 @@
     
     //添加咨询内容所在的view
     UIView *consulatView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kConsultViewH)];
-    consulatView.backgroundColor = kSetRGBColor(242, 242, 242);
+    consulatView.backgroundColor = [UIColor whiteColor];;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(34, 5, 32, kConsultViewH -10)];
+    imageView.image = [UIImage imageNamed:@"consulationContent"];
+    [consulatView addSubview:imageView];
     
     //添加左侧标题
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 20, kConsultViewH)];
     titleLabel.numberOfLines = 0;
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.text = @"咨询内容";
     //titleLabel.backgroundColor = [UIColor redColor];
     [consulatView addSubview:titleLabel];
@@ -70,16 +75,16 @@
     textView.backgroundColor = [UIColor clearColor];
     textView.font = [UIFont systemFontOfSize:14];
     textView.text = self.consultStr;
+    textView.textColor = [UIColor textColor];
     textView.editable = NO;
     [consulatView addSubview:textView];
     [self.view addSubview:consulatView];
     
     //添加UITableView
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + kConsultViewH, kScreenSizeWidth, kScreenSizeHeight - 64 - kConsultViewH - 50) style:UITableViewStylePlain];
-    tableView.backgroundColor = [UIColor viewBackgroundColor];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64 + kConsultViewH + 10, kScreenSizeWidth, kScreenSizeHeight - 64 - kConsultViewH - 50 - 10) style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor whiteColor];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tableView registerNib:[UINib nibWithNibName:@"CommonLanguageCell" bundle:nil] forCellReuseIdentifier:@"CellId"];
     [self.view addSubview:tableView];
     tableView.tableFooterView = [UIView new];
@@ -92,17 +97,13 @@
     btn.layer.cornerRadius = 5;
     [btn setTitle:@"下一步" forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
-    btn.backgroundColor = kSetRGBColor(0, 208, 150);
+    btn.backgroundColor = kSetRGBColor(39, 170, 238);
     [self.view addSubview:btn];
 
 }
 
 - (void)showPopView {
     GKAlertView *alertView = [[GKAlertView alloc] initWithResultArr:self.resultArr];
-//    alertView.sendMessage = ^(NSString *text) {
-//        [self.navigationController popViewControllerAnimated:NO];
-//
-//    };
     [alertView show];
 }
 
@@ -140,8 +141,6 @@
     
     [searchBar resignFirstResponder];
     NSDictionary *param = @{@"keyWord":searchBar.text};
-    
-   /// __weak PhraseViewController *weakSelf = self;
     
     [[GKNetwork sharedInstance] GetUrl:kSearchExpressionsURL param:param completionBlockSuccess:^(id responseObject) {
         if ([responseObject[@"state"] integerValue] != 1) {
@@ -194,11 +193,11 @@
     
     CommonLanguageModle *model = self.dataArr[indexPath.row];
     //NSString *content = [NSString stringWithFormat:@"%ld、%@",indexPath.row,model.content];
-    CGSize size = [HZUtils getHeightWithFont:[UIFont systemFontOfSize:15] title:model.content maxWidth:kScreenSizeWidth - 73 - 10];
-    if ((size.height + 32)< 50) {
+    CGSize size = [HZUtils getHeightWithFont:[UIFont systemFontOfSize:15] title:model.content maxWidth:kScreenSizeWidth - 68];
+    if ((size.height + 30)< 50) {
         return 50;
     }
-    return size.height + 32;
+    return size.height + 30;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

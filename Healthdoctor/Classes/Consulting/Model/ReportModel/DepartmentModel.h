@@ -15,5 +15,6 @@
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
+//获取异常项数据，现在接口返回的数据有这些数据了，就不用自己解析了
 - (NSMutableArray *)getUnusualDataArr;
 @end

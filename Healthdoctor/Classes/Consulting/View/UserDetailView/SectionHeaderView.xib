@@ -8,20 +8,20 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SectionHeaderView">
-            <rect key="frame" x="0.0" y="0.0" width="573" height="40"/>
+            <rect key="frame" x="0.0" y="0.0" width="573" height="45"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sectionHeaderBg" translatesAutoresizingMaskIntoConstraints="NO" id="9VT-Mt-Sdd">
-                    <rect key="frame" x="0.0" y="0.0" width="573" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="573" height="45"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="体检报告" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddW-Ed-L1U">
-                    <rect key="frame" x="12" y="9" width="72" height="22"/>
+                    <rect key="frame" x="12" y="12" width="72" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <color key="textColor" red="0.17254901960784313" green="0.72549019607843135" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqa-mj-4xQ">
-                    <rect key="frame" x="101" y="9" width="49" height="22"/>
+                    <rect key="frame" x="101" y="12" width="49" height="21"/>
                     <color key="backgroundColor" red="0.60784313729999995" green="0.79607843140000001" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="更新">
@@ -32,7 +32,7 @@
                     </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_selected" translatesAutoresizingMaskIntoConstraints="NO" id="9Tp-tT-b2u">
-                    <rect key="frame" x="538" y="14" width="20" height="12"/>
+                    <rect key="frame" x="538" y="17" width="20" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="87a-iJ-bHg"/>
                         <constraint firstAttribute="height" constant="12" id="UbG-t8-bVg"/>
@@ -53,7 +53,7 @@
                 <outlet property="titleLabel" destination="ddW-Ed-L1U" id="rM0-FD-trd"/>
                 <outlet property="updateBtn" destination="eqa-mj-4xQ" id="a1k-nD-ExK"/>
             </connections>
-            <point key="canvasLocation" x="364.5" y="215"/>
+            <point key="canvasLocation" x="364.5" y="214.5"/>
         </view>
     </objects>
     <resources>

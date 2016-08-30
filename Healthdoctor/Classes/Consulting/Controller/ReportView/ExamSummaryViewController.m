@@ -37,6 +37,7 @@
     self.tableView.sectionFooterHeight = 70;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+    self.tableView.backgroundColor = [UIColor viewBackgroundColor];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SummaryCell" bundle:nil] forCellReuseIdentifier:@"SummaryCell"];
     
@@ -54,7 +55,7 @@
     label.text = [NSString stringWithFormat:@"主检医生:%@",str];
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont boldSystemFontOfSize:16];
-    label.textColor = [UIColor fontColor];
+    label.textColor = [UIColor textColor];
     [view addSubview:label];
     
     return view;
@@ -67,26 +68,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-   // static NSString *cellId = @"CellId";
+
     SummaryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SummaryCell"];
+    if (indexPath.row == 0) {
+        cell.lineLabelY.constant = 30;
+        cell.lineLabelH.constant = 11;
+    }else {
+        cell.lineLabelY.constant = 0;
+        cell.lineLabelH.constant = 41;
+    }
+    
+    if (indexPath.row % 2 == 0) {
+        cell.pointView.backgroundColor = kSetRGBColor(155, 203, 101);
+    }else {
+        cell.pointView.backgroundColor = kSetRGBColor(255, 187, 92);
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SummarysModel *model = self.dataArr[indexPath.row];
-    //cell.contentLabel.text = model.content;
-//    NSAttributedString *attributeString = [[NSAttributedString alloc] initWithData:[model.content dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
-    NSString *str = [model.content stringByReplacingOccurrencesOfString:@"</strong><br/>" withString:@"\n"];
-    NSString *result = [str stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
-    
-    cell.contentLabel.text = result;
+    [cell showDataWithModel:model];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SummarysModel *model = self.dataArr[indexPath.row];
 
-    NSString *str = [model.content stringByReplacingOccurrencesOfString:@"</strong><br/>" withString:@"\n"];
-    NSString *result = [str stringByReplacingOccurrencesOfString:@"<strong>" withString:@""];
-    CGSize size = [HZUtils getHeightWithFont:[UIFont systemFontOfSize:15] title:result maxWidth:kScreenSizeWidth - 40];
-    return size.height + 30;
+    SummarysModel *model = self.dataArr[indexPath.row];
+    CGSize size = [HZUtils getHeightWithFont:[UIFont systemFontOfSize:15] title:model.content maxWidth:kScreenSizeWidth - 50];
+    return size.height + 55;
 }
 
 - (void)didReceiveMemoryWarning {
