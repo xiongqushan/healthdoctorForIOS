@@ -17,6 +17,7 @@
 #import "UIView+Utils.h"
 #import "AppDelegate.h"
 #import "JPUSHService.h"
+#import <MJExtension.h>
 
 @interface PasswdLoginViewController ()
 
@@ -46,11 +47,12 @@
         
         if ([responseObject[@"state"] integerValue] == 1) {
             NSDictionary *data = responseObject[@"Data"];
-            HZUser *user = [[HZUser alloc] init];
-            [user setValuesForKeysWithDictionary:data];
-            user.isLogin = @"1";
-            user.doctorId = data[@"Doctor_ID"];
-            user.lastLogOn = data[@"Last_Log_On"];
+            HZUser *user = [HZUser mj_objectWithKeyValues:data];
+//            HZUser *user = [[HZUser alloc] init];
+//            [user setValuesForKeysWithDictionary:data];
+//            user.isLogin = @"1";
+//            user.doctorId = data[@"Doctor_ID"];
+//            user.lastLogOn = data[@"Last_Log_On"];
             [Config saveProfile:user];
             
             [JPUSHService setAlias:[NSString stringWithFormat:@"%@",user.doctorId] callbackSelector:@selector(setAlias:tags:alias:) object:self];

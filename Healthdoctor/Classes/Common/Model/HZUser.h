@@ -8,7 +8,7 @@
 
 #import "HZBaseModel.h"
 
-@interface HZUser : HZBaseModel
+@interface HZUser : NSObject
 
 //该属性是记录用户是否登录
 @property (nonatomic, copy) NSString *isLogin;
@@ -49,5 +49,6 @@
 @property (nonatomic, copy)NSString *name;
 @property (nonatomic, copy)NSString *photoUrl;
 @property (nonatomic, copy)NSString *position;
+@property (nonatomic, copy)NSString *roleFlag;
 
 @end
