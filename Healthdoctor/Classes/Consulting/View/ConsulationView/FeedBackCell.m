@@ -27,7 +27,8 @@
     NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     self.dateLabel.text = [HZUtils getDetailDateStrWithDate:date];
     //设置星级
-    //[self.starView setStarLevel:[model.score doubleValue]];
+    model.score = @"3";
+    [self.starView setStarLevel:[model.score doubleValue]];
     if (!model.reDoctor) {
         self.doctorName.hidden = YES;
     }else {
@@ -35,7 +36,6 @@
     }
     //self.doctorName.text = [NSString stringWithFormat:@"健管师:%@",model.reDoctor];
     self.doctorName.text = model.reDoctor;
-    self.consulationLabel.text = model.consultTitele;
     
 }
 

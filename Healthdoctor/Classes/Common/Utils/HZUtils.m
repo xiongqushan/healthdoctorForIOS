@@ -237,4 +237,28 @@
         return @"男";
     }
 }
+
+//获取推送通知的状态
++ (BOOL)getNotificationStatus {
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0f) {
+        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if (UIUserNotificationTypeNone == setting.types) {
+            NSLog(@"推送关闭!!");
+            return NO;
+        }else {
+            NSLog(@"推送打开!!");
+            return YES;
+        }
+    }else {
+        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (UIRemoteNotificationTypeNone == type) {
+            NSLog(@"推送关闭!!");
+            return NO;
+        }else {
+            NSLog(@"推送打开!!");
+            return YES;
+        }
+    }
+}
 @end

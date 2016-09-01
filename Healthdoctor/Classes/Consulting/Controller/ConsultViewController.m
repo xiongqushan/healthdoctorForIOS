@@ -16,9 +16,12 @@
 #import "ConsulationView.h"
 #import "HZAPI.h"
 #import "UIView+Utils.h"
+#import "IWBadgeView.h"
 
 @interface ConsultViewController ()
 @property (nonatomic, strong) UISegmentedControl *segment;
+@property (nonatomic, strong) IWBadgeView *badgeView;
+
 @end
 
 @implementation ConsultViewController
@@ -28,12 +31,12 @@
     ConsulationView *_processedView;  //已处理
     ConsulationView *_feedbackView;   //问题反馈
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     //创建分段选择控制器
     [self setUpSegmentView];
-    
     //创建进行筛选的滑动视图
     [self setUpBaseUI];
     
@@ -48,11 +51,11 @@
     NSMutableArray *dataArr = note.userInfo[@"dataArr"];
     
     ChartBaseViewController *chart = [[ChartBaseViewController alloc] init];
+    
     ConsulationModel *model = dataArr[indexPath.row];
     chart.customId = [NSString stringWithFormat:@"%ld",model.custId];
     chart.photoUrl = model.photoUrl;
     chart.customName = model.custName;
-    
     [self.navigationController pushViewController:chart animated:YES];
 }
 
@@ -70,6 +73,13 @@
     
     [self.navigationController.navigationBar addSubview:segment];
     self.segment = segment;
+    
+    CGFloat badgeX = (kScreenSizeWidth - 80)/6.0 + 40 + 20;
+    IWBadgeView *badgeView = [[IWBadgeView alloc] initWithFrame:CGRectMake(badgeX, 8, 22, 15)];
+    badgeView.badgeValue = @"0";
+    badgeView.alpha = 0.2;
+    [self.navigationController.navigationBar addSubview:badgeView];
+    self.badgeView = badgeView;
 
 }
 
@@ -80,11 +90,9 @@
     ConsulationView *pendingView = [[ConsulationView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64 - 48) titleArr:pendingArr url:kGetPendingURL];
     
     pendingView.badgeBlock = ^(NSInteger count) {
-        CGFloat badgeX = (kScreenSizeWidth - 80)/6.0 + 40 + 30
-        ;
-        [self.navigationController.navigationBar setBadgeValue:count center:CGPointMake(badgeX, 15)];
+        
+        self.badgeView.badgeValue = [NSString stringWithFormat:@"%ld",count];
     };
-    
     [self.view addSubview:pendingView];
     _pendingView = pendingView;
     
@@ -121,21 +129,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    // self.segment.hidden = YES;
-    
     [UIView animateWithDuration:0.25 animations:^{
         self.segment.alpha = 0.0;
+        self.badgeView.alpha = 0.0;
     }];
-    
-    for (UIView *view in [self.navigationController.navigationBar subviews]) {
-        if ([view isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)view;
-            
-            [UIView animateWithDuration:0.25 animations:^{
-                label.alpha = 0.0;
-            }];
-        }
-    }
     
 }
 
@@ -144,22 +141,15 @@
     
     [UIView animateWithDuration:0.25 animations:^{
         self.segment.alpha = 1.0;
+        self.badgeView.alpha = 1.0;
     }];
     
-    for (UIView *view in [self.navigationController.navigationBar subviews]) {
-        if ([view isKindOfClass:[UILabel class]]) {
-            UILabel *label = (UILabel *)view;
-            
-            [UIView animateWithDuration:0.25 animations:^{
-                label.alpha = 1.0;
-            }];
-        }
-    }
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

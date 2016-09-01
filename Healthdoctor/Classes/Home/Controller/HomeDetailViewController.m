@@ -89,20 +89,27 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.tableFooterView = [UIView new];
+    self.tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:self.tableView];
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeDetailCell" bundle:nil] forCellReuseIdentifier:@"HomeDetailCell"];
-    
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        _index = 1;
-        self.tableView.mj_footer.hidden = NO;
-        [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
-    }];
+
+    //创建下拉刷新
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    header.automaticallyChangeAlpha = YES;
+    header.lastUpdatedTimeLabel.hidden = YES;
+    [header beginRefreshing];
+    self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         _index ++;
         [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
     }];
+}
+
+- (void)loadNewData {
+    
+    _index = 1;
+    [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
 }
 
 - (void)endRefershView {
@@ -128,16 +135,17 @@
         
         NSInteger count2 = [data[@"Count"] integerValue];
         if (count2 == 0) {
-            [HZUtils showHUDWithTitle:@"没有服务人数！"];
-            self.tableView.mj_footer.hidden = YES;
-            [self endRefershView];
+//            [HZUtils showHUDWithTitle:@"没有服务人数！"];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            [self.tableView.mj_header endRefreshing];
             return;
         }
         
         NSArray *dataArr = data[@"Data"];
         if(dataArr.count == 0) {
-            [HZUtils showHUDWithTitle:@"数据加载完成!"];
-            self.tableView.mj_footer.hidden = YES;
+//            [HZUtils showHUDWithTitle:@"数据加载完成!"];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            return;
         }
         for (NSDictionary *dict in dataArr) {
             HomeDetailModel *model = [[HomeDetailModel alloc] init];
@@ -145,10 +153,10 @@
             [self.dataArr addObject:model];
         }
         [self.tableView reloadData];
-        
         [self endRefershView];
         
     } failure:^(NSError *error) {
+        
     }];
     
 }

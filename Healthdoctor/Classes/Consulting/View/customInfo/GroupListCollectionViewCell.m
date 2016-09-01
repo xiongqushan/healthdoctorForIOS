@@ -13,7 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    UIImage *image = [UIImage imageNamed:@"backgroundImage"];
+    UIImage *image = [UIImage imageNamed:@"cellBg2"];
     image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(10, 30, 10, 30) resizingMode:UIImageResizingModeStretch];
     self.backgroundImageView.image = image;
 }

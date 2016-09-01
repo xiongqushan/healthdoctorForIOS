@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet StarLevelView *starView;
 @property (weak, nonatomic) IBOutlet UILabel *doctorName;
-@property (weak, nonatomic) IBOutlet UILabel *consulationLabel;
+
 
 - (void)showDataWithModel:(FeedbackModel*)model;
 

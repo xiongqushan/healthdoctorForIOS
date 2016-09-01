@@ -29,7 +29,6 @@
 
 - (void)setUpCollectionView {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-   
     if (self.groupList.count == 0) {
         return;
     }
@@ -42,6 +41,7 @@
     //[collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellId"];
     [collectionView registerNib:[UINib nibWithNibName:@"GroupListCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"GroupListCollectionViewCell"];
     [self.itemsView addSubview:collectionView];
+    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -56,6 +56,10 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+//    [self.groupList removeObjectAtIndex:indexPath.row];
+//    [collectionView reloadData];
+    
     HZUser *user = [Config getProfile];
     NSDictionary *param = @{@"customerId":self.customerId,@"curGroupId":self.groupIdList[indexPath.row],@"operateBy":user.name};
     [[GKNetwork sharedInstance] GetUrl:kDeleteGroupURL param:param completionBlockSuccess:^(id responseObject) {
@@ -82,13 +86,13 @@
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 10;
-}
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+//    return 10;
+//}
+//
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+//    return 10;
+//}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

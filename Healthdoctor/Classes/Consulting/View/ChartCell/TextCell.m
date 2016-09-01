@@ -44,25 +44,25 @@
         //根据内容的size改变气泡的大小
         HZUser *user = [Config getProfile];
         NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
-        CGSize size = [model.content boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 40, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+        CGSize size = [model.content boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 30, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
         
-        self.leftConstraint.constant = kScreenSizeWidth - 120 - size.width - 40;
+//        CGFloat cellW = kScreenSizeWidth - 120 - 30;
+        self.leftConstraint.constant = kScreenSizeWidth - 120 - size.width - 30;
         
         self.leftIconImageView.hidden = YES;
         self.rightIconImageView.hidden = NO;
         [self.rightIconImageView sd_setImageWithURL:[NSURL URLWithString:user.photoUrl] placeholderImage:[UIImage imageNamed:@"default"]];
         
         self.contentLabel.text = model.content;
-        UIImage *image = [UIImage imageNamed:@"SenderAppCardNodeBkg"];
+        UIImage *image = [UIImage imageNamed:@"chat_icon_bubble_min_outgoing"];
         self.backImageView.image = [image stretchableImageWithLeftCapWidth:21 topCapHeight:30];
         
     }else if([model.isDoctorReply integerValue] == 0){
         
-        
         NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
-         CGSize size = [model.content boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 40, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+         CGSize size = [model.content boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 30, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
         
-        self.rightConstraint.constant = kScreenSizeWidth - 120 - size.width - 40;
+        self.rightConstraint.constant = kScreenSizeWidth - 120 - size.width - 30;
         
         self.rightIconImageView.hidden = YES;
         self.leftIconImageView.hidden = NO;
@@ -78,7 +78,7 @@
             self.contentLabel.text = [NSString stringWithFormat:@"%@",contentStr];
         }
         
-        UIImage *image = [UIImage imageNamed:@"ReceiverTextNodeBkg"];
+        UIImage *image = [UIImage imageNamed:@"chat_icon_bubble_min_incomming"];
         self.backImageView.image = [image stretchableImageWithLeftCapWidth:21 topCapHeight:30];
 
     }

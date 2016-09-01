@@ -41,6 +41,10 @@
     }
     
     [self addSubview:label];
+    [self bringSubviewToFront:label];
+    if (badgeValue == 0) {
+        label.hidden = YES;
+    }
 }
 
 - (void)addCuttingLine {

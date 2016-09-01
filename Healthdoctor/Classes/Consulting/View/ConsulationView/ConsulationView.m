@@ -109,18 +109,14 @@
     for (NSInteger i = 0; i < 3; i++) {
         
         FilterViewController *one = [[FilterViewController alloc] init];
-        
-        one.badgeBlock = ^(NSInteger count) {
-            if (self.badgeBlock) {
-                self.badgeBlock(count);
-            }
-        };
-//        if (self.badgeBlock) {
-//            one.badgeBlock = ^(NSInteger count) {
-//                self.badgeBlock(count);
-//            };
-//            
-//        }
+        if (i == 0) {
+            one.badgeBlock = ^(NSInteger count) {
+                if (self.badgeBlock) {
+                    self.badgeBlock(count);
+                }
+            };
+        }
+
         one.url = _url;
         //当是已处理界面的时候  是以日期范围作为参数进行数据请求的
         if ([_url isEqualToString:kGetProcessedURL]) {

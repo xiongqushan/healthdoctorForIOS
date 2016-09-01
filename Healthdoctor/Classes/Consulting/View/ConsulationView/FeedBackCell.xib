@@ -50,10 +50,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfH-sh-Gk3" customClass="StarLevelView">
-                        <rect key="frame" x="141" y="41" width="65" height="23"/>
+                        <rect key="frame" x="141" y="43" width="80" height="12"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="65" id="Bhe-Mm-IkY"/>
-                            <constraint firstAttribute="height" constant="23" id="wg9-Km-njB"/>
+                            <constraint firstAttribute="width" constant="80" id="Bhe-Mm-IkY"/>
+                            <constraint firstAttribute="height" constant="12" id="wg9-Km-njB"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQT-7y-TaB">
@@ -70,7 +70,7 @@
                 <constraints>
                     <constraint firstItem="Aer-X6-74w" firstAttribute="leading" secondItem="cwv-Z4-MhW" secondAttribute="trailing" constant="8" id="3F3-tM-X5u"/>
                     <constraint firstItem="qQT-7y-TaB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="6up-zF-YvY"/>
-                    <constraint firstItem="jfH-sh-Gk3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="41" id="Aem-hI-gQk"/>
+                    <constraint firstItem="jfH-sh-Gk3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="43" id="Aem-hI-gQk"/>
                     <constraint firstItem="Cx5-OF-EkS" firstAttribute="leading" secondItem="cwv-Z4-MhW" secondAttribute="trailing" constant="8" id="Cdc-Ne-df8"/>
                     <constraint firstAttribute="trailing" secondItem="qQT-7y-TaB" secondAttribute="trailing" constant="11" id="D5a-yv-6qJ"/>
                     <constraint firstItem="FI9-1A-hJs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="38" id="Jtr-8d-uX4"/>

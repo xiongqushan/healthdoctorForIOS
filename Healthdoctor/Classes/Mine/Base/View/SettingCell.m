@@ -9,15 +9,25 @@
 #import "SettingCell.h"
 #import "BaseSetting.h"
 #import "UIColor+Utils.h"
+#import "HZUtils.h"
 
 @interface SettingCell ()
 
 @property (nonatomic, strong)UIImageView *arrowView;
 @property (nonatomic, strong)UILabel *labelView;
+@property (nonatomic, strong)UISwitch *switchView;
 
 @end
 
 @implementation SettingCell
+
+- (UISwitch *)switchView {
+    if (_switchView == nil) {
+        _switchView = [[UISwitch alloc] init];
+        _switchView.userInteractionEnabled = NO;
+    }
+    return _switchView;
+}
 
 - (UIImageView *)arrowView {
     if (_arrowView == nil) {
@@ -71,8 +81,11 @@
 }
 
 - (void)setUpRightView {
-    if ([_item isKindOfClass:[ArrowItem class]]) {//剪头
+    if ([_item isKindOfClass:[ArrowItem class]]) {//箭头
         self.accessoryView = self.arrowView;
+    }else if ([_item isKindOfClass:[SwitchItem class]]) {
+        self.accessoryView = self.switchView;
+        self.switchView.on = [HZUtils getNotificationStatus];
     }else {
         self.accessoryView = nil;
     }
@@ -80,7 +93,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     self.labelView.frame = self.bounds;
 }
 

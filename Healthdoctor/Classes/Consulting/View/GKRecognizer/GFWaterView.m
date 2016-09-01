@@ -8,6 +8,7 @@
 
 #import "GFWaterView.h"
 #define kScreenSize [UIScreen mainScreen].bounds.size
+#import "UIColor+Utils.h"
 
 @implementation GFWaterView
 
@@ -32,7 +33,7 @@
     layer.path = path.CGPath;       // 添加路径 下面三个同理
     
     layer.lineWidth = 0.3;
-    layer.strokeColor = [UIColor greenColor].CGColor;
+    layer.strokeColor = [UIColor navigationBarColor].CGColor;
     layer.fillColor = [UIColor clearColor].CGColor;
     
     

@@ -14,5 +14,6 @@
 #import "ArrowItem.h"
 #import "LabelItem.h"
 #import "IntroItem.h"
+#import "SwitchItem.h"
 
 #endif /* BaseSetting_h */

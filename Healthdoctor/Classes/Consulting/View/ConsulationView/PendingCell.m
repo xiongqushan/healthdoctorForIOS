@@ -26,7 +26,7 @@
     NSString *date = [model.commitOn stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     self.dateLabel.text = [HZUtils getDetailDateStrWithDate:date];
    // self.cosulationLabel.text = model.consultTitele;
-    self.cosulationLabel.text = @"183****8531";
+    self.cosulationLabel.text = @"156****5186";
 
 }
 

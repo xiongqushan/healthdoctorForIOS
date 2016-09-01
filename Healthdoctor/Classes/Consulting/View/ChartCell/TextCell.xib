@@ -22,13 +22,13 @@
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u07-EX-ows">
-                        <rect key="frame" x="60" y="25" width="81" height="45"/>
+                        <rect key="frame" x="60" y="25" width="81" height="37"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUC-9l-Lem">
-                                <rect key="frame" x="0.0" y="0.0" width="81" height="45"/>
+                                <rect key="frame" x="0.0" y="0.0" width="81" height="37"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auf-aN-ycg">
-                                <rect key="frame" x="20" y="10" width="41" height="17"/>
+                                <rect key="frame" x="15" y="10" width="51" height="17"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,10 +40,10 @@
                         <constraints>
                             <constraint firstItem="auf-aN-ycg" firstAttribute="top" secondItem="u07-EX-ows" secondAttribute="top" constant="10" id="0G2-vk-Zi2"/>
                             <constraint firstItem="BUC-9l-Lem" firstAttribute="leading" secondItem="u07-EX-ows" secondAttribute="leading" id="3r8-mg-yOr"/>
-                            <constraint firstAttribute="trailing" secondItem="auf-aN-ycg" secondAttribute="trailing" constant="20" id="OPz-RJ-lmc"/>
+                            <constraint firstAttribute="trailing" secondItem="auf-aN-ycg" secondAttribute="trailing" constant="15" id="OPz-RJ-lmc"/>
                             <constraint firstAttribute="bottom" secondItem="BUC-9l-Lem" secondAttribute="bottom" id="l2R-HQ-BXO"/>
                             <constraint firstAttribute="trailing" secondItem="BUC-9l-Lem" secondAttribute="trailing" id="nKp-oK-nrq"/>
-                            <constraint firstItem="auf-aN-ycg" firstAttribute="leading" secondItem="u07-EX-ows" secondAttribute="leading" constant="20" id="oFT-51-WKO"/>
+                            <constraint firstItem="auf-aN-ycg" firstAttribute="leading" secondItem="u07-EX-ows" secondAttribute="leading" constant="15" id="oFT-51-WKO"/>
                             <constraint firstItem="BUC-9l-Lem" firstAttribute="top" secondItem="u07-EX-ows" secondAttribute="top" id="uq2-O9-Nza"/>
                         </constraints>
                     </view>
@@ -70,7 +70,7 @@
                     <constraint firstItem="q0r-go-sFq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="iL6-YZ-CdD"/>
                     <constraint firstItem="VXT-ov-R1N" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="iVk-eA-ek3"/>
                     <constraint firstItem="u07-EX-ows" firstAttribute="leading" secondItem="q0r-go-sFq" secondAttribute="trailing" constant="5" id="nn0-Qv-ejr"/>
-                    <constraint firstAttribute="bottom" secondItem="u07-EX-ows" secondAttribute="bottom" constant="9" id="rmc-gk-mQc"/>
+                    <constraint firstAttribute="bottom" secondItem="u07-EX-ows" secondAttribute="bottom" constant="17" id="rmc-gk-mQc"/>
                     <constraint firstItem="vEK-tV-14v" firstAttribute="leading" secondItem="u07-EX-ows" secondAttribute="trailing" constant="5" id="u0m-3j-h6a"/>
                 </constraints>
             </tableViewCellContentView>

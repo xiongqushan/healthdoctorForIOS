@@ -52,6 +52,7 @@
 
 - (void)back {
     [self popViewControllerAnimated:YES];
+    
 }
 
 //滑动返回

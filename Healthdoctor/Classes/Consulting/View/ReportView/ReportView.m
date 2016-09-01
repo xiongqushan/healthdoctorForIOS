@@ -78,6 +78,38 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableViewClick)];
     _tap = tap;
     
+    //添加浮动按钮
+    UIButton *floatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [floatBtn setBackgroundImage:[UIImage imageNamed:@"floatingBtn"] forState:UIControlStateNormal];
+    floatBtn.frame = CGRectMake(self.bounds.size.width - 80, self.bounds.size.height - 140, 44, 44);
+    [floatBtn addTarget:self action:@selector(floatBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:floatBtn];
+    
+}
+
+#pragma mark -- 浮动按钮被点击
+- (void)floatBtnClick:(UIButton *)btn {
+    
+    _isShowLeftView = !_isShowLeftView;
+    if (_isShowLeftView) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.tableView.frame = CGRectMake(kleftViewWidth, 0, self.bounds.size.width, self.bounds.size.height);
+            btn.transform = CGAffineTransformRotate(btn.transform, -M_PI_4);
+        }];
+        
+        [self.tableView addGestureRecognizer: _tap];
+        
+        NSInteger index = 2;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self.leftTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+        
+    }else {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.tableView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+            btn.transform = CGAffineTransformRotate(btn.transform, M_PI_4);
+        }];
+        [self.tableView removeGestureRecognizer:_tap];
+    }
 }
 
 - (void)tableViewClick {
@@ -202,25 +234,25 @@
 #pragma mark -- 分区头视图被点击
 //分区头视图被点击
 - (void)sectionClick:(UITapGestureRecognizer *)tap {
-    _isShowLeftView = !_isShowLeftView;
-    
-    if (_isShowLeftView) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.tableView.frame = CGRectMake(kleftViewWidth, 0, self.bounds.size.width, self.bounds.size.height);
-        }];
-        
-        [self.tableView addGestureRecognizer: _tap];
-        
-        NSInteger index = tap.view.tag - 200;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-        [self.leftTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
-        
-    }else {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.tableView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
-        }];
-        [self.tableView removeGestureRecognizer:_tap];
-    }
+//    _isShowLeftView = !_isShowLeftView;
+//    
+//    if (_isShowLeftView) {
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.tableView.frame = CGRectMake(kleftViewWidth, 0, self.bounds.size.width, self.bounds.size.height);
+//        }];
+//        
+//        [self.tableView addGestureRecognizer: _tap];
+//        
+//        NSInteger index = tap.view.tag - 200;
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+//        [self.leftTableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionTop];
+//        
+//    }else {
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.tableView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+//        }];
+//        [self.tableView removeGestureRecognizer:_tap];
+//    }
 
 }
 

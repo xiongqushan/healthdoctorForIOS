@@ -78,7 +78,7 @@
         self.groupIdList = [NSMutableArray arrayWithArray:model.groupList];
         self.customerId = model.Id;//保存客户Id
         
-        for (id groupId in model.groupList) {
+        for (NSString *groupId in model.groupList) {
             /*
             NSString *keyStr = [NSString stringWithFormat:@"%@",groupId];
             NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:keyStr];
@@ -86,7 +86,7 @@
                 [self.groupList addObject:groupName];
             NSLog(@"_____%@",groupName);
              */
-            HomeGroupModel *groupModel=[GroupManager getGroup:(NSInteger)groupId];
+            HomeGroupModel *groupModel=[GroupManager getGroup:[groupId integerValue]];
             if (groupModel) {
                 [self.groupList addObject:groupModel.name];
             }

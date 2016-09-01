@@ -28,8 +28,6 @@
 		A95641B61D250C0C00224FE0 /* ShowDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = A95641B51D250C0C00224FE0 /* ShowDetailView.m */; };
 		A95893761D5883B300F41BBE /* GFWaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A95893731D5883B300F41BBE /* GFWaterView.m */; };
 		A95893771D5883B300F41BBE /* GKRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A95893751D5883B300F41BBE /* GKRecognizer.m */; };
-		A958937A1D5883DD00F41BBE /* edit_voiceinput@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95893781D5883DD00F41BBE /* edit_voiceinput@2x.png */; };
-		A958937B1D5883DD00F41BBE /* edit_voiceinput@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A95893791D5883DD00F41BBE /* edit_voiceinput@3x.png */; };
 		A95EDEC01CEB23770092BF79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A95EDEBF1CEB23770092BF79 /* main.m */; };
 		A95EDECB1CEB23770092BF79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95EDECA1CEB23770092BF79 /* Assets.xcassets */; };
 		A95EDECE1CEB23770092BF79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A95EDECC1CEB23770092BF79 /* LaunchScreen.storyboard */; };
@@ -43,7 +41,6 @@
 		A9686ACB1D0007E9008AAFD7 /* PendingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9686AC31D0007E9008AAFD7 /* PendingCell.m */; };
 		A9686ACC1D0007E9008AAFD7 /* PendingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9686AC41D0007E9008AAFD7 /* PendingCell.xib */; };
 		A9686ACE1D0007E9008AAFD7 /* StarLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9686AC81D0007E9008AAFD7 /* StarLevelView.m */; };
-		A96DC8271D0125AE0036B3F2 /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A96DC8261D0125AE0036B3F2 /* BadgeView.m */; };
 		A97116001CF454B300575670 /* ConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97115FC1CF454B300575670 /* ConfirmViewController.m */; };
 		A97116011CF454B300575670 /* ConfirmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A97115FD1CF454B300575670 /* ConfirmViewController.xib */; };
 		A97116021CF454B300575670 /* ScanCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97115FF1CF454B300575670 /* ScanCodeViewController.m */; };
@@ -161,6 +158,11 @@
 		A9DDAF7F1D13D8D100E557A1 /* UIImage+MSSScale.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAF701D13D8D100E557A1 /* UIImage+MSSScale.m */; };
 		A9DDAF801D13D8D100E557A1 /* UIView+MSSLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDAF721D13D8D100E557A1 /* UIView+MSSLayout.m */; };
 		A9DE3D8D1CF3F70800A8F573 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DE3D8C1CF3F70800A8F573 /* UIButton+countDown.m */; };
+		A9E7577D1D76B7E500FC1403 /* SwitchItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E7577C1D76B7E500FC1403 /* SwitchItem.m */; };
+		A9E757801D76DC7600FC1403 /* IWBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E7577F1D76DC7600FC1403 /* IWBadgeView.m */; };
+		A9E757831D76DEEB00FC1403 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E757821D76DEEB00FC1403 /* UIView+Frame.m */; };
+		A9E757B61D78104600FC1403 /* edit_voiceinput@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E757B41D78104600FC1403 /* edit_voiceinput@2x.png */; };
+		A9E757B71D78104600FC1403 /* edit_voiceinput@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E757B51D78104600FC1403 /* edit_voiceinput@3x.png */; };
 		A9FC66651CF7DC8C00D4DA7E /* ChartBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC66641CF7DC8C00D4DA7E /* ChartBaseViewController.m */; };
 		A9FC66791CF7DF7F00D4DA7E /* CommonLanguageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FC66751CF7DF7F00D4DA7E /* CommonLanguageCell.m */; };
 		A9FC667A1CF7DF7F00D4DA7E /* CommonLanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9FC66761CF7DF7F00D4DA7E /* CommonLanguageCell.xib */; };
@@ -231,8 +233,6 @@
 		A95893731D5883B300F41BBE /* GFWaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GFWaterView.m; sourceTree = "<group>"; };
 		A95893741D5883B300F41BBE /* GKRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKRecognizer.h; sourceTree = "<group>"; };
 		A95893751D5883B300F41BBE /* GKRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKRecognizer.m; sourceTree = "<group>"; };
-		A95893781D5883DD00F41BBE /* edit_voiceinput@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit_voiceinput@2x.png"; sourceTree = "<group>"; };
-		A95893791D5883DD00F41BBE /* edit_voiceinput@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit_voiceinput@3x.png"; sourceTree = "<group>"; };
 		A95EDEBB1CEB23770092BF79 /* Healthdoctor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Healthdoctor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95EDEBF1CEB23770092BF79 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A95EDECA1CEB23770092BF79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -258,8 +258,6 @@
 		A9686AC41D0007E9008AAFD7 /* PendingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PendingCell.xib; sourceTree = "<group>"; };
 		A9686AC71D0007E9008AAFD7 /* StarLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarLevelView.h; sourceTree = "<group>"; };
 		A9686AC81D0007E9008AAFD7 /* StarLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarLevelView.m; sourceTree = "<group>"; };
-		A96DC8251D0125AE0036B3F2 /* BadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeView.h; sourceTree = "<group>"; };
-		A96DC8261D0125AE0036B3F2 /* BadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeView.m; sourceTree = "<group>"; };
 		A97115FB1CF454B300575670 /* ConfirmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmViewController.h; sourceTree = "<group>"; };
 		A97115FC1CF454B300575670 /* ConfirmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmViewController.m; sourceTree = "<group>"; };
 		A97115FD1CF454B300575670 /* ConfirmViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmViewController.xib; sourceTree = "<group>"; };
@@ -463,6 +461,14 @@
 		A9DDAF721D13D8D100E557A1 /* UIView+MSSLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MSSLayout.m"; sourceTree = "<group>"; };
 		A9DE3D8B1CF3F70800A8F573 /* UIButton+countDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+countDown.h"; sourceTree = "<group>"; };
 		A9DE3D8C1CF3F70800A8F573 /* UIButton+countDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+countDown.m"; sourceTree = "<group>"; };
+		A9E7577B1D76B7E500FC1403 /* SwitchItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchItem.h; sourceTree = "<group>"; };
+		A9E7577C1D76B7E500FC1403 /* SwitchItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchItem.m; sourceTree = "<group>"; };
+		A9E7577E1D76DC7600FC1403 /* IWBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IWBadgeView.h; path = ../../../../../IWBadgeView.h; sourceTree = "<group>"; };
+		A9E7577F1D76DC7600FC1403 /* IWBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IWBadgeView.m; path = ../../../../../IWBadgeView.m; sourceTree = "<group>"; };
+		A9E757811D76DEEB00FC1403 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		A9E757821D76DEEB00FC1403 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		A9E757B41D78104600FC1403 /* edit_voiceinput@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit_voiceinput@2x.png"; sourceTree = "<group>"; };
+		A9E757B51D78104600FC1403 /* edit_voiceinput@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit_voiceinput@3x.png"; sourceTree = "<group>"; };
 		A9FC66631CF7DC8C00D4DA7E /* ChartBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartBaseViewController.h; sourceTree = "<group>"; };
 		A9FC66641CF7DC8C00D4DA7E /* ChartBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartBaseViewController.m; sourceTree = "<group>"; };
 		A9FC66741CF7DF7F00D4DA7E /* CommonLanguageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonLanguageCell.h; sourceTree = "<group>"; };
@@ -593,8 +599,8 @@
 		A95893711D5883A600F41BBE /* GKRecognizer */ = {
 			isa = PBXGroup;
 			children = (
-				A95893781D5883DD00F41BBE /* edit_voiceinput@2x.png */,
-				A95893791D5883DD00F41BBE /* edit_voiceinput@3x.png */,
+				A9E757B41D78104600FC1403 /* edit_voiceinput@2x.png */,
+				A9E757B51D78104600FC1403 /* edit_voiceinput@3x.png */,
 				A95893721D5883B300F41BBE /* GFWaterView.h */,
 				A95893731D5883B300F41BBE /* GFWaterView.m */,
 				A95893741D5883B300F41BBE /* GKRecognizer.h */,
@@ -699,8 +705,8 @@
 		A96DC8241D01258D0036B3F2 /* BadgeView */ = {
 			isa = PBXGroup;
 			children = (
-				A96DC8251D0125AE0036B3F2 /* BadgeView.h */,
-				A96DC8261D0125AE0036B3F2 /* BadgeView.m */,
+				A9E7577E1D76DC7600FC1403 /* IWBadgeView.h */,
+				A9E7577F1D76DC7600FC1403 /* IWBadgeView.m */,
 			);
 			path = BadgeView;
 			sourceTree = "<group>";
@@ -883,6 +889,8 @@
 		A9CA927C1CEBFA3B0077175A /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				A9E757811D76DEEB00FC1403 /* UIView+Frame.h */,
+				A9E757821D76DEEB00FC1403 /* UIView+Frame.m */,
 				A9DE3D8B1CF3F70800A8F573 /* UIButton+countDown.h */,
 				A9DE3D8C1CF3F70800A8F573 /* UIButton+countDown.m */,
 				A9CA92A21CEBFC750077175A /* UIColor+Utils.h */,
@@ -1104,6 +1112,8 @@
 				A9CA92E21CEC0C7C0077175A /* IntroItem.m */,
 				A9CA92E31CEC0C7C0077175A /* LabelItem.h */,
 				A9CA92E41CEC0C7C0077175A /* LabelItem.m */,
+				A9E7577B1D76B7E500FC1403 /* SwitchItem.h */,
+				A9E7577C1D76B7E500FC1403 /* SwitchItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1464,13 +1474,14 @@
 				A9CA93761CEC508F0077175A /* SpeechViewController.xib in Resources */,
 				A9B2308F1D6E9E0800D96457 /* ExceptionCell.xib in Resources */,
 				A9DDAF741D13D8D100E557A1 /* mss_browseLoading@3x.png in Resources */,
-				A958937A1D5883DD00F41BBE /* edit_voiceinput@2x.png in Resources */,
 				A95EDECE1CEB23770092BF79 /* LaunchScreen.storyboard in Resources */,
 				A950447E1D0E3E6600FF8155 /* PasswdLoginViewController.xib in Resources */,
 				A98B16641D65B48800CBE062 /* PhotoCell.xib in Resources */,
 				A9686ACC1D0007E9008AAFD7 /* PendingCell.xib in Resources */,
 				A9FC66901CF7DFD300D4DA7E /* ImageCell.xib in Resources */,
 				A92BC9051D0D385500BDF132 /* HomeDetailCell.xib in Resources */,
+				A9E757B71D78104600FC1403 /* edit_voiceinput@3x.png in Resources */,
+				A9E757B61D78104600FC1403 /* edit_voiceinput@2x.png in Resources */,
 				A98329441D1A626E008107DF /* OtherView.xib in Resources */,
 				A9FC66921CF7DFD300D4DA7E /* TextCell.xib in Resources */,
 				A98B16341D644B6D00CBE062 /* MedicalReportCell.xib in Resources */,
@@ -1489,7 +1500,6 @@
 				A924A6611D2CEA600077FF5A /* Images.xcassets in Resources */,
 				A9D921661D1CD04B00B8D7A5 /* SummaryCell.xib in Resources */,
 				A9D6BDA11D221375003E236D /* SuggestViewController.xib in Resources */,
-				A958937B1D5883DD00F41BBE /* edit_voiceinput@3x.png in Resources */,
 				A9B2308A1D6E7BC100D96457 /* BasicInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1579,7 +1589,6 @@
 				A9CA92ED1CEC0C7C0077175A /* ArrowItem.m in Sources */,
 				A976805B1D337B2A0098DEC2 /* InfoItemModel.m in Sources */,
 				A98329471D1A6308008107DF /* OtherView.m in Sources */,
-				A96DC8271D0125AE0036B3F2 /* BadgeView.m in Sources */,
 				A9D1EB3C1D07CA740088DCB8 /* ExamSummaryViewController.m in Sources */,
 				A9FC66871CF7DF9800D4DA7E /* UIView+SDAutoLayout.m in Sources */,
 				A9FC66AC1CF7E28200D4DA7E /* CommonLanguageModle.m in Sources */,
@@ -1601,6 +1610,7 @@
 				A5070D691D63266E006060BA /* GroupManager.m in Sources */,
 				A9CA92981CEBFB970077175A /* ConsultViewController.m in Sources */,
 				A915D7971CF7FDD800EA7084 /* PersonalInfoViewController.m in Sources */,
+				A9E757801D76DC7600FC1403 /* IWBadgeView.m in Sources */,
 				A95044811D0E5F0200FF8155 /* SearchViewController.m in Sources */,
 				A9CA93791CEC56B50077175A /* UIView+Utils.m in Sources */,
 				A9FC66861CF7DF9800D4DA7E /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
@@ -1619,6 +1629,7 @@
 				A9DDAF791D13D8D100E557A1 /* MSSBrowseLoadingImageView.m in Sources */,
 				A9CA92B61CEC0A070077175A /* MineViewController.m in Sources */,
 				A9D2F4601CF2956D00715650 /* README.md in Sources */,
+				A9E757831D76DEEB00FC1403 /* UIView+Frame.m in Sources */,
 				A9686AC91D0007E9008AAFD7 /* FeedBackCell.m in Sources */,
 				A9CA929E1CEBFBF10077175A /* HZTabBarViewController.m in Sources */,
 				A9DDAF781D13D8D100E557A1 /* MSSBrowseCollectionViewCell.m in Sources */,
@@ -1653,6 +1664,7 @@
 				A9FC66791CF7DF7F00D4DA7E /* CommonLanguageCell.m in Sources */,
 				A925C8831CF551440026B31F /* HZBaseModel.m in Sources */,
 				A9D1EB3F1D07CAA30088DCB8 /* ExamExceptionsViewController.m in Sources */,
+				A9E7577D1D76B7E500FC1403 /* SwitchItem.m in Sources */,
 				A9CA93721CEC4E780077175A /* SpeechViewController.m in Sources */,
 				A98B16331D644B6D00CBE062 /* MedicalReportCell.m in Sources */,
 				A91C618E1D6C42A300676F9A /* HeaderView.m in Sources */,

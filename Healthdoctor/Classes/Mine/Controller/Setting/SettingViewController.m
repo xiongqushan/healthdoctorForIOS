@@ -10,6 +10,7 @@
 #import "BaseSetting.h"
 #import "AboutUsViewController.h"
 #import "SuggestViewController.h"
+#import "HZUtils.h"
 
 @interface SettingViewController ()
 
@@ -20,11 +21,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNotifi:) name:@"changeNotifi" object:nil];
     self.title = @"设置";
     
     [self setUpGroup0];
     [self setUpGroup1];
     [self setUpGroup2];
+}
+
+- (void)getNotifi:(NSNotification *)noti {
+    NSLog(@"________123");
+    [self.tableView reloadData];
 }
 
 - (void)setUpGroup0 {
@@ -47,8 +54,12 @@
     
     //ArrowItem *arrow2 = [ArrowItem itemWithTitle:@"清理缓存" withImage:[UIImage imageNamed:@"vip"]];
     SettingItem *set = [SettingItem itemWithTitle:@"清理缓存" withImage:[UIImage imageNamed:@"clearCache"]];
+    
+    SwitchItem *switchView = [SwitchItem itemWithTitle:@"推送设置" withImage:[UIImage imageNamed:@"messagePush"]];
+    //switchView.on = [HZUtils getNotificationStatus];
+    
     GroupItem *group = [[GroupItem alloc] init];
-    group.items = @[arrow,set];
+    group.items = @[arrow,set,switchView];
     
     [self.dataArr addObject:group];
 }
@@ -66,6 +77,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSLog(@"______%d",[HZUtils getNotificationStatus]);
 }
 
 /*

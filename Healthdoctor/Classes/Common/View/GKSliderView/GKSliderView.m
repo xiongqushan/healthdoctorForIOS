@@ -9,7 +9,7 @@
 #define kScreenSize [UIScreen mainScreen].bounds.size
 #import "UIColor+Utils.h"
 //#define kTabBarHeight 60
-#define kItemWidth 100
+#define kItemWidth 80
 //#define kItemHeight 54
 //#define kItemSpace (kScreenSize.width - kItemWidth *itemCount)/(itemCount +1)
 

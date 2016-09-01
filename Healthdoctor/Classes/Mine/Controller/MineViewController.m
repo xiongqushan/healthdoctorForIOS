@@ -40,7 +40,7 @@
     [self setUpHeaderView];
     
     [self setUpGroup0];// 个人资料
-    [self setUpGroup2];// 语音听写
+//    [self setUpGroup2];// 语音听写
     [self setUpGroup1];// 设置管理
 }
 
@@ -80,7 +80,7 @@
 
 - (void)setUpGroup0{
 
-    ArrowItem *arrow = [ArrowItem itemWithTitle:@"个人资料" withImage:[UIImage imageNamed:@"new_friend"]];
+    ArrowItem *arrow = [ArrowItem itemWithTitle:@"个人资料" withImage:[UIImage imageNamed:@"person_data"]];
     arrow.destVcClass = [PersonalInfoViewController class];
     GroupItem *group = [[GroupItem alloc] init];
     group.items = @[arrow];
@@ -88,7 +88,7 @@
 }
 
 - (void)setUpGroup1 {
-    ArrowItem *arrow = [ArrowItem itemWithTitle:@"设置管理" withImage:[UIImage imageNamed:@"card"]];
+    ArrowItem *arrow = [ArrowItem itemWithTitle:@"设置管理" withImage:[UIImage imageNamed:@"setting"]];
     arrow.destVcClass = [SettingViewController class];
     GroupItem *group = [[GroupItem alloc] init];
     group.items = @[arrow];
@@ -96,7 +96,7 @@
 }
 
 - (void)setUpGroup2 {
-    ArrowItem *arrow = [ArrowItem itemWithTitle:@"语音听写" withImage:[UIImage imageNamed:@"vip"]];
+    ArrowItem *arrow = [ArrowItem itemWithTitle:@"语音听写" withImage:[UIImage imageNamed:@"setting"]];
     arrow.destVcClass = [SpeechViewController class];
     GroupItem *group = [[GroupItem alloc] init];
     group.items = @[arrow];

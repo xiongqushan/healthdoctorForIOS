@@ -48,6 +48,7 @@
         if ([responseObject[@"state"] integerValue] == 1) {
             NSDictionary *data = responseObject[@"Data"];
             HZUser *user = [HZUser mj_objectWithKeyValues:data];
+            
 //            HZUser *user = [[HZUser alloc] init];
 //            [user setValuesForKeysWithDictionary:data];
 //            user.isLogin = @"1";

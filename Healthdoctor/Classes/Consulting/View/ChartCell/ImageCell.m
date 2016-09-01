@@ -38,12 +38,12 @@
     
     [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.photoUrl] placeholderImage:[UIImage imageNamed:@"default"]];
     [self.iconImageView setRoundWithRadius:25];
-    UIImage *image = [UIImage imageNamed:@"ReceiverTextNodeBkg"];
+    UIImage *image = [UIImage imageNamed:@"chat_icon_bubble_min_incomming"];
     self.bgImageView.image = [image stretchableImageWithLeftCapWidth:21 topCapHeight:30];
     NSArray *imageArr = [model.appendInfo componentsSeparatedByString:@","];
     _imageArr = [NSMutableArray arrayWithArray:imageArr];
-    CGFloat bgViewWidth = kScreenSizeWidth - 120 - 10;
-    CGFloat itemWidth = (bgViewWidth - 40) /3;
+    CGFloat bgViewWidth = kScreenSizeWidth - 120 - 5;
+    CGFloat itemWidth = (bgViewWidth - 40) /3.0;
     CGFloat padding = 10;
     if (imageArr.count < 3) {
         NSInteger count = 3 - imageArr.count;
@@ -55,7 +55,7 @@
     for (NSInteger i = 0; i < imageArr.count; i++) {
         NSInteger column = i%3; //列
         NSInteger row = i/3 +1; //行
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((column +1)*padding + column*itemWidth +5, row*padding + (row - 1)*itemWidth, itemWidth, itemWidth)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((column +1)*padding + column*itemWidth+5, row*padding + (row - 1)*itemWidth, itemWidth, itemWidth)];
        
         [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTap:)]];
         imageView.tag = 300 + i;

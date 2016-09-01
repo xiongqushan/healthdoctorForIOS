@@ -76,6 +76,7 @@
     NSArray *controllers = self.navigationController.viewControllers;
     NSInteger count = controllers.count;
     UIViewController *controller = controllers[count - 2];
+    
     if ([controller isKindOfClass:[ChartBaseViewController class]]) {
         [self.navigationController popViewControllerAnimated:YES];
         

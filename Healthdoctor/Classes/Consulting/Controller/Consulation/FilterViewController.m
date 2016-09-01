@@ -43,6 +43,16 @@
     
     _index = 1;
     [self setUpTableView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeListNoti:) name:@"ChangeListNotifi" object:nil];
+}
+
+- (void)changeListNoti:(NSNotification *)noti {
+    NSLog(@"_______321");
+//    self.url = kGetPendingURL;
+//    self.flag = @"3";
+//    _index = 1;
+    [self loadData];
 }
 
 - (void)setUpTableView {
@@ -113,22 +123,22 @@
         
         NSDictionary *data = dict[@"Data"];
         NSInteger count = [data[@"Count"] integerValue];
-        if(count == 0) {
-            [HZUtils showHUDWithTitle:@"暂时没有客户"];
-            [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshing];
-            [self.dataArr removeAllObjects];
-            [self.tableView reloadData];
-            self.tableView.mj_footer.hidden = YES;
-            return;
-        }
         if (self.badgeBlock) {// 刷新之后调用block更改badgeValue
             self.badgeBlock(count);
         }
+        if(count == 0) {
+        //    [HZUtils showHUDWithTitle:@"暂时没有客户"];
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            [self.dataArr removeAllObjects];
+            [self.tableView reloadData];
+            return;
+        }
         NSArray *arr = data[@"Data"];
         if (!arr.count) { // 请求不来数据 提示
-            [HZUtils showHUDWithTitle:@"客户已全部加载"];
-            self.tableView.mj_footer.hidden = YES;
+//            [HZUtils showHUDWithTitle:@"客户已全部加载"];
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            
             return;
         }
         for (NSDictionary *dic in arr) {
@@ -148,12 +158,11 @@
         
         //判断数据个数，如果不够上拉加载更多，隐藏上拉加载视图
         if (self.dataArr.count < 10) {
-            self.tableView.mj_footer.hidden = YES;
-        }else {
-            self.tableView.mj_footer.hidden = NO;
+          
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
     } failure:^(NSError *error) {
-        [HZUtils showHUDWithTitle:@"服务器连接失败"];
+        [HZUtils showHUDWithTitle:@"请检查网络"];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
@@ -178,11 +187,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if ([self.url isEqualToString:kGetPendingURL]) {
-//        return 70;
-//    }else {
-//        return 80;
-//    }
+
     return 70;
 }
 
@@ -193,6 +198,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kCellSelectedNotification object:self userInfo:@{@"indexPath":indexPath,@"dataArr":self.dataArr}];
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -51,4 +51,7 @@
 //获得性别
 + (NSString *)getGender:(NSString *)gender;
 
+//获取推送状态
++ (BOOL)getNotificationStatus;
+
 @end

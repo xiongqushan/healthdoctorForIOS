@@ -14,7 +14,7 @@
 static NSMutableArray *_groupArray;
 
 +(NSString*)getFilePath{
-    NSString *homePath=NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    NSString *homePath=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *srcPath=[homePath stringByAppendingPathComponent:@"groups.archiver"];
     return srcPath;
 }

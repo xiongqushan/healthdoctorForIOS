@@ -100,6 +100,11 @@
             [alert show];
         }
         
+        if (indexPath.section == 1 && indexPath.row == 2) {
+            //推送设置
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID&&path=com.ihaozhuo.health"]];
+        }
+        
         if (indexPath.section == 2) {
             NSLog(@"_________退出登录");
 //            [[[UIAlertView alloc] initWithTitle:@"提示" message:@"确认退出登录?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil] show];

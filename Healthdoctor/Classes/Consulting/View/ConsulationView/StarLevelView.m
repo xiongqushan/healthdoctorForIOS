@@ -40,16 +40,16 @@
 }
 
 - (void)creatView {
-    _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 65, 23)];
-    _backImageView.image = [UIImage imageNamed:@"StarsBackground"];
+    _backImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 12)];
+    _backImageView.image = [UIImage imageNamed:@"star_unSelected"];
     //设置内容模式
     _backImageView.contentMode = UIViewContentModeLeft;
     //先粘贴的在下面
     [self addSubview:_backImageView];
     
     //前景  在背景的上面
-    _foreImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 65, 23)];
-    _foreImageView.image = [UIImage imageNamed:@"StarsForeground"];
+    _foreImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 80, 12)];
+    _foreImageView.image = [UIImage imageNamed:@"star_selected"];
     //设置内容模式
     _foreImageView.contentMode = UIViewContentModeLeft;
     
@@ -62,6 +62,6 @@
 }
 - (void)setStarLevel:(double)level {
     //改变前景的frame 的宽
-    _foreImageView.frame = CGRectMake(0, 0, _backImageView.frame.size.width*(level/5.0), 23);
+    _foreImageView.frame = CGRectMake(0, 0, _backImageView.frame.size.width*(level/5.0), 12);
 }
 @end

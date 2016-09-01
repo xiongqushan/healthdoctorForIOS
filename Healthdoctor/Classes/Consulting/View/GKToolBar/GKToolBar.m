@@ -37,20 +37,20 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
     //[btn setTitle:@"短语" forState:UIControlStateNormal];
-    [btn setBackgroundImage:[UIImage imageNamed:@"expressionsBtn"] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"expression"] forState:UIControlStateNormal];
     [self addSubview:btn];
     self.expressionsBtn = btn;
     
     UIButton *voiceBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [voiceBtn setRoundWithRadius:15];
-    [voiceBtn setBackgroundImage:[UIImage imageNamed:@"collect"] forState:UIControlStateNormal];
+    [voiceBtn setBackgroundImage:[UIImage imageNamed:@"voice"] forState:UIControlStateNormal];
     [self addSubview:voiceBtn];
     self.voiceBtn = voiceBtn;
     
     
-    textView.sd_layout.leftSpaceToView(self,10).widthIs(kScreenSizeWidth - 100).topSpaceToView(self,5).bottomSpaceToView(self,5);
+    textView.sd_layout.leftSpaceToView(self,50).widthIs(kScreenSizeWidth - 100).topSpaceToView(self,5).bottomSpaceToView(self,5);
     btn.sd_layout.rightSpaceToView(self,10).topSpaceToView(self,8).bottomSpaceToView(self,8).widthIs(30).heightIs(30);
-    voiceBtn.sd_layout.leftSpaceToView(textView,10).topSpaceToView(self,8).bottomSpaceToView(self,8).widthIs(30).heightIs(30);
+    voiceBtn.sd_layout.leftSpaceToView(self,10).topSpaceToView(self,8).bottomSpaceToView(self,8).widthIs(30).heightIs(30);
 
 }
 

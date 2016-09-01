@@ -285,7 +285,12 @@
 
 - (void)keyboardWillChange:(NSNotification *)note {
    // [self.view bringSubviewToFront:self.toolBar];
-    
+
+    if (_isRecognizering) {
+        [_timer setFireDate:[NSDate distantFuture]];
+        [[GKRecognizer shareManager] stopRecognizer];
+        _isRecognizering = NO;
+    }
     NSDictionary *userInfo = note.userInfo;
     CGFloat duration = [userInfo[@"UIKeyboardAnimationDurationUserInfoKey"] doubleValue];
     
@@ -307,7 +312,7 @@
             
         }else {
             
-            [self cancelAllThing];
+            ///[self cancelAllThing];
             
             [UIView animateWithDuration:duration animations:^{
                 
@@ -329,7 +334,7 @@
     if (!_voiceView) {
         _voiceView = [[UIView alloc] init];
         _voiceView.frame = CGRectMake(0, self.view.bounds.size.height, kScreenSizeWidth, kVoiceHeight);
-        _voiceView.backgroundColor = [UIColor grayColor];
+        _voiceView.backgroundColor = [UIColor lightGrayColor];
         
         UIButton *voiceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         voiceBtn.frame = CGRectMake(0, 0, 60, 60);
@@ -430,6 +435,21 @@
             }
         }
     }
+    
+    if (!phrase.consultStr) {
+        NSLog(@"_____空");
+        for (ChartModel *model in _textDataArr) {
+            if ([model.isDoctorReply integerValue] == 0) {
+                if ([model.consultType integerValue] == 2) {
+                    phrase.consultStr = @"最近咨询的一条是照片病例。";
+                }else {
+                    phrase.consultStr = model.content;
+                }
+                 break;
+            }
+        }
+    }
+    
     [self.navigationController pushViewController:phrase animated:YES];
 }
 
@@ -490,6 +510,8 @@
             //[textView resignFirstResponder]; //取消第一响应
             NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_textDataArr.count - 1 inSection:0];
             [_tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeListNotifi" object:nil];
             
         }else {
             [HZUtils showHUDWithTitle:@"回复失败"];
@@ -576,9 +598,9 @@
         NSArray *imageArr = [model.appendInfo componentsSeparatedByString:@","];
         NSInteger row = (imageArr.count - 1)/3 +1;
         CGFloat padding = 10;
-        CGFloat bgViewWidth = kScreenSizeWidth - 120 - 10;
-        CGFloat itemWidth = (bgViewWidth - 40) /3;
-        return (row + 1)*padding + row*itemWidth +10 +10 +20;
+        CGFloat bgViewWidth = kScreenSizeWidth - 120 - 5;
+        CGFloat itemWidth = (bgViewWidth - 40) /3.0;
+        return (row + 1)*padding + row*itemWidth +10 +20;
     }else {
         //根据文字内容计算size
         NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
@@ -587,7 +609,7 @@
            // model.content = [model.content stringByAppendingString:@"\n点击加载更多"];
             contentStr = [model.content stringByAppendingString:@"\n点击查看报告"];
         }
-        CGSize size = [contentStr boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 40, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+        CGSize size = [contentStr boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 30, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
         return size.height + 62;
 
         }
@@ -725,6 +747,7 @@
 //        [_tableView removeFromSuperview];
 //        _tableView = nil;
 //    }
+
 }
 
 
