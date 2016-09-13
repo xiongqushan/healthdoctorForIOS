@@ -40,7 +40,7 @@
     {
         _browseItemArray = browseItemArray;
         _currentIndex = currentIndex;
-        _isEqualRatio = YES;
+        _isEqualRatio = NO;  //不根据小图的尺寸比例进行显示大图比例
         _isFirstOpen = YES;
         _screenWidth = MSS_SCREEN_WIDTH;
         _screenHeight = MSS_SCREEN_HEIGHT;

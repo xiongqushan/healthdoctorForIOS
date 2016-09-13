@@ -9,16 +9,16 @@
 #import "AppDelegate.h"
 #import "HZTabBarViewController.h"
 #import "UIColor+Utils.h"
-#import "LoginViewController.h"
 #import "iflyMSC/IFlyMSC.h"
 #import "Config.h"
 #import "PasswdLoginViewController.h"
-//#import <Bugly/Bugly.h>
+#import <Bugly/Bugly.h>
 #import "HZUtils.h"
 #import "JPUSHService.h"
+#import "HZUtils.h"
 
 #define kIflyAppId @"57bf998f"
-//#define kBugluAppId @"900037400"
+#define kBugluAppId @"900037400"
 #define kJPushAppId @"330bf15f3128cf7802eb9921"
 #define kChannelId @"App Stroe"
 
@@ -34,7 +34,7 @@
     
     [NSThread sleepForTimeInterval:2.0];
     
-  //  [Bugly startWithAppId:kBugluAppId];
+    [Bugly startWithAppId:kBugluAppId];
     //获取应用沙盒
     NSString *path = NSHomeDirectory();
     NSLog(@"_______%@",path);
@@ -75,10 +75,7 @@
     }
 
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-//    [JPUSHService setupWithOption:launchOptions appKey:kJPushAppId
-//                          channel:kChannelId
-//                 apsForProduction:NO
-//            advertisingIdentifier:nil];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [JPUSHService setupWithOption:launchOptions appKey:kJPushAppId channel:kChannelId apsForProduction:NO];
     
     [JPUSHService crashLogON];  //统计用户应用崩溃日志
@@ -101,8 +98,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     /// Required - 注册 DeviceToken
     [JPUSHService registerDeviceToken:deviceToken];
     
-   // UILocalNotification
-    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -118,7 +113,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [JPUSHService handleRemoteNotification:userInfo];
     NSLog(@"__________UserInfo:%@",userInfo);
     NSDictionary *aps = userInfo[@"aps"];
-    [[[UIAlertView alloc] initWithTitle:@"提示" message:aps[@"alert"] delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil] show];
+    [HZUtils showHUDWithTitle:aps[@"alert"]];
+    
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

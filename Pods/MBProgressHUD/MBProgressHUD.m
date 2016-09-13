@@ -382,13 +382,16 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
     MBProgressHUDMode mode = self.mode;
     if (mode == MBProgressHUDModeIndeterminate) {
         if (!isActivityIndicator) {
-            // Update to indeterminate indicator
-            [indicator removeFromSuperview];
-            indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            [(UIActivityIndicatorView *)indicator startAnimating];
-            [self.bezelView addSubview:indicator];
-            self.bezelView.backgroundColor = [UIColor clearColor];
             
+    //MB自带的效果
+            // Update to indeterminate indicator
+//            [indicator removeFromSuperview];
+//            indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//            [(UIActivityIndicatorView *)indicator startAnimating];
+//            [self.bezelView addSubview:indicator];
+//            self.bezelView.backgroundColor = [UIColor clearColor];
+            
+    //使用一帧一帧的图片进行加载动画
 //            [indicator removeFromSuperview];
 //            indicator = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 49, 30)];
 //            [self.bezelView addSubview:indicator];
@@ -408,6 +411,31 @@ static const CGFloat MBDefaultDetailsLabelFontSize = 12.f;
 //            [(UIImageView *)indicator setAnimationDuration:1.5];
 //            //开始动画
 //            [(UIImageView *)indicator startAnimating];
+            
+    //使用coreAnimation 进行加载动画
+            [indicator removeFromSuperview];
+            UIImageView *logo = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 34, 47)];
+            logo.image = [UIImage imageNamed:@"loading"];
+            
+            indicator = logo;
+            
+            [self.bezelView addSubview:indicator];
+            self.bezelView.backgroundColor = [UIColor whiteColor];
+            
+            CALayer *moveLayer = [[CALayer alloc] initWithLayer:indicator.layer];
+            moveLayer.backgroundColor = [UIColor whiteColor].CGColor;
+            moveLayer.opacity = 0.8;
+            moveLayer.frame = indicator.bounds;
+            [indicator.layer addSublayer:moveLayer];
+            
+            CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+            moveAnimation.fromValue = [NSValue valueWithCGPoint:moveLayer.position];
+            moveAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(moveLayer.position.x,-25)];
+            
+            moveAnimation.repeatCount = MAXFLOAT;
+            moveAnimation.duration = 1.5;
+            
+            [moveLayer addAnimation:moveAnimation forKey:@"moveAnimation"];
         }
     }
     else if (mode == MBProgressHUDModeDeterminateHorizontalBar) {

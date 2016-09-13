@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youjianguan" translatesAutoresizingMaskIntoConstraints="NO" id="Cum-22-SyP">
-                                <rect key="frame" x="220" y="223" width="161" height="57"/>
+                                <rect key="frame" x="208" y="223" width="185" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="rWw-gP-LgF"/>
-                                    <constraint firstAttribute="width" constant="161" id="tlK-zi-ChC"/>
+                                    <constraint firstAttribute="width" constant="185" id="tlK-zi-ChC"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的健康，我们帮您把关" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-5e-e8n">
