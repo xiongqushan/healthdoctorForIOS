@@ -13,6 +13,7 @@
 #import "Config.h"
 #import "HZUser.h"
 #import "HZUtils.h"
+#import "PersonInfoHttpRequest.h"
 
 @interface PersonalInfoViewController ()
 @property (nonatomic, copy)NSString *professional; //职称
@@ -37,7 +38,18 @@
     [self setUpGroup1];
 }
 
+//获取职称
 - (void)getBasList {
+    [PersonInfoHttpRequest requestProfessional:^(NSString *professional, NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            self.professional = professional;
+            [self setValueWithIndex:2 string:professional];
+            [self.tableView reloadData];
+        }
+    }];
+/*
     [[GKNetwork sharedInstance] GetUrl:kBasConstListURL param:nil completionBlockSuccess:^(id responseObject) {
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
@@ -59,9 +71,21 @@
     } failure:^(NSError *error) {
 
     }];
+ */
 }
 
+//获取所属机构
 - (void)getDeptList {
+    [PersonInfoHttpRequest requestDepartmentName:^(NSString *department, NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            self.department = department;
+            [self setValueWithIndex:3 string:self.department];
+            [self.tableView reloadData];
+        }
+    }];
+/*
     [[GKNetwork sharedInstance] GetUrl:kServiceDeptListURL param:nil completionBlockSuccess:^(id responseObject) {
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
@@ -81,6 +105,8 @@
     } failure:^(NSError *error) {
         
     }];
+ */
+    
 }
 
 - (void)setValueWithIndex:(NSInteger)index string:(NSString *)str{

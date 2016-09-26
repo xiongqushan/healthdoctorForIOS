@@ -11,9 +11,12 @@
 @interface GKNetwork : NSObject
 
 + (instancetype)sharedInstance;
-
+/*
 - (void)GetUrl:(NSString *)url param:(NSDictionary *)param completionBlockSuccess:(void(^)(id responseObject))success failure:(void (^)(NSError *error))failure;
 
 - (void)PostUrl:(NSString *)url param:(NSDictionary *)dict completionBlockSuccess:(void (^)(id responseObject))success failure:(void (^)(NSError *error))failure;
+*/
+- (void)GetUrl:(NSString *)url param:(NSDictionary *)param completionBlock:(void(^)(id responseObject, NSError *error))completion;
+- (void)postUrl:(NSString *)url param:(NSDictionary *)param completionBlock:(void(^)(id responseObject, NSError *error))completion;
 
 @end

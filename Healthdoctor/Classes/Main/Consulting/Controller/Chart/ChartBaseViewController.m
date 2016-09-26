@@ -30,6 +30,9 @@
 #import "GFWaterView.h"
 #import "PhraseViewController.h"
 #import "UserDetailViewController.h"
+#import "ChartHttpRequest.h"
+#import <MBProgressHUD.h>
+#import "ReplyCell.h"
 
 #define kVoiceHeight 220
 
@@ -68,8 +71,16 @@
     [self loadUserInfoData];//获取个人信息
     //添加可点击的导航title
     [self setUpNavTitleViewWithTitle:self.customName];
-    [self setUpTableView];
+    
+    if (self.isFeedback) {
+        //如果是问题反馈界面进来的 不需要回复 将tableView的height变大
+        [self setUpTableViewWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64)];
+    }else {
+        [self setUpTableViewWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64 - 46)];
+    }
+    
     [self setUpToolBar];
+    
 }
 
 - (NSString *)getCurrentDate {
@@ -86,81 +97,60 @@
 }
 
 - (void)loadChartDataWithDate:(NSString *)date {
+    MBProgressHUD *hud = [HZUtils createHUD];
+    
     NSLog(@"_____date:%@",date);
     NSDictionary *param = @{@"customerId":self.customId,@"commitOn":date};
-    [[GKNetwork sharedInstance] GetUrl:kGetAskReplyURL param:param completionBlockSuccess:^(id responseObject) {
-        NSInteger count = 0;
-       // [self.textDataArr removeAllObjects];
+    
+    [ChartHttpRequest requestData:param completionBlock:^(NSMutableArray *arr, NSString *message) {
         
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:responseObject[@"message"]];
-            [_tableView.mj_header endRefreshing];
-            return ;
-        }
-        
-        NSArray *data = responseObject[@"Data"];
-        if (data.count == 0) {
-            [HZUtils showHUDWithTitle:@"全部加载完成"];
+        [hud hideAnimated:YES];
+        [_tableView.mj_header endRefreshing];
+        if (arr.count == 0) {
             _tableView.mj_header.hidden = YES;
-            [_tableView.mj_header endRefreshing];
-            return;
         }
-        for (NSDictionary *dict in data) {
-            ChartModel *model = [[ChartModel alloc] init];
-            [model setValuesForKeysWithDictionary:dict];
-            if ([model.isDoctorReply integerValue] == 1) {
-                model.consultType = @"1";
-            }
-            [_textDataArr addObject:model];
-            count ++;
+        
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [_textDataArr addObjectsFromArray:arr];
+            [_tableView reloadData];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:arr.count - 1 inSection:0];
+            [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
         }
-        [_tableView.mj_header endRefreshing];
-        [_tableView reloadData];
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:count - 1 inSection:0];
-        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        
-    } failure:^(NSError *error) {
-        [_tableView.mj_header endRefreshing];
     }];
+    
 }
 
 - (void)loadUserInfoData {
     NSDictionary *param = @{@"customerId":self.customId};
-    [[GKNetwork sharedInstance] GetUrl:kGetCusInfoURL param:param completionBlockSuccess:^(id responseObject) {
-       
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:responseObject[@"message"]];
-            return ;
+    
+    [ChartHttpRequest requestChartCusInfo:param completionBlock:^(CusInfoModel *model, NSString *message) {
+        
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            _infoModel = model;
+            
+            NSString *navTitle = [NSString stringWithFormat:@"%@ %@ %@",model.cname,[HZUtils getGender:model.gender],[HZUtils getAgeWithBirthday:model.birthday]];
+            _navTitleLabel.text = navTitle;
         }
         
-        NSDictionary *data = responseObject[@"Data"];
-        CusInfoModel *model = [[CusInfoModel alloc] init];
-        [model setValuesForKeysWithDictionary:data];
-       // model.commitOn = self.commitOn;
-        _infoModel = model;
-        
-        NSString *navTitle = [NSString stringWithFormat:@"%@ %@ %@",model.cname,[HZUtils getGender:model.gender],[HZUtils getAgeWithBirthday:model.birthday]];
-        //[self setUpNavTitleViewWithTitle:navTitle];
-        _navTitleLabel.text = navTitle;
-        
-    } failure:^(NSError *error) {
-        
     }];
+    
 }
 
 //设置TableView
-- (void)setUpTableView {
+- (void)setUpTableViewWithFrame:(CGRect)frame {
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor viewBackgroundColor];
     
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, kScreenSizeWidth, kScreenSizeHeight - 64 - 46)];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.backgroundColor = [UIColor viewBackgroundColor];
     [tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(endEdit)]];
-    self.automaticallyAdjustsScrollViewInsets = NO;
     [tableView registerNib:[UINib nibWithNibName:@"ImageCell" bundle:nil] forCellReuseIdentifier:@"ImageCell"];
     [self.view addSubview:tableView];
     _tableView = tableView;
@@ -255,8 +245,7 @@
     detail.photoUrl = self.photoUrl;
     detail.custID = self.customId;
     detail.accountID = _infoModel.account_Id;
-//   // test.chartDataArr = _textDataArr;
-//    detail.customInfoModel = _infoModel;
+
     detail.mobile = _infoModel.mobile;
     detail.gender = _infoModel.gender;
     detail.birthday = _infoModel.birthday;
@@ -280,6 +269,12 @@
     [voiceBtn addTarget:self action:@selector(voiceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    if (self.isFeedback) { //如果是问题反馈界面进来的隐藏textView
+        _toolBar.hidden = YES;
+    }else {
+        _toolBar.hidden = NO;
+    }
     
 }
 
@@ -491,36 +486,27 @@
     NSString *currentDate = [dateFormatter stringFromDate:date];
     
     NSDictionary *param = @{@"DoctorId":_infoModel.doctorID,@"ReDoctorId":user.doctorId,@"ReDoctorName":user.name,@"CustomerId":self.customId,@"ReplyContent":text,@"ReplyTime":currentDate};
-    [[GKNetwork sharedInstance] PostUrl:kAddDoctorReplyURL param:param completionBlockSuccess:^(id responseObject) {
+    [ChartHttpRequest replyMessage:param completionBlock:^(ChartModel *model, NSString *message) {
         
-        if ([responseObject[@"state"] integerValue] == 1) {
-            [HZUtils showHUDWithTitle:@"回复成功"];
-            ChartModel *model = [[ChartModel alloc] init];
-            model.consultType = @"1";
-            model.isDoctorReply = @"1";
-            model.content = text;
-            model.photoUrl = user.photoUrl;
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
             
-            model.commitOn = [HZUtils getDateWithDate:[NSDate date]];
             [_textDataArr insertObject:model atIndex:0];
             
-            NSIndexPath *indexPaht = [NSIndexPath indexPathForRow:_textDataArr.count - 1 inSection:0];
-            [_tableView insertRowsAtIndexPaths:@[indexPaht] withRowAnimation:UITableViewRowAnimationNone];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_textDataArr.count - 1 inSection:0];
+            [_tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             
             NSIndexPath *lastPath = [NSIndexPath indexPathForRow:_textDataArr.count - 1 inSection:0];
             [_tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeListNotifi" object:nil];
-            [_textView resignFirstResponder]; //取消第一响应
-            
-        }else {
-            [HZUtils showHUDWithTitle:@"回复失败"];
-        }
-    } failure:^(NSError *error) {
-        [HZUtils showHUDWithTitle:@"回复失败"];
-    
-    }];
+         
+            [HZUtils showHUDWithTitle:@"回复成功"];
 
+        }
+    }];
+    
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -551,6 +537,7 @@
     ChartModel *model = _textDataArr[count - indexPath.row];
 
     if ([model.consultType integerValue] == 2) {
+        //图片样式的cell
         ImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ImageCell"];
         cell.clickBlock = ^(MSSBrowseNetworkViewController *vc) {
             [vc showBrowseViewController:weakSelf];
@@ -567,22 +554,33 @@
         
         return cell;
     }else {
-        
-        static NSString *cellId = @"cellId";
-        TextCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TextCell" owner:self options:nil] lastObject];
+        if ([model.isDoctorReply integerValue] == 1) {
+            //健管师回复
+            static NSString *cellId = @"ReplyCell";
+            ReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"ReplyCell" owner:self options:nil] lastObject];
+            }
+            [cell showDataWithModel:model];
+            return cell;
+        }else {
+            //客户咨询
+            static NSString *cellId = @"cellId";
+            TextCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"TextCell" owner:self options:nil] lastObject];
+            }
+            cell.messageClick = ^(NSString *checkCode, NSString *workNo){
+                ReportDetailViewController *detail = [[ReportDetailViewController alloc] init];
+                detail.checkCode = checkCode;
+                detail.workNum = workNo;
+                detail.custId = weakSelf.customId;
+                [weakSelf.navigationController pushViewController:detail animated:YES];
+            };
+            [cell showDataWithModel:model];
+            return cell;
         }
-        cell.messageClick = ^(NSString *checkCode, NSString *workNo){
-            ReportDetailViewController *detail = [[ReportDetailViewController alloc] init];
-            detail.checkCode = checkCode;
-            detail.workNum = workNo;
-            detail.custId = weakSelf.customId;
-            [weakSelf.navigationController pushViewController:detail animated:YES];
-        };
-        [cell showDataWithModel:model];
-        return cell;
     }
     
     return nil;
@@ -602,17 +600,21 @@
         CGFloat itemWidth = (bgViewWidth - 40) /3.0;
         return (row + 1)*padding + row*itemWidth +10 +20;
     }else {
+        /*
         //根据文字内容计算size
-        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
+//        NSDictionary *attributes = @{NSFontAttributeName:[UIFont systemFontOfSize:14.f]};
         NSString *contentStr = model.content;
         if ([model.consultType integerValue] == 3) {
            // model.content = [model.content stringByAppendingString:@"\n点击加载更多"];
             contentStr = [model.content stringByAppendingString:@"\n点击查看报告"];
         }
-        CGSize size = [contentStr boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 30, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
-        return size.height + 62;
+ //       CGSize size = [contentStr boundingRectWithSize:CGSizeMake(kScreenSizeWidth - 120 - 30, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+        CGSize size = [HZUtils getHeightWithFont:[UIFont systemFontOfSize:14.f] title:contentStr maxWidth:kScreenSizeWidth - 120 - 30];
+        
+        return size.height + 62;*/
+        return model.cellHeight;
 
-        }
+    }
 
 }
 
@@ -620,82 +622,15 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     //[self.view endEditing:YES];
+   /* if (scrollView == _tableView && (!self.isFeedback)) {
+        [self cancelAllThing];
+    }*/
+    
     if (scrollView == _tableView) {
         [self cancelAllThing];
     }
     
 }
-
-/*
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    
-    if (scrollView == self.tableView) {
-//        CGPoint translation = [scrollView.panGestureRecognizer translationInView:scrollView.superview];
-//        if (translation.y>0) {
-//            
-//            NSLog(@"______向下滑动，显示View");
-//            [self showUserInfoView];
-//        }else if(translation.y<0){
-//            
-//            NSLog(@"______向上滑动，隐藏View");
-//            [self hiddenUserInfoView];
-//        }
-        
-        //滑动时，textView如果是第一响应者，取消
-//        if (self.textView.isFirstResponder) {
-//            [self.textView resignFirstResponder];
-//        }
-//        
-//        [UIView animateWithDuration:0.25 animations:^{
-//            self.voiceView.frame = CGRectMake(0, kScreenSizeHeight, kScreenSizeWidth, kVoiceHeight);
-//            
-//            self.view.transform = CGAffineTransformMakeTranslation(0, 0);
-//        }];
-//        
-//        [UIView animateWithDuration:0.25 animations:^{
-//            self.toolBar.sd_layout.bottomSpaceToView(self.view,0);
-//            [self.toolBar updateLayout];
-//        }];
-        
-        
-    }
-}
-
-*
-//隐藏用户信息View
-- (void)hiddenUserInfoView {
-    [UIView animateWithDuration:0.4 animations:^{
-        CGRect frame = self.userInfoView.frame;
-        frame.origin.y = 0;
-        self.userInfoView.frame = frame;
-        
-        //修改tableView的frame
-        CGRect tableViewFrame = self.tableView.frame;
-        tableViewFrame.origin.y = 64;
-        tableViewFrame.size.height = kScreenSizeHeight - 40 -64;
-        self.tableView.frame = tableViewFrame;
-    }];
-
-    _userViewIsHidden = YES;
-}
-
-//显示用户信息View
-- (void)showUserInfoView {
-    [UIView animateWithDuration:0.4 animations:^{
-        CGRect frame = self.userInfoView.frame;
-        frame.origin.y = 64;
-        self.userInfoView.frame = frame;
-        
-        //修改tableView的frame
-        CGRect tableViewFrame = self.tableView.frame;
-        tableViewFrame.origin.y = 64 + 64;
-        tableViewFrame.size.height = kScreenSizeHeight - 64 - 40 -64;
-        self.tableView.frame = tableViewFrame;
-    }];
-    
-    _userViewIsHidden = NO;
-}
-*/
 
 //当点击屏幕，或滑动tableView时执行的一系列动作
 - (void)cancelAllThing {
@@ -741,7 +676,7 @@
     //将语音识别view从父类中删除
     [self.voiceView removeFromSuperview];
     //
-    _toolBar.sd_layout.bottomSpaceToView(self.view,0);
+  //  _toolBar.sd_layout.bottomSpaceToView(self.view,0);
     
 //    if (_tableView) {
 //        [_tableView removeFromSuperview];

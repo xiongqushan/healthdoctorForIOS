@@ -60,6 +60,7 @@
 
     UILabel *headerView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kleftViewWidth, 60)];
     headerView.textColor = [UIColor textColor];
+    headerView.textAlignment = NSTextAlignmentCenter;
     headerView.text = [NSString stringWithFormat:@"体检项目 (%ld) ",self.dataArr.count];
     leftTableView.tableHeaderView = headerView;
     

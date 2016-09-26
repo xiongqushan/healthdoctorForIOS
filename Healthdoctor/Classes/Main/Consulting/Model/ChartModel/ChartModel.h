@@ -7,7 +7,7 @@
 //
 
 #import "HZBaseModel.h"
-
+#import <UIKit/UIKit.h>
 /*
  type:1  纯文本
  type:2  图片
@@ -27,5 +27,7 @@
 @property (nonatomic, copy)NSString *photoUrl;
 @property (nonatomic, copy)NSString *reDoctorId;
 @property (nonatomic, copy)NSString *strGuid;
+
+@property (nonatomic, assign, readonly) CGFloat cellHeight;
 
 @end

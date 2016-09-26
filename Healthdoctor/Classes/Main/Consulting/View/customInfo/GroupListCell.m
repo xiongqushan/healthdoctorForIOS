@@ -14,6 +14,7 @@
 #import "HZAPI.h"
 #import "HZUser.h"
 #import "Config.h"
+#import "CustomInfoHttpRequest.h"
 
 @implementation GroupListCell
 
@@ -62,16 +63,13 @@
     
     HZUser *user = [Config getProfile];
     NSDictionary *param = @{@"customerId":self.customerId,@"curGroupId":self.groupIdList[indexPath.row],@"operateBy":user.name};
-    [[GKNetwork sharedInstance] GetUrl:kDeleteGroupURL param:param completionBlockSuccess:^(id responseObject) {
-        
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:@"删除分组失败！"];
-            return ;
+    [CustomInfoHttpRequest deleteCustomGroup:param completionBlock:^(NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [self.groupList removeObjectAtIndex:indexPath.row];
+            [collectionView reloadData];
         }
-        
-        [self.groupList removeObjectAtIndex:indexPath.row];
-        [collectionView reloadData];
-    } failure:^(NSError *error) {
     }];
 
 }

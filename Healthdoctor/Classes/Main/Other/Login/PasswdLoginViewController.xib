@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PasswdLoginViewController">
@@ -19,81 +20,73 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loginBg" translatesAutoresizingMaskIntoConstraints="NO" id="1He-DN-snm">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <frame key="frameInset" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="4Y0-dE-g7S">
-                    <rect key="frame" x="55" y="225" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="6ZA-vY-MR5"/>
                         <constraint firstAttribute="height" constant="25" id="eBN-j3-cjK"/>
                     </constraints>
                 </imageView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="15601815186" placeholder="手机号:" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LJp-IJ-3oU">
-                    <rect key="frame" x="92" y="222" width="227" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="xtK-9u-EtG"/>
                     </constraints>
-                    <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="passwd" translatesAutoresizingMaskIntoConstraints="NO" id="pN8-Uh-eSc">
-                    <rect key="frame" x="57" y="270" width="25" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="Q6s-tZ-cYC"/>
                         <constraint firstAttribute="height" constant="25" id="Wx4-Ef-ZrR"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cuttingLine" translatesAutoresizingMaskIntoConstraints="NO" id="jIY-nh-Kfq">
-                    <rect key="frame" x="52" y="257" width="272" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="hdn-dI-V9r"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cuttingLine" translatesAutoresizingMaskIntoConstraints="NO" id="Ve0-8j-jYk">
-                    <rect key="frame" x="52" y="304" width="272" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="6jd-4m-YsU"/>
                     </constraints>
                 </imageView>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="111111" placeholder="密码:" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bQD-Li-7Qd">
-                    <rect key="frame" x="92" y="268" width="227" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="1Yo-ik-cSl"/>
                     </constraints>
-                    <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="V12-aW-a5D">
-                    <rect key="frame" x="137" y="94" width="102" height="102"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="102" id="ZwN-CL-K3I"/>
                         <constraint firstAttribute="height" constant="102" id="a7S-wr-NRh"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RV9-9F-Quc">
-                    <rect key="frame" x="52" y="323" width="271" height="44"/>
-                    <color key="backgroundColor" red="0.15294117647058825" green="0.66666666666666663" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.15294117647058825" green="0.66666666666666663" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Kv1-ZK-HIy"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <state key="normal" title="登录">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="login:" destination="-1" eventType="touchUpInside" id="H9U-MA-bEJ"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击&quot;登录&quot;即表示您同意并愿意遵守优健管[用户协议]和[隐私政策]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saD-cd-uzL">
-                    <rect key="frame" x="64" y="373" width="246" height="32"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Ve0-8j-jYk" secondAttribute="trailing" constant="51" id="6XZ-2o-hlo"/>
                 <constraint firstItem="V12-aW-a5D" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9FQ-uf-2sT"/>
@@ -120,7 +113,6 @@
                 <constraint firstItem="Ve0-8j-jYk" firstAttribute="top" secondItem="bQD-Li-7Qd" secondAttribute="bottom" constant="6" id="rUQ-Ps-80X"/>
                 <constraint firstItem="LJp-IJ-3oU" firstAttribute="leading" secondItem="4Y0-dE-g7S" secondAttribute="trailing" constant="12" id="tRi-LV-VGZ"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="438.5" y="183.5"/>
         </view>
     </objects>

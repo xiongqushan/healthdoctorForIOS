@@ -16,13 +16,16 @@
 #import "HZUtils.h"
 #import "JPUSHService.h"
 #import "HZUtils.h"
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
 
-#define kIflyAppId @"57bf998f"
-#define kBugluAppId @"900037400"
-#define kJPushAppId @"330bf15f3128cf7802eb9921"
+#define kIflyAppId @"57bf998f"  //讯飞AppId
+#define kBugluAppId @"900037400"  //bugly AppId
+#define kJPushAppId @"330bf15f3128cf7802eb9921"  //极光推送AppId
 #define kChannelId @"App Stroe"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<JPUSHRegisterDelegate>
 
 @property (nonatomic, strong)UIViewController *main;
 
@@ -33,11 +36,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [NSThread sleepForTimeInterval:2.0];
-    
     [Bugly startWithAppId:kBugluAppId];
-    //获取应用沙盒
-    NSString *path = NSHomeDirectory();
-    NSLog(@"_______%@",path);
+    
+//    //获取应用沙盒
+//    NSString *path = NSHomeDirectory();
+//    NSLog(@"_______%@",path);
     
     /**************** 控件外观设置 *******************/
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -59,8 +62,13 @@
     [IFlySpeechUtility createUtility:initString];
     
     /********************************************** 配置极光推送 *******************************************/
-    
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
+        JPUSHRegisterEntity *entity = [[JPUSHRegisterEntity alloc] init];
+        entity.types = UNAuthorizationOptionAlert|UNAuthorizationOptionBadge|UNAuthorizationOptionSound;
+        [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+#endif
+    }else if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         //可以添加自定义categories
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                           UIUserNotificationTypeSound |
@@ -77,6 +85,14 @@
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [JPUSHService setupWithOption:launchOptions appKey:kJPushAppId channel:kChannelId apsForProduction:NO];
+    
+    [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
+        if (resCode == 0) {
+            NSLog(@"registrationID获取成功:%@",registrationID);
+        }else {
+            NSLog(@"registrationID获取失败,code: %d",resCode);
+        }
+    }];
     
     [JPUSHService crashLogON];  //统计用户应用崩溃日志
     
@@ -122,6 +138,38 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     //Optional
     NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
 }
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#pragma mark -- iOS10程序在前台收到通知之后调用的方法
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler {
+    
+
+}
+#pragma mark -- ios10程序在后台收到通知调用的方法
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+#endif
+
+- (NSString *)logDic:(NSDictionary *)dic {
+    if (![dic count]) {
+        return nil;
+    }
+    NSString *tempStr1 =
+    [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
+                                                 withString:@"\\U"];
+    NSString *tempStr2 =
+    [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 =
+    [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *str =
+    [NSPropertyListSerialization propertyListFromData:tempData
+                                     mutabilityOption:NSPropertyListImmutable
+                                               format:NULL
+                                     errorDescription:NULL];
+    return str;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

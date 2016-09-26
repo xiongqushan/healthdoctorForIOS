@@ -61,7 +61,7 @@ static UIGestureRecognizer *_tap;
 - (void)setErrorViewWithTarget:(id)target action:(SEL)sel {
 
     UIView *errorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
-    errorView.tag = 101;
+    errorView.tag = 201;
     errorView.backgroundColor = [UIColor clearColor];
     errorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     
@@ -85,7 +85,7 @@ static UIGestureRecognizer *_tap;
 
 - (void)removeErrorView {
     for (UIView *view in self.subviews) {
-        if (view.tag == 101) {
+        if (view.tag == 201) {
             [view removeFromSuperview];
         }
     }

@@ -49,6 +49,48 @@
     return [NSString stringWithFormat:@"%@?timespan=%d",url,timeStamp];
 }
 
+- (void)GetUrl:(NSString *)url param:(NSDictionary *)param completionBlock:(void(^)(id responseObject, NSError *error))completion {
+
+  //  MBProgressHUD *hud = [HZUtils createHUD];
+    NSString *requestUrl = [self getRequestUrl:url];
+    if (param) { //在这个地方拼接参数到URL，使请求的url和参与加密的url参数顺序一致
+        NSArray *keyArr = param.allKeys;
+        NSArray *valueArr = param.allValues;
+        for (NSInteger i = 0; i < keyArr.count; i++) {
+            NSString *paramStr = [NSString stringWithFormat:@"%@=%@",keyArr[i],valueArr[i]];
+            requestUrl = [requestUrl stringByAppendingString:[NSString stringWithFormat:@"&%@",paramStr]];
+        }
+    }
+    
+    NSString *basicStr = [self getHttpHeaderStrWithUrl:requestUrl];
+    
+    //Basic认证 base64进行加密
+    NSString *newBasicStr = [NSString stringWithFormat:@"Basic %@",[basicStr base64EncodedString]];
+    
+    requestUrl = [requestUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //请求URL（带时间戳）
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET" URLString:requestUrl parameters:nil error:nil];
+    //将认证信息添加到请求头
+    [request setValue:newBasicStr forHTTPHeaderField:@"Authorization"];
+    
+    //AFN请求数据
+    NSURLSessionDataTask *dataTask = [_manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * response, id responseObject, NSError * error) {
+        
+//        [hud hideAnimated:YES];
+        
+//        if (error) {
+//            //请求失败回调
+//            failure(error);
+//        } else {
+//            //请求成功回调
+//            success(responseObject);
+//            
+//        }
+        completion(responseObject,error);
+    }];
+    [dataTask resume];
+}
+
 //get 请求
 - (void)GetUrl:(NSString *)url param:(NSDictionary *)param completionBlockSuccess:(void (^)(id))success failure:(void (^)(NSError *))failure {
     
@@ -101,6 +143,28 @@
     NSString *basicString = [NSString stringWithFormat:@"HZ_API_V2:%@",sign];
     return basicString;
     
+}
+
+- (void)postUrl:(NSString *)url param:(NSDictionary *)param completionBlock:(void (^)(id, NSError *))completion {
+    
+    NSString *requestUrl = [self getRequestUrl:url];
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] requestWithMethod:@"POST" URLString:requestUrl parameters:param error:nil];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:param options:0 error:nil];
+    NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSString *basicStr = [self postHttpHeaderStrWithUrl:requestUrl param:jsonStr];
+    //Basic认证 base64进行加密
+    NSString *newBasicStr = [NSString stringWithFormat:@"Basic %@",[basicStr base64EncodedString]];
+    //将认证信息添加到请求头
+    [request setValue:newBasicStr forHTTPHeaderField:@"Authorization"];
+    NSURLSessionDataTask *dataTask = [_manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * response, id responseObject, NSError * error) {
+        
+        completion(responseObject,error);
+    }];
+    
+    [dataTask resume];
+
 }
 
 //post 请求

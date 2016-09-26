@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "JPUSHService.h"
 #import <MJExtension.h>
+#import "LoginHttpRequest.h"
 
 @interface PasswdLoginViewController ()
 
@@ -33,6 +34,7 @@
     
 }
 
+
 - (void)setAlias:(int)iResCode tags:(NSSet *)tags alias:(NSString *)alias {
     
     NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
@@ -41,29 +43,35 @@
 - (IBAction)login:(id)sender {
     NSString *passwd = [MD5 md532BitLower:self.passwdTextField.text];
     NSDictionary *param = @{@"Account":self.phoneNumTextField.text,@"Password":passwd};
-    
+    [LoginHttpRequest requestLogin:param completionBlock:^(NSString *doctorId, NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+       //     [JPUSHService setAlias:[NSString stringWithFormat:@"%@",doctorId] callbackSelector:@selector(setAlias:tags:alias:) object:self];
+            [JPUSHService setTags:nil alias:[NSString stringWithFormat:@"%@",doctorId] fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+                NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, iTags , iAlias);
+            }];
+            //跳转页面
+            HZTabBarViewController *hzTab = [[HZTabBarViewController alloc] init];
+            [self presentViewController:hzTab animated:NO completion:nil];
+        }
+    }];
+
+/*
     [[GKNetwork sharedInstance] PostUrl:kLoginValidateURL param:param completionBlockSuccess:^(id responseObject) {
         NSString *message = responseObject[@"message"];
         
         if ([responseObject[@"state"] integerValue] == 1) {
             NSDictionary *data = responseObject[@"Data"];
+            
             HZUser *user = [HZUser mj_objectWithKeyValues:data];
-            
-//            HZUser *user = [[HZUser alloc] init];
-//            [user setValuesForKeysWithDictionary:data];
-//            user.isLogin = @"1";
-//            user.doctorId = data[@"Doctor_ID"];
-//            user.lastLogOn = data[@"Last_Log_On"];
-            
             [Config saveProfile:user];
             
             [JPUSHService setAlias:[NSString stringWithFormat:@"%@",user.doctorId] callbackSelector:@selector(setAlias:tags:alias:) object:self];
-    
             //跳转页面
             HZTabBarViewController *hzTab = [[HZTabBarViewController alloc] init];
-
             [self presentViewController:hzTab animated:NO completion:nil];
-            
+
         }else {
          
             [HZUtils showHUDWithTitle:message];
@@ -73,6 +81,8 @@
         [HZUtils showHUDWithTitle:@"网络出错！"];
         
     }];
+    */
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

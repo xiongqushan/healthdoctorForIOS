@@ -20,6 +20,7 @@
 #import "SearchViewController.h"
 #import "UserDetailViewController.h"
 #import "AudionPlayer.h"
+#import "GroupListHttpRequest.h"
 
 @interface HomeDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -38,32 +39,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tabbar_discover"] style:UIBarButtonItemStylePlain target:self action:@selector(search:)];
 
-   
     self.dataArr = [NSMutableArray array];
     self.title = self.model.name;
     [self setUpTableView];
-//    [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
 }
-//
-//- (void)loadUserInfoData {
-//    NSDictionary *param = @{@"customerId":self.model.Id};
-//    [[GKNetwork sharedInstance] GetUrl:kGetCusInfoURL param:param completionBlockSuccess:^(id responseObject) {
-//        
-//        //  NSLog(@"_________%@",responseObject);
-//        if ([responseObject[@"state"] integerValue] != 1) {
-//            [HZUtils showHUDWithTitle:responseObject[@"message"]];
-//            return ;
-//        }
-//        NSDictionary *data = responseObject[@"Data"];
-//        CusInfoModel *model = [[CusInfoModel alloc] init];
-//        [model setValuesForKeysWithDictionary:data];
-//        model.commitOn = self.model.commitOn;
-//        self.infoModel = model;
-//      //  [self setUpUserInfoViewWithModel:model];
-//    } failure:^(NSError *error) {
-//        
-//    }];
-//}
 
 - (void)setUpRightSearchBtn {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -92,7 +71,8 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self.view addSubview:self.tableView];
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeDetailCell" bundle:nil] forCellReuseIdentifier:@"HomeDetailCell"];
-
+    
+    _index = 1;
     //创建下拉刷新
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     header.automaticallyChangeAlpha = YES;
@@ -101,67 +81,57 @@
     self.tableView.mj_header = header;
     
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _index ++;
-        [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
+        [self loadMoreData];
     }];
 }
 
 - (void)loadNewData {
-    
     _index = 1;
-    [self requestDataWithCustomNameOrld:@"" pageIndex:_index pageSize:10];
-}
-
-- (void)endRefershView {
-    [self.tableView.mj_header endRefreshing];
-    [self.tableView.mj_footer endRefreshing];
-}
-
-- (void)requestDataWithCustomNameOrld:(NSString *)customName pageIndex:(NSInteger)index pageSize:(NSInteger)count {
     HZUser *user = [Config getProfile];
+    NSDictionary *param = @{@"serviceDeptId":user.dept,@"customNameOrMobile":@"",@"groupId":[NSString stringWithFormat:@"%ld",self.model.Id],@"doctorId":user.doctorId,@"pageIndex":@(_index),@"pageSize":@(10)};
     
-    NSDictionary *param = @{@"serviceDeptId":user.dept,@"customNameOrMobile":customName,@"groupId":[NSString stringWithFormat:@"%ld",self.model.Id],@"doctorId":user.doctorId,@"pageIndex":@(index),@"pageSize":@(count)};
-    [[GKNetwork sharedInstance] GetUrl:kGroupCustInfoListURL param:param completionBlockSuccess:^(id responseObject) {
-        if (index == 1) {
-            [self.dataArr removeAllObjects];
+    [[GroupListHttpRequest getInstatce] requestNewData:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+        [self.tableView.mj_header endRefreshing];
+        if (dataArr.count < 10) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }else {
+            [self.tableView.mj_footer endRefreshing];
         }
-        NSDictionary *data = responseObject[@"Data"];
-        NSString *message = responseObject[@"message"];
-        if ([responseObject[@"state"] integerValue] != 1) {
+        if (message) {
+            //失败
             [HZUtils showHUDWithTitle:message];
-            [self endRefershView];
-            return ;
+        }else {
+            
+            [[AudionPlayer shareAudioPlayer] play];
+            self.dataArr = dataArr;
+            [self.tableView reloadData];
         }
-        
-        //播放声音
-        [[AudionPlayer shareAudioPlayer] play];
-        
-        NSInteger count2 = [data[@"Count"] integerValue];
-        if (count2 == 0) {
-//            [HZUtils showHUDWithTitle:@"没有服务人数！"];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            [self.tableView.mj_header endRefreshing];
-            return;
-        }
-        
-        NSArray *dataArr = data[@"Data"];
-        if(dataArr.count == 0) {
-//            [HZUtils showHUDWithTitle:@"数据加载完成!"];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            return;
-        }
-        for (NSDictionary *dict in dataArr) {
-            HomeDetailModel *model = [[HomeDetailModel alloc] init];
-            [model setValuesForKeysWithDictionary:dict];
-            [self.dataArr addObject:model];
-        }
-        [self.tableView reloadData];
-        [self endRefershView];
-        
-    } failure:^(NSError *error) {
-        
     }];
+}
+
+- (void)loadMoreData {
+    _index ++;
+    HZUser *user = [Config getProfile];
+    NSDictionary *param = @{@"serviceDeptId":user.dept,@"customNameOrMobile":@"",@"groupId":[NSString stringWithFormat:@"%ld",self.model.Id],@"doctorId":user.doctorId,@"pageIndex":@(_index),@"pageSize":@(10)};
     
+    [[GroupListHttpRequest getInstatce] requestMoreData:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+       
+        if (dataArr.count < 10) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }else {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [[AudionPlayer shareAudioPlayer] play];
+            
+            [self.dataArr addObjectsFromArray:dataArr];
+            [self.tableView reloadData];
+            
+        }
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

@@ -101,7 +101,8 @@
         
         if (indexPath.section == 1 && indexPath.row == 2) {
             //推送设置
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID&&path=com.ihaozhuo.health"]];
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=NOTIFICATIONS_ID&&path=com.ihaozhuo.health"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }
         
         if (indexPath.section == 2) {

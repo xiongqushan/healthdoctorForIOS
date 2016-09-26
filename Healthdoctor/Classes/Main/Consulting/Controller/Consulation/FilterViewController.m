@@ -19,6 +19,8 @@
 #import "FeedbackModel.h"
 #import "UIColor+Utils.h"
 #import "AudionPlayer.h"
+#import "ConsulationHttpRequest.h"
+#import <MBProgressHUD.h>
 
 #define kTableViewH kScreenSizeHeight - 64 - 48 - 40
 @interface FilterViewController () <UITableViewDelegate,UITableViewDataSource>
@@ -30,7 +32,7 @@
 {
     NSInteger _index;
     Class _cls;
-
+    BOOL _isFlag;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,14 +49,19 @@
     _index = 1;
     //创建tableView
     [self setUpTableView];
-    
-    //回复完消息回到该界面时重新请求数据
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeListNoti:) name:@"ChangeListNotifi" object:nil];
+ 
+    _isFlag = YES;
+    if ([self.url isEqualToString:kGetPendingURL] && ([self.flag integerValue] == 3 || [self.flag integerValue] == 2 || [self.flag integerValue] == 1)) {//只有在待处理 全部界面 注册通知
+        //回复完消息回到该界面时重新请求数据
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeListNoti:) name:@"ChangeListNotifi" object:nil];
+    }
+
 }
 
 - (void)changeListNoti:(NSNotification *)noti {
-
-    [self loadData];
+    
+    _isFlag = NO;
+    [self loadNewData];
 }
 
 - (void)setUpTableView {
@@ -78,20 +85,72 @@
     
     //创建上拉加载
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        _index ++;
-        [self loadData];
+        [self loadMoreData];
         
     }];
     
 }
 
-- (void)loadNewData {
-    //下拉刷新
-    _index = 1;
-    [self loadData];
+- (void)loadMoreData {
+   // MBProgressHUD *hud = [HZUtils createHUD];
+    
+    _index++;
+    NSDictionary *param = [self getParamWithFlag:self.flag];
+    [ConsulationHttpRequest requestMoreData:self.url param:param class:_cls completionBlock:^(NSMutableArray *arr, NSString *message) {
+     //   [hud hideAnimated:YES];
+        
+        if (arr.count < 10) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }else {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [[AudionPlayer shareAudioPlayer] play];
+            
+            [self.dataArr addObjectsFromArray:arr];
+            [self.tableView reloadData];
+        }
+    }];
 }
 
-//
+- (void)loadNewData {
+    
+    MBProgressHUD *hud = [HZUtils createHUD];
+    //下拉刷新
+    _index = 1;
+    NSDictionary *param = [self getParamWithFlag:self.flag];
+    [ConsulationHttpRequest requestNewData:self.url param:param class:_cls completionBlock:^(NSMutableArray *arr, NSString *message) {
+        
+        [hud hideAnimated:YES];
+        [self.tableView.mj_header endRefreshing]; //停止刷新
+        //根据数组个数判断数据是否全部加载
+        if (arr.count < 10) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }else {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        
+        if (message) {
+            if (_isFlag) {
+                [HZUtils showHUDWithTitle:message];
+            }
+
+        }
+        
+        [[AudionPlayer shareAudioPlayer] play];
+        
+        if (self.badgeBlock) {
+            self.badgeBlock(arr.count);
+        }
+        self.dataArr = arr;
+        [self.tableView reloadData];
+        _isFlag = YES;
+    }];
+}
+
 - (NSDictionary *)getParamWithFlag:(NSString *)flag {
     
     HZUser *user = [Config getProfile];
@@ -100,77 +159,10 @@
         NSDictionary *param = @{@"doctorId":user.doctorId,@"beginCommitOn":self.starDate,@"endCommitOn":self.endDate,@"pageIndex":@(_index),@"pageSize":@(10)};
         return param;
     }
-
     //待处理  问题反馈
     NSDictionary *param = @{@"doctorId":user.doctorId,@"pageIndex":@(_index),@"pageSize":@(10),@"flag":flag};
     return param;
 
-}
-
-- (void)loadData {
-    NSDictionary *param = [self getParamWithFlag:self.flag];
-    
-    [[GKNetwork sharedInstance] GetUrl:self.url param:param completionBlockSuccess:^(id responseObject) {
-        if (_index == 1) {
-            [self.dataArr removeAllObjects];
-        }
-        
-        NSDictionary *dict = (NSDictionary *)responseObject;
-        if ([dict[@"state"] integerValue] != 1) { //不为1时请求数据失败
-            [HZUtils showHUDWithTitle:@"服务器出错"];
-            [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshing];
-            return ;
-        }
-        
-        //播放声音
-        [[AudionPlayer shareAudioPlayer] play];
-        
-        NSDictionary *data = dict[@"Data"];
-        NSInteger count = [data[@"Count"] integerValue];
-        if (self.badgeBlock) {// 刷新之后调用block更改badgeValue
-            self.badgeBlock(count);
-        }
-        if(count == 0) {
-        //    [HZUtils showHUDWithTitle:@"暂时没有客户"];
-            [self.tableView.mj_header endRefreshing];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            [self.dataArr removeAllObjects];
-            [self.tableView reloadData];
-            return;
-        }
-        NSArray *arr = data[@"Data"];
-        if (!arr.count) { // 请求不来数据 提示
-//            [HZUtils showHUDWithTitle:@"客户已全部加载"];
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            
-            return;
-        }
-        for (NSDictionary *dic in arr) {
-            HZBaseModel *model = [[_cls alloc] init];
-            [model setValuesForKeysWithDictionary:dic];
-            [self.dataArr addObject:model];
-            
-            if ([model isKindOfClass:[FeedbackModel class]]) {
-                FeedbackModel *backModel = (FeedbackModel *)model;
-                NSLog(@"_____socre:%@",backModel.score);
-            }
-        }
-        
-        [self.tableView reloadData];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-        
-        //判断数据个数，如果不够上拉加载更多，隐藏上拉加载视图
-        if (self.dataArr.count < 10) {
-          
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        }
-    } failure:^(NSError *error) {
-        [HZUtils showHUDWithTitle:@"请检查网络"];
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -200,7 +192,12 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kCellSelectedNotification object:self userInfo:@{@"indexPath":indexPath,@"dataArr":self.dataArr}];
+    NSString *flag = @"0";
+    if ([self.url isEqualToString:kGetFeedbackURL]) {
+        flag = @"1";
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCellSelectedNotification object:self userInfo:@{@"indexPath":indexPath,@"dataArr":self.dataArr,@"isFeedback":flag}];
     
 }
 

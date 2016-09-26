@@ -15,6 +15,7 @@
 #import "CommonLanguageCell.h"
 #import "Define.h"
 #import "GKAlertView.h"
+#import "PhraseHttpRequest.h"
 
 #define kConsultViewH 120
 
@@ -115,25 +116,17 @@
     self.dataArr = [NSMutableArray array];
     self.resultArr = [NSMutableArray array];
     
-    [[GKNetwork sharedInstance] GetUrl:kDefaultExpressionsURL param:nil completionBlockSuccess:^(id responseObject) {
+    [PhraseHttpRequest requestPhraseData:nil completionBlock:^(NSMutableArray *dataArr, NSString *message) {
         [self.dataArr removeAllObjects];
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:@"请求失败"];
-            return ;
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [self.dataArr addObjectsFromArray:dataArr];
+            [self.tableView reloadData];
         }
-        NSArray *data = responseObject[@"Data"];
-        for (NSDictionary *dict in data) {
-            CommonLanguageModle *model = [[CommonLanguageModle alloc] init];
-            [model setValuesForKeysWithDictionary:dict];
-            model.isClick = @"0";
-            [self.dataArr addObject:model];
-        }
-        
-        [self.tableView reloadData];
-        
-    } failure:^(NSError *error) {
         
     }];
+
 }
 
 #pragma mark -- UISearchBarDelegate
@@ -142,22 +135,16 @@
     [searchBar resignFirstResponder];
     NSDictionary *param = @{@"keyWord":searchBar.text};
     
-    [[GKNetwork sharedInstance] GetUrl:kSearchExpressionsURL param:param completionBlockSuccess:^(id responseObject) {
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:responseObject[@"message"]];
-            return ;
+    [PhraseHttpRequest requestSearchData:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [self.dataArr removeAllObjects];
+            [self.dataArr addObjectsFromArray:dataArr];
+            [self.tableView reloadData];
         }
-        [self.dataArr removeAllObjects];
-        for (NSDictionary *dict in responseObject[@"Data"]) {
-            CommonLanguageModle *model = [[CommonLanguageModle alloc] init];
-            [model setValuesForKeysWithDictionary:dict];
-            model.isClick = @"0";
-            [self.dataArr addObject:model];
-        }
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-    
     }];
+    
 }
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {

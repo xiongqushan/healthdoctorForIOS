@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong)NSMutableArray *dataArr;
 
+@property (nonatomic, copy)NSString *medicalCenter;
+
 @end

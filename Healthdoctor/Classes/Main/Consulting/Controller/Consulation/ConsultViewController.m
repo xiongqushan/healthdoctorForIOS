@@ -49,6 +49,7 @@
 
     NSIndexPath *indexPath = note.userInfo[@"indexPath"];
     NSMutableArray *dataArr = note.userInfo[@"dataArr"];
+    NSString *isFeedback = note.userInfo[@"isFeedback"];
     
     ChartBaseViewController *chart = [[ChartBaseViewController alloc] init];
     
@@ -56,6 +57,12 @@
     chart.customId = [NSString stringWithFormat:@"%ld",model.custId];
     chart.photoUrl = model.photoUrl;
     chart.customName = model.custName;
+    if ([isFeedback isEqualToString:@"1"]) {
+        chart.isFeedback = YES;
+    }else {
+        chart.isFeedback = NO;
+    }
+    
     [self.navigationController pushViewController:chart animated:YES];
 }
 

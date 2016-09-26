@@ -21,6 +21,7 @@
 #import "SummarysModel.h"
 #import "ResultModel.h"
 #import "ReportInfoModel.h"
+#import "ReportHttpRequest.h"
 
 @interface ReportDetailViewController ()
 @property (nonatomic ,strong)NSMutableArray *detailDataArr;
@@ -59,6 +60,7 @@
     
     ExamExceptionsViewController *exceptions = [[ExamExceptionsViewController alloc] init];
     exceptions.dataArr = self.unusualDataArr;
+    exceptions.medicalCenter = self.infoModel.checkUnitName;
     
     ExamDetailViewController *detail = [[ExamDetailViewController alloc] init];
     detail.dataArr = self.detailDataArr;
@@ -72,6 +74,20 @@
     // AppendInfo = "6616032768;66";
     // AppendInfo = "6616032768;66";
     NSDictionary *param = @{@"customerId":self.custId,@"checkCode":self.checkCode,@"workNo":self.workNum};
+    [ReportHttpRequest requestReport:param completionBlock:^(NSDictionary *dicts, NSString *message) {
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            self.infoModel = dicts[@"reportInfo"];
+            self.summaryDataArr = dicts[@"summary"];
+            self.unusualDataArr = dicts[@"unusual"];
+            self.detailDataArr = dicts[@"medicalDetail"];
+            self.masterDoctor = dicts[@"masterDoctor"];
+            [self setUpBaseUI];
+        }
+    }];
+    
+/*
     [[GKNetwork sharedInstance] GetUrl:kGetHealthReportURL param:param completionBlockSuccess:^(id responseObject) {
         if ([responseObject[@"state"] integerValue] != 1) {
             [HZUtils showHUDWithTitle:responseObject[@"message"]];
@@ -132,6 +148,7 @@
     } failure:^(NSError *error) {
         
     }];
+ */
     
 }
 

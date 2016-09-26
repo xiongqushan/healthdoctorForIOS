@@ -19,6 +19,7 @@
 #import "HomeDetailCell.h"
 //#import "UserViewController.h"
 #import "UserDetailViewController.h"
+#import "GroupListHttpRequest.h"
 
 @interface SearchViewController ()<UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource>
 
@@ -57,32 +58,14 @@
     HZUser *user = [Config getProfile];
     
     NSDictionary *param = @{@"serviceDeptId":user.dept,@"doctorId":user.doctorId,@"groupId":[NSString stringWithFormat:@"%ld",self.model.Id],@"customNameOrMobile":customName,@"pageIndex":@(index),@"pageSize":@(count)};
-    [[GKNetwork sharedInstance] GetUrl:kGroupCustInfoListURL param:param completionBlockSuccess:^(id responseObject) {
-        if (index == 1) {
-            [self.dataArr removeAllObjects];
-        }
-        NSDictionary *data = responseObject[@"Data"];
-        NSString *message = responseObject[@"message"];
-        if ([responseObject[@"state"] integerValue] != 1) {
+    
+    [[GroupListHttpRequest getInstatce] requestNewData:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+        if (message) {
             [HZUtils showHUDWithTitle:message];
-            return ;
+        }else {
+            self.dataArr = dataArr;
+            [self.tableView reloadData];
         }
-        
-        NSInteger count2 = [data[@"Count"] integerValue];
-        if (count2 == 0) {
-            [HZUtils showHUDWithTitle:@"没有该客户！"];
-            return;
-        }
-        NSArray *dataArr = data[@"Data"];
-        for (NSDictionary *dict in dataArr) {
-            HomeDetailModel *model = [[HomeDetailModel alloc] init];
-            [model setValuesForKeysWithDictionary:dict];
-            [self.dataArr addObject:model];
-        }
-        [self.tableView reloadData];
-        
-    } failure:^(NSError *error) {
-        [HZUtils showHUDWithTitle:@"网络不给力"];
     }];
 
 }

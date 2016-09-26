@@ -37,8 +37,8 @@
     self.view.backgroundColor = [UIColor viewBackgroundColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, kScreenSizeWidth, 30)];
     label.backgroundColor = kSetRGBColor(254, 187, 92);
-    label.font = [UIFont systemFontOfSize:13];
-    label.text = [NSString stringWithFormat:@"河南省直医院分析到体检报告中以下%ld项可能存在异常",self.dataArr.count];
+    label.font = [UIFont systemFontOfSize:12];
+    label.text = [NSString stringWithFormat:@"%@分析到体检报告中以下%ld项可能存在异常",self.medicalCenter,(unsigned long)self.dataArr.count];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     [self.view addSubview:label];
@@ -91,7 +91,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell showDataWithModel:model];
     return cell;
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

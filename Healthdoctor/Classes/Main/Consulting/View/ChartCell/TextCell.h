@@ -19,11 +19,7 @@ typedef void(^MessageClickBlock)(NSString *checkCode,NSString *workNo);
 
 
 @property (weak, nonatomic) IBOutlet UIImageView *leftIconImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *rightIconImageView;
 
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
 
 @property (nonatomic, copy)MessageClickBlock messageClick;
 

@@ -17,6 +17,8 @@
 @property (nonatomic, copy) NSString *photoUrl;
 @property (nonatomic, copy) NSString *customName;
 
+@property (nonatomic, assign) BOOL isFeedback;
+
 @property (nonatomic, strong)UIView *userInfoView;
 
 - (void)setUpNavTitleViewWithTitle:(NSString *)title;

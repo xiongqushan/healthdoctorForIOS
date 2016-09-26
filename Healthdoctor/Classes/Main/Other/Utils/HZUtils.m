@@ -28,11 +28,11 @@
 }
 
 + (MBProgressHUD *)createHUD {
+    
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:window animated:YES];
     HUD.userInteractionEnabled = NO;
     HUD.removeFromSuperViewOnHide = YES;
-    
     return HUD;
 }
 
@@ -99,7 +99,7 @@
 
 + (CGSize)getHeightWithFont:(UIFont *)font title:(NSString *)title maxWidth:(CGFloat)width{
     NSDictionary *attributes = @{NSFontAttributeName:font};
-    CGSize size = [title boundingRectWithSize:CGSizeMake(width, 1000.0f) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    CGSize size = [title boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     return size;
 }
 

@@ -19,6 +19,8 @@
 #import "GroupListCell.h"
 #import "HomeGroupModel.h"
 #import "GroupManager.h"
+#import "CustomInfoHttpRequest.h"
+
 @interface CusInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong)UITableView *tableView;
@@ -43,59 +45,27 @@
 
 - (void)loadInfoData {
     NSDictionary *param = @{@"customerId":self.customId};
-    [[GKNetwork sharedInstance] GetUrl:kGetCusInfoURL param:param completionBlockSuccess:^(id responseObject) {
-        
-        if ([responseObject[@"state"] integerValue] != 1) {
-            [HZUtils showHUDWithTitle:responseObject[@"message"]];
-            return ;
-        }
-        NSDictionary *dict = responseObject[@"Data"];
-        CustomInfoModel *model = [[CustomInfoModel alloc] init];
-//        if ([dict[@"Gender"] isKindOfClass:[NSNull class]]) {
-//            model.gender = @"暂无";
-//        }else if ([dict[@"Gender"] integerValue] == 0) {
-//            model.gender = @"女";
-//        }else {
-//            model.gender = @"男";
-//        }
-        
-        //根据数字获得性别
-        model.gender = [HZUtils getGender:dict[@"Gender"]];
-        
-        model.career = dict[@"Career"];
-        
-        model.birthday = dict[@"Birthday"];
-        model.age = [HZUtils getAgeWithBirthday:model.birthday];
-        
-        model.mobile = dict[@"Mobile"];
-        model.certificateCode = dict[@"Certificate_Code"];
-        model.companyName = dict[@"Company_Name"];
-        model.contactName = dict[@"Contact_Name"];
-        model.contactMobile = dict[@"Contact_Mobile"];
-        model.Id = dict[@"Id"];
-        model.groupList = dict[@"GroupIdList"];
-        //保存存放分组Id的可变数组
-        self.groupIdList = [NSMutableArray arrayWithArray:model.groupList];
-        self.customerId = model.Id;//保存客户Id
-        
-        for (NSString *groupId in model.groupList) {
-            /*
-            NSString *keyStr = [NSString stringWithFormat:@"%@",groupId];
-            NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:keyStr];
-            if (groupName) {
-                [self.groupList addObject:groupName];
-            NSLog(@"_____%@",groupName);
-             */
-            HomeGroupModel *groupModel=[GroupManager getGroup:[groupId integerValue]];
-            if (groupModel) {
-                [self.groupList addObject:groupModel.name];
-            }
+    [CustomInfoHttpRequest requestInfo:param completionBlock:^(CustomInfoModel *model, NSString *message) {
+       
+        if (message) {
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            //保存存放分组Id的可变数组
+            self.groupIdList = [NSMutableArray arrayWithArray:model.groupList];
+            self.customerId = model.Id;//保存客户Id
             
+            for (NSString *groupId in model.groupList) {
+
+                HomeGroupModel *groupModel=[GroupManager getGroup:[groupId integerValue]];
+                if (groupModel) {
+                    [self.groupList addObject:groupModel.name];
+                }
+            }
+            [self initDataWithModel:model];
+
         }
-        [self initDataWithModel:model];
-        
-    } failure:^(NSError *error) {
     }];
+    
 }
 
 - (void)initDataWithModel:(CustomInfoModel *)model {

@@ -23,6 +23,7 @@
 #import "ChartBaseViewController.h"
 #import "ReportDetailViewController.h"
 #import "MSSBrowseDefine.h"
+#import "CustomDetailHttpRequest.h"
 
 @class HomeViewController;
 
@@ -128,6 +129,18 @@
     // 40210
     self.medicalDataArr = [NSMutableArray array];
     NSDictionary *param = @{@"customerId":self.custID};
+    [CustomDetailHttpRequest requestReportList:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+        [self.medicalDataArr removeAllObjects];
+        if (message) {
+            [self.tableView reloadData];
+            [HZUtils showHUDWithTitle:message];
+            
+        }else {
+            [self.medicalDataArr addObjectsFromArray:dataArr];
+            [self.tableView reloadData];
+        }
+    }];
+/*
     [[GKNetwork sharedInstance] GetUrl:kGetReportListURL param:param completionBlockSuccess:^(id responseObject) {
         [self.medicalDataArr removeAllObjects];
         if ([responseObject[@"state"] integerValue] != 1) {
@@ -159,6 +172,8 @@
     } failure:^(NSError *error) {
         
     }];
+ */
+    
 }
 
 //获取照片病例网络数据
@@ -167,6 +182,17 @@
     self.photoDataArr = [NSMutableArray array];
     
     NSDictionary *param = @{@"accountID":self.accountID};
+    [CustomDetailHttpRequest requestPhotoCasesList:param completionBlock:^(NSMutableArray *dataArr, NSString *message) {
+        [self.photoDataArr removeAllObjects];
+        if (message) {
+            [self.tableView reloadData];
+            [HZUtils showHUDWithTitle:message];
+        }else {
+            [self.photoDataArr addObjectsFromArray:dataArr];
+            [self.tableView reloadData];
+        }
+    }];
+/*
     [[GKNetwork sharedInstance] GetUrl:kReportPhotoListURL param:param completionBlockSuccess:^(id responseObject) {
         
         [self.photoDataArr removeAllObjects];
@@ -196,6 +222,7 @@
     } failure:^(NSError *error) {
         
     }];
+ */
 }
 #pragma mark -- PhotoCasesCellDelegate
 - (void)photoCasesDidSelected:(NSIndexPath *)indexPath imageView:(UIImageView *)imageView{
@@ -232,6 +259,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         MedicalReportCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MedicalReportCell"];
+        cell.genderLabel.text = self.genderLabel.text;
+        cell.ageLabel.text = self.ageLabel.text;
         [cell showDataWithModel:self.medicalDataArr[indexPath.row]];
         return cell;
     }else {

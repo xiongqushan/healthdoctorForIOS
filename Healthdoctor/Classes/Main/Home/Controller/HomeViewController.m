@@ -20,12 +20,11 @@
 #import "UIColor+Utils.h"
 #import "GroupManager.h"
 #import "UIView+Utils.h"
+#import "HomeHttpRequest.h"
 
 #define kBaseTag 101
 
 @interface HomeViewController ()
-
-@property (nonatomic, strong)NSMutableArray *dataArr;
 
 @end
 
@@ -37,74 +36,45 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor viewBackgroundColor];
-    [self loadData];
+   // [self loadData];
 }
 
 - (void)loadData {
     
     [self.view removeErrorView];
-    
-    self.dataArr = [NSMutableArray array];
+
     HZUser *user = [Config getProfile];
     NSDictionary *param = @{@"doctorId":user.doctorId};
-
-    [[GKNetwork sharedInstance] GetUrl:kGetCusGroupURL param:param completionBlockSuccess:^(id responseObject) {
+    MBProgressHUD *hud = [HZUtils createHUD];
+    
+    [HomeHttpRequest requestHomeData:param completionBlock:^(NSArray *dataArr, NSString *message) {
         
-        if ([responseObject[@"state"] integerValue] == 1) {
-            
-            NSArray * Data = responseObject[@"Data"];
-            for (NSDictionary *dict in Data) {
-                HomeGroupModel *model = [[HomeGroupModel alloc] init]; 
-                [model setValuesForKeysWithDictionary:dict];
-                if ([model.name containsString:@"Test_"]) {
-                    continue;
-                }else {
-                    [self.dataArr addObject:model];
-                }
-//                [self.dataArr addObject:model];
-                
-                /*
-                [[NSUserDefaults standardUserDefaults] setObject:model.name forKey:[NSString stringWithFormat:@"%@",model.Id]];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                if ([model.name containsString:@"Test_"]) {
-                    
-                }else {
-                    [self.dataArr addObject:model];
-                }
-                
-
-                NSLog(@"_______%@   %@",model.name,model.Id);
-                */
-            }
-            [GroupManager setGroupArray:self.dataArr];
-            
-            //对数组进行排序
-            _sortArr = [self.dataArr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-               
-                HomeGroupModel *pModel1 = obj1;
-                HomeGroupModel *pModel2 = obj2;
-                
-                if ([pModel1.groupNum integerValue] < [pModel2.groupNum integerValue]) {
-                    return NSOrderedAscending; //升序
-                }else if ([pModel1.groupNum integerValue] > [pModel2.groupNum integerValue]) {
-                    return NSOrderedDescending; //降序
-                }else {
-                    return NSOrderedSame; //相等
-                }
-            }];
-            
-            [self setUpBaseUIWithArr:_sortArr];
-            
+        [hud hideAnimated:YES];
+        
+        if (message) {
+            //失败，显示加载失败界面
+            [self.view setErrorViewWithTarget:self action:@selector(loadData)];
+            [self removewGroup];
+            [HZUtils showHUDWithTitle:message];
         }else {
-            [HZUtils showHUDWithTitle:@"获取失败!"];
+            //成功
+            if (dataArr) {
+                _sortArr = dataArr;
+                [self setUpBaseUIWithArr:_sortArr];
+            }else {
             
+                [HZUtils showHUDWithTitle:message];
+            }
         }
-        
-    } failure:^(NSError *error) {
-        NSLog(@"________失败！！！");
-        [self.view setErrorViewWithTarget:self action:@selector(loadData)];
     }];
+}
+
+- (void)removewGroup {
+    for (UIView *view in self.view.subviews) {
+        if (view.tag < 200) {
+            [view removeFromSuperview];
+        }
+    }
 }
 
 - (void)setUpBaseUIWithArr:(NSArray *)sortArr {
@@ -117,21 +87,21 @@
     
     CGRect frame = CGRectMake(padding, padding + 64, itemW, itemH*3);
 //    [self setUpMaxHWithFrame:frame model:sortArr[5] index:0];
-    [self setUpMiddleWithFrame:frame model:sortArr[5] index:0 color:kSetRGBColor(62, 198, 162)];
+    [self setUpMiddleWithFrame:frame model:sortArr[0] index:0 color:kSetRGBColor(62, 198, 162)];
     CGFloat lastItemY = kScreenSizeHeight - padding - itemH*3 -48;
 //    [self setUpMaxHWithFrame:CGRectMake(padding*2 + itemW, lastItemY, itemW, itemH*3) model:sortArr[4] index:5];
-    [self setUpMiddleWithFrame:CGRectMake(padding*2 + itemW, lastItemY, itemW, itemH*3) model:sortArr[4] index:5 color:kSetRGBColor(97, 200, 241)];
+    [self setUpMiddleWithFrame:CGRectMake(padding*2 + itemW, lastItemY, itemW, itemH*3) model:sortArr[1] index:5 color:kSetRGBColor(97, 200, 241)];
 
-    [self setUpMiddleWithFrame:CGRectMake(padding, 2*padding + itemH*3 +64, itemW, itemH*2) model:sortArr[3] index:1 color:kSetRGBColor(177, 225, 127)];
+    [self setUpMiddleWithFrame:CGRectMake(padding, 2*padding + itemH*3 +64, itemW, itemH*2) model:sortArr[2] index:1 color:kSetRGBColor(177, 225, 127)];
     
-    [self setUpMiddleWithFrame:CGRectMake(2*padding + itemW, 2*padding + itemH*2 +64, itemW, itemH*2) model:sortArr[2] index:4 color:kSetRGBColor(252, 204, 151)];
+    [self setUpMiddleWithFrame:CGRectMake(2*padding + itemW, 2*padding + itemH*2 +64, itemW, itemH*2) model:sortArr[3] index:4 color:kSetRGBColor(252, 204, 151)];
     
-    [self setUpMiddleWithFrame:CGRectMake(padding, 3*padding + 64 + 5*itemH, itemW, itemH *2) model:sortArr[1] index:2 color:kSetRGBColor(246, 182, 169)];
+    [self setUpMiddleWithFrame:CGRectMake(padding, 3*padding + 64 + 5*itemH, itemW, itemH *2) model:sortArr[4] index:2 color:kSetRGBColor(246, 182, 169)];
     
-    [self setUpMiddleWithFrame:CGRectMake(padding*2 + itemW, padding + 64, itemW, itemH *2) model:sortArr[0] index:3 color:kSetRGBColor(89, 219, 217)];
+    [self setUpMiddleWithFrame:CGRectMake(padding*2 + itemW, padding + 64, itemW, itemH *2) model:sortArr[5] index:3 color:kSetRGBColor(89, 219, 217)];
     
 }
-
+/*
 - (void)setUpMaxHWithFrame:(CGRect)frame model:(HomeGroupModel *)model index:(NSInteger)index{
     GroupView *view = [[GroupView alloc] initWithFrame:frame model:model];
     view.backgroundColor = kSetRGBColor(135, 216, 255);
@@ -139,6 +109,7 @@
     [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)]];
     [self.view addSubview:view];
 }
+ */
 
 - (void)setUpMiddleWithFrame:(CGRect)frame model:(HomeGroupModel *)model index:(NSInteger)index color:(UIColor *)color{
     GroupView *view = [[GroupView alloc] initWithFrame:frame model:model];
@@ -147,7 +118,7 @@
     [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)]];
     [self.view addSubview:view];
 }
-
+/*
 - (void)setUpMinWithFrame:(CGRect)frame model:(HomeGroupModel *)model index:(NSInteger)index{
     GroupView *view = [[GroupView alloc] initWithFrame:frame model:model];
     view.backgroundColor = kSetRGBColor(185, 162, 173);
@@ -155,6 +126,7 @@
     [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)]];
     [self.view addSubview:view];
 }
+ */
 
 - (void)viewTap:(UITapGestureRecognizer *)tap {
     NSInteger tag = tap.view.tag;
@@ -162,17 +134,17 @@
     HomeGroupModel *model = [[HomeGroupModel alloc] init];
     
     if (index == 0) {
-        model = _sortArr[5];
-    }else if (index == 1) {
-        model = _sortArr[3];
-    }else if (index == 2) {
-        model = _sortArr[1];
-    }else if (index == 3) {
         model = _sortArr[0];
-    }else if (index == 4){
+    }else if (index == 1) {
         model = _sortArr[2];
-    }else if (index == 5) {
+    }else if (index == 2) {
         model = _sortArr[4];
+    }else if (index == 3) {
+        model = _sortArr[5];
+    }else if (index == 4){
+        model = _sortArr[3];
+    }else if (index == 5) {
+        model = _sortArr[1];
     }
     
     HomeDetailViewController *detail = [[HomeDetailViewController alloc] init];
@@ -185,6 +157,11 @@
 //- (void)setUpNavigationBar {
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"扫一扫" style:UIBarButtonItemStylePlain target:self action:@selector(scan)];
 //}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadData];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
